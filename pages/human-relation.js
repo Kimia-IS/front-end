@@ -4,7 +4,7 @@ import Head from 'next/head'
 const HumanRelation = () => (
   <div>
     <Head>
-      <title>Human Relation</title>
+      <title>Human Relations</title>
       <link rel='icon' href='/favicon.ico' />
     </Head>
 
