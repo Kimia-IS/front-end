@@ -12,6 +12,10 @@ const HumanRelation = () => (
       <h1 className='title'>Test</h1>
     </div>
 
+    <div className='hero'>
+      <h1 className='title'>Test 2</h1>
+    </div>
+
     <style jsx>{`
       .hero {
         width: 100%;

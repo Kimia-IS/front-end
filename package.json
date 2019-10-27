@@ -6,9 +6,12 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "generate": "next generate"
+    "export": "next export",
+    "generate": "next generate",
+    "deploy": "npm run build && npm run export"
   },
   "dependencies": {
+    "@material-ui/core": "^4.5.1",
     "next": "9.1.1",
     "react": "16.11.0",
     "react-dom": "16.11.0"
