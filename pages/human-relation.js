@@ -1,13 +1,7 @@
 import React from 'react'
-import Head from 'next/head'
 
 const HumanRelation = () => (
   <div>
-    <Head>
-      <title>Human Relations</title>
-      <link rel='icon' href='/favicon.ico' />
-    </Head>
-
     <div className='hero'>
       <h1 className='title'>Test</h1>
     </div>
