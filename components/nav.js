@@ -1,5 +1,10 @@
 import React from 'react'
 import Link from 'next/link'
+import AppBar from '@material-ui/core/AppBar'
+import Button from '@material-ui/core/Button'
+import Toolbar from '@material-ui/core/Toolbar'
+import IconButton from '@material-ui/core/IconButton'
+import Typography from '@material-ui/core/Typography'
 
 const links = [
   { href: 'https://zeit.co/now', label: 'ZEIT' },
@@ -10,47 +15,13 @@ const links = [
 })
 
 const Nav = () => (
-  <nav>
-    <ul>
-      <li>
-        <Link href='/'>
-          <a>Home</a>
-        </Link>
-      </li>
-      {links.map(({ key, href, label }) => (
-        <li key={key}>
-          <a href={href}>{label}</a>
-        </li>
-      ))}
-    </ul>
-
-    <style jsx>{`
-      :global(body) {
-        margin: 0;
-        font-family: -apple-system, BlinkMacSystemFont, Avenir Next, Avenir,
-          Helvetica, sans-serif;
-      }
-      nav {
-        text-align: center;
-      }
-      ul {
-        display: flex;
-        justify-content: space-between;
-      }
-      nav > ul {
-        padding: 4px 16px;
-      }
-      li {
-        display: flex;
-        padding: 6px 8px;
-      }
-      a {
-        color: #067df7;
-        text-decoration: none;
-        font-size: 13px;
-      }
-    `}</style>
-  </nav>
+  <AppBar position="static" color="inherit" style={{marginBottom: "50px"}}>
+    <Toolbar>
+      <IconButton edge="start" color="inherit" aria-label="menu" href="/">
+        Kimia IS
+      </IconButton>
+    </Toolbar>
+  </AppBar>
 )
 
 export default Nav
