@@ -17,7 +17,7 @@ const links = [
 const Nav = () => (
   <AppBar position="static" color="inherit" style={{marginBottom: "50px"}}>
     <Toolbar>
-      <IconButton edge="start" color="inherit" aria-label="menu">
+      <IconButton edge="start" color="inherit" aria-label="menu" href="/">
         Kimia IS
       </IconButton>
     </Toolbar>

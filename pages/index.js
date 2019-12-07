@@ -1,6 +1,7 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
+import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 
@@ -25,12 +26,15 @@ export default function Index() {
           Kimia IS
         </Typography>
         <br />
-        <Link href="/dosen/login">
-          Login sebagai dosen
+        <Link href="/dosen/login" style={{marginRight: "20px"}}>
+          <Button variant="outlined">
+            Login sebagai dosen
+          </Button>
         </Link>
-        <br />
         <Link href="/admin/login">
-          Login sebagai admin
+          <Button variant="outlined">
+            Login sebagai admin
+          </Button>
         </Link>
         <br />
         <Copyright />
