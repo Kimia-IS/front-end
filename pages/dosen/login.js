@@ -33,6 +33,14 @@ export default function LoginDosen() {
 				  </Button>
 				</Grid>
 	        </Grid>
+	        <Grid item xs={12}>
+		        <Typography variant="subtitle1" gutterBottom>
+		          Lupa kata sandi? <a href="/dosen/reset">Reset</a>
+		        </Typography>
+		        <Typography variant="subtitle1" gutterBottom>
+		          Belum terdaftar? <a href="/dosen/register">Daftar</a>
+		        </Typography>
+	        </Grid>
 	      </Grid>
       </Box>
     </Container>

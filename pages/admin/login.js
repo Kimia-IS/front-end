@@ -33,6 +33,14 @@ export default function LoginAdmin() {
 				  </Button>
 				</Grid>
 	        </Grid>
+	        <Grid item xs={12}>
+		        <Typography variant="subtitle1" gutterBottom>
+		          Lupa kata sandi? <a href="/admin/reset">Reset</a>
+		        </Typography>
+		        <Typography variant="subtitle1" gutterBottom>
+		          Belum terdaftar? <a href="/admin/register">Daftar</a>
+		        </Typography>
+	        </Grid>
 	      </Grid>
       </Box>
     </Container>
