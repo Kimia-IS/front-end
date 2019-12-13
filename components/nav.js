@@ -20,7 +20,7 @@ export default function Nav() {
   const classes = useStyles();
 
   return (
-    <AppBar position="static" color="inherit" style={{marginBottom: "50px"}}>
+    <AppBar position="fixed" color="inherit" style={{marginBottom: "50px"}}>
       <Toolbar>
         <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" href="/">
           <img src="/static/images/logo-itb.png" style={{'width': '45px'}}/>

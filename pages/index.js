@@ -53,7 +53,7 @@ export default function Index() {
 
   return (
     <Container>
-      <Box my={4}>
+      <Box my={12}>
         <Grid container spacing={3} alignItems="center" alignContent="center" justify="center">
           <Grid item xs={4} md={2}>
             <img src="/static/images/logo-itb.png" style={{'width': '90px'}}/>

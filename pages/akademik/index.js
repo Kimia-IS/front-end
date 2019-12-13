@@ -3,6 +3,7 @@ import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import MaterialTable from 'material-table';
+import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -76,7 +77,7 @@ export default function Index() {
 
   return (
     <Container>
-      <Box my={4}>
+      <Box my={12}>
         <Grid container spacing={3} alignItems="center" alignContent="center" justify="center">
           <Grid item xs={2}>
             <Link href="/dashboard">

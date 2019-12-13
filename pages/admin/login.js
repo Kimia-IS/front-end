@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 export default function LoginAdmin() {
   return (
     <Container>
-      <Box m={3}>
+      <Box my={12}>
 	      <Grid container spacing={3}>
 	      	<Grid item xs={12}>
 	          <Typography variant="h4" gutterBottom>
