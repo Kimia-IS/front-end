@@ -33,19 +33,18 @@ export default function Index() {
       },
     ],
   });
-  const classes = useStyles();
 
   return (
     <div>
       <Grid container spacing={3} alignItems="center" alignContent="center" justify="center">
-        <Grid item xs={2}>
+        <Grid item xs={4} md={2}>
           <Link href="/dashboard">
             <Typography variant="h6" align="justify" gutterBottom>
               &lt; Kembali
             </Typography>
           </Link>
         </Grid>
-        <Grid item xs={10}>
+        <Grid item xs={8} md={10}>
           <Typography variant="h5" align="justify" gutterBottom>
             Akademik
           </Typography>
