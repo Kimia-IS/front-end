@@ -52,175 +52,173 @@ export default function Index() {
   const classes = useStyles();
 
   return (
-    <Container>
-      <Box my={12}>
-        <Grid container spacing={3} alignItems="center" alignContent="center" justify="center">
-          <Grid item xs={12}>
-            <Typography variant="h5" align="justify" gutterBottom>
-              Dashhboard Dosen
-            </Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Typography variant="h5" gutterBottom>
-              <Box fontWeight="fontWeightBold">
-                Halo, [nama dosen]!
-              </Box>
-            </Typography>
-          </Grid>
+    <div>
+      <Grid container spacing={3} alignItems="center" alignContent="center" justify="center">
+        <Grid item xs={12}>
+          <Typography variant="h5" align="justify" gutterBottom>
+            Dashhboard Dosen
+          </Typography>
         </Grid>
-        <hr />
-        <br />
-        <br />
-        <Grid container spacing={3} justify="center">
-          <Grid item xs={6} md={3}>
-            <Card className={classes.card}>
-              <CardActionArea>
-                <Link href="/akademik">
-                  <CardMedia
-                    className={classes.media}
-                    image="/static/images/home-dosen.jpg"
-                    title="Dosen"
-                  />
-                  <Typography variant="h6" className={classes.typography} align="center" gutterBottom>
-                    Akademik
-                  </Typography>
-                </Link>
-              </CardActionArea>
-            </Card>
-          </Grid>
-          <Grid item xs={6} md={3}>
-            <Card className={classes.card}>
-              <CardActionArea>
-                <Link href="/tugas-akhir">
-                  <CardMedia
-                    className={classes.media}
-                    image="/static/images/home-web.jpg"
-                    title="Web"
-                  />
-                  <Typography variant="h6" className={classes.typography} align="center" gutterBottom>
-                    Tugas Akhir
-                  </Typography>
-                </Link>
-              </CardActionArea>
-            </Card>
-          </Grid>
-          <Grid item xs={6} md={3}>
-            <Card className={classes.card}>
-              <CardActionArea>
-                <Link href="/penelitian">
-                  <CardMedia
-                    className={classes.media}
-                    image="/static/images/home-admin.jpg"
-                    title="Admin"
-                  />
-                  <Typography variant="h6" className={classes.typography} align="center" gutterBottom>
-                    Penelitian
-                  </Typography>
-                </Link>
-              </CardActionArea>
-            </Card>
-          </Grid>
-          <Grid item xs={6} md={3}>
-            <Card className={classes.card}>
-              <CardActionArea>
-                <Link href="/publikasi">
-                  <CardMedia
-                    className={classes.media}
-                    image="/static/images/home-dosen.jpg"
-                    title="Dosen"
-                  />
-                  <Typography variant="h6" className={classes.typography} align="center" gutterBottom>
-                    Publikasi
-                  </Typography>
-                </Link>
-              </CardActionArea>
-            </Card>
-          </Grid>
-          <Grid item xs={6} md={3}>
-            <Card className={classes.card}>
-              <CardActionArea>
-                <Link href="/pengabdian-masyarakat">
-                  <CardMedia
-                    className={classes.media}
-                    image="/static/images/home-web.jpg"
-                    title="Web"
-                  />
-                  <Typography variant="h6" className={classes.typography} align="center" gutterBottom>
-                    Pengabdian Masyarakat
-                  </Typography>
-                </Link>
-              </CardActionArea>
-            </Card>
-          </Grid>
-          <Grid item xs={6} md={3}>
-            <Card className={classes.card}>
-              <CardActionArea>
-                <Link href="/prestasi">
-                  <CardMedia
-                    className={classes.media}
-                    image="/static/images/home-admin.jpg"
-                    title="Admin"
-                  />
-                  <Typography variant="h6" className={classes.typography} align="center" gutterBottom>
-                    Prestasi
-                  </Typography>
-                </Link>
-              </CardActionArea>
-            </Card>
-          </Grid>
-          <Grid item xs={6} md={3}>
-            <Card className={classes.card}>
-              <CardActionArea>
-                <Link href="/organisasi">
-                  <CardMedia
-                    className={classes.media}
-                    image="/static/images/home-dosen.jpg"
-                    title="Dosen"
-                  />
-                  <Typography variant="h6" className={classes.typography} align="center" gutterBottom>
-                    Organisasi
-                  </Typography>
-                </Link>
-              </CardActionArea>
-            </Card>
-          </Grid>
-          <Grid item xs={6} md={3}>
-            <Card className={classes.card}>
-              <CardActionArea>
-                <Link href="/riwayat-kerja">
-                  <CardMedia
-                    className={classes.media}
-                    image="/static/images/home-web.jpg"
-                    title="Web"
-                  />
-                  <Typography variant="h6" className={classes.typography} align="center" gutterBottom>
-                    Riwayat Kerja
-                  </Typography>
-                </Link>
-              </CardActionArea>
-            </Card>
-          </Grid>
-          <Grid item xs={6} md={3}>
-            <Card className={classes.card}>
-              <CardActionArea>
-                <Link href="/profil">
-                  <CardMedia
-                    className={classes.media}
-                    image="/static/images/home-admin.jpg"
-                    title="Admin"
-                  />
-                  <Typography variant="h6" className={classes.typography} align="center" gutterBottom>
-                    Profil
-                  </Typography>
-                </Link>
-              </CardActionArea>
-            </Card>
-          </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h5" gutterBottom>
+            <Box fontWeight="fontWeightBold">
+              Halo, [nama dosen]!
+            </Box>
+          </Typography>
         </Grid>
-        <br />
-        <br />
-        <Copyright />
-      </Box>
-    </Container>
+      </Grid>
+      <hr />
+      <br />
+      <br />
+      <Grid container spacing={3} justify="center">
+        <Grid item xs={6} md={3}>
+          <Card className={classes.card}>
+            <CardActionArea>
+              <Link href="/akademik">
+                <CardMedia
+                  className={classes.media}
+                  image="/static/images/home-dosen.jpg"
+                  title="Dosen"
+                />
+                <Typography variant="h6" className={classes.typography} align="center" gutterBottom>
+                  Akademik
+                </Typography>
+              </Link>
+            </CardActionArea>
+          </Card>
+        </Grid>
+        <Grid item xs={6} md={3}>
+          <Card className={classes.card}>
+            <CardActionArea>
+              <Link href="/tugas-akhir">
+                <CardMedia
+                  className={classes.media}
+                  image="/static/images/home-web.jpg"
+                  title="Web"
+                />
+                <Typography variant="h6" className={classes.typography} align="center" gutterBottom>
+                  Tugas Akhir
+                </Typography>
+              </Link>
+            </CardActionArea>
+          </Card>
+        </Grid>
+        <Grid item xs={6} md={3}>
+          <Card className={classes.card}>
+            <CardActionArea>
+              <Link href="/penelitian">
+                <CardMedia
+                  className={classes.media}
+                  image="/static/images/home-admin.jpg"
+                  title="Admin"
+                />
+                <Typography variant="h6" className={classes.typography} align="center" gutterBottom>
+                  Penelitian
+                </Typography>
+              </Link>
+            </CardActionArea>
+          </Card>
+        </Grid>
+        <Grid item xs={6} md={3}>
+          <Card className={classes.card}>
+            <CardActionArea>
+              <Link href="/publikasi">
+                <CardMedia
+                  className={classes.media}
+                  image="/static/images/home-dosen.jpg"
+                  title="Dosen"
+                />
+                <Typography variant="h6" className={classes.typography} align="center" gutterBottom>
+                  Publikasi
+                </Typography>
+              </Link>
+            </CardActionArea>
+          </Card>
+        </Grid>
+        <Grid item xs={6} md={3}>
+          <Card className={classes.card}>
+            <CardActionArea>
+              <Link href="/pengabdian-masyarakat">
+                <CardMedia
+                  className={classes.media}
+                  image="/static/images/home-web.jpg"
+                  title="Web"
+                />
+                <Typography variant="h6" className={classes.typography} align="center" gutterBottom>
+                  Pengabdian Masyarakat
+                </Typography>
+              </Link>
+            </CardActionArea>
+          </Card>
+        </Grid>
+        <Grid item xs={6} md={3}>
+          <Card className={classes.card}>
+            <CardActionArea>
+              <Link href="/prestasi">
+                <CardMedia
+                  className={classes.media}
+                  image="/static/images/home-admin.jpg"
+                  title="Admin"
+                />
+                <Typography variant="h6" className={classes.typography} align="center" gutterBottom>
+                  Prestasi
+                </Typography>
+              </Link>
+            </CardActionArea>
+          </Card>
+        </Grid>
+        <Grid item xs={6} md={3}>
+          <Card className={classes.card}>
+            <CardActionArea>
+              <Link href="/organisasi">
+                <CardMedia
+                  className={classes.media}
+                  image="/static/images/home-dosen.jpg"
+                  title="Dosen"
+                />
+                <Typography variant="h6" className={classes.typography} align="center" gutterBottom>
+                  Organisasi
+                </Typography>
+              </Link>
+            </CardActionArea>
+          </Card>
+        </Grid>
+        <Grid item xs={6} md={3}>
+          <Card className={classes.card}>
+            <CardActionArea>
+              <Link href="/riwayat-kerja">
+                <CardMedia
+                  className={classes.media}
+                  image="/static/images/home-web.jpg"
+                  title="Web"
+                />
+                <Typography variant="h6" className={classes.typography} align="center" gutterBottom>
+                  Riwayat Kerja
+                </Typography>
+              </Link>
+            </CardActionArea>
+          </Card>
+        </Grid>
+        <Grid item xs={6} md={3}>
+          <Card className={classes.card}>
+            <CardActionArea>
+              <Link href="/profil">
+                <CardMedia
+                  className={classes.media}
+                  image="/static/images/home-admin.jpg"
+                  title="Admin"
+                />
+                <Typography variant="h6" className={classes.typography} align="center" gutterBottom>
+                  Profil
+                </Typography>
+              </Link>
+            </CardActionArea>
+          </Card>
+        </Grid>
+      </Grid>
+      <br />
+      <br />
+      <Copyright />
+    </div>
   );
 }

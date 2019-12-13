@@ -52,84 +52,82 @@ export default function Index() {
   const classes = useStyles();
 
   return (
-    <Container>
-      <Box my={12}>
-        <Grid container spacing={3} alignItems="center" alignContent="center" justify="center">
-          <Grid item xs={4} md={2}>
-            <img src="/static/images/logo-itb.png" style={{'width': '90px'}}/>
-          </Grid>
-          <Grid item xs={8} md={10}>
-            <Typography variant="h5" align="justify" gutterBottom>
-              <Box letterSpacing={6}>
-                SISTEM INFORMASI KIMIA ITB
-              </Box>
-            </Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Typography variant="h5" gutterBottom>
-              <Box fontWeight="fontWeightBold">
-                Selamat datang di website sistem informasi Kimia Institut Teknologi Bandung
-              </Box>
-            </Typography>
-          </Grid>
+    <div>
+      <Grid container spacing={3} alignItems="center" alignContent="center" justify="center">
+        <Grid item xs={4} md={2}>
+          <img src="/static/images/logo-itb.png" style={{'width': '90px'}}/>
         </Grid>
-        <hr />
-        <br />
-        <br />
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={4}>
-            <Card className={classes.card}>
-              <CardActionArea>
-                <Link href="/dosen/login">
-                  <CardMedia
-                    className={classes.media}
-                    image="/static/images/home-dosen.jpg"
-                    title="Dosen"
-                  />
-                  <Typography variant="h6" className={classes.typography} align="center" gutterBottom>
-                    Login sebagai Dosen
-                  </Typography>
-                </Link>
-              </CardActionArea>
-            </Card>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Card className={classes.card}>
-              <CardActionArea>
-                <Link href="http://www.chem.itb.ac.id/" target="_blank">
-                  <CardMedia
-                    className={classes.media}
-                    image="/static/images/home-web.jpg"
-                    title="Web"
-                  />
-                  <Typography variant="h6" className={classes.typography} align="center" gutterBottom>
-                    Website Kimia ITB
-                  </Typography>
-                </Link>
-              </CardActionArea>
-            </Card>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Card className={classes.card}>
-              <CardActionArea>
-                <Link href="/admin/login">
-                  <CardMedia
-                    className={classes.media}
-                    image="/static/images/home-admin.jpg"
-                    title="Admin"
-                  />
-                  <Typography variant="h6" className={classes.typography} align="center" gutterBottom>
-                    Login sebagai Admin
-                  </Typography>
-                </Link>
-              </CardActionArea>
-            </Card>
-          </Grid>
+        <Grid item xs={8} md={10}>
+          <Typography variant="h5" align="justify" gutterBottom>
+            <Box letterSpacing={6}>
+              SISTEM INFORMASI KIMIA ITB
+            </Box>
+          </Typography>
         </Grid>
-        <br />
-        <br />
-        <Copyright />
-      </Box>
-    </Container>
+        <Grid item xs={12}>
+          <Typography variant="h5" gutterBottom>
+            <Box fontWeight="fontWeightBold">
+              Selamat datang di website sistem informasi Kimia Institut Teknologi Bandung
+            </Box>
+          </Typography>
+        </Grid>
+      </Grid>
+      <hr />
+      <br />
+      <br />
+      <Grid container spacing={3}>
+        <Grid item xs={12} md={4}>
+          <Card className={classes.card}>
+            <CardActionArea>
+              <Link href="/dosen/login">
+                <CardMedia
+                  className={classes.media}
+                  image="/static/images/home-dosen.jpg"
+                  title="Dosen"
+                />
+                <Typography variant="h6" className={classes.typography} align="center" gutterBottom>
+                  Login sebagai Dosen
+                </Typography>
+              </Link>
+            </CardActionArea>
+          </Card>
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <Card className={classes.card}>
+            <CardActionArea>
+              <Link href="http://www.chem.itb.ac.id/" target="_blank">
+                <CardMedia
+                  className={classes.media}
+                  image="/static/images/home-web.jpg"
+                  title="Web"
+                />
+                <Typography variant="h6" className={classes.typography} align="center" gutterBottom>
+                  Website Kimia ITB
+                </Typography>
+              </Link>
+            </CardActionArea>
+          </Card>
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <Card className={classes.card}>
+            <CardActionArea>
+              <Link href="/admin/login">
+                <CardMedia
+                  className={classes.media}
+                  image="/static/images/home-admin.jpg"
+                  title="Admin"
+                />
+                <Typography variant="h6" className={classes.typography} align="center" gutterBottom>
+                  Login sebagai Admin
+                </Typography>
+              </Link>
+            </CardActionArea>
+          </Card>
+        </Grid>
+      </Grid>
+      <br />
+      <br />
+      <Copyright />
+    </div>
   );
 }

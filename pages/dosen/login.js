@@ -8,41 +8,39 @@ import Typography from '@material-ui/core/Typography';
 
 export default function LoginDosen() {
   return (
-    <Container>
-      <Box my={12}>
-	      <Grid container spacing={3}>
-	      	<Grid item xs={12}>
-	          <Typography variant="h4" gutterBottom>
-		        Login sebagai Dosen
-		      </Typography>
+    <div>
+      <Grid container spacing={3}>
+      	<Grid item xs={12}>
+          <Typography variant="h4" gutterBottom>
+	        Login sebagai Dosen
+	      </Typography>
+        </Grid>
+        <Grid item xs={12}>
+	        <Grid item xs={12} md={5}>
+	          <TextField id="nip" label="NIP" variant="outlined" fullWidth />
 	        </Grid>
-	        <Grid item xs={12}>
-		        <Grid item xs={12} md={5}>
-		          <TextField id="nip" label="NIP" variant="outlined" fullWidth />
-		        </Grid>
+        </Grid>
+        <Grid item xs={12}>
+	        <Grid item xs={12} md={5}>
+	          <TextField id="password" label="Kata sandi" variant="outlined" fullWidth />
 	        </Grid>
-	        <Grid item xs={12}>
-		        <Grid item xs={12} md={5}>
-		          <TextField id="password" label="Kata sandi" variant="outlined" fullWidth />
-		        </Grid>
-	        </Grid>
-	        <Grid item xs={12}>
-		        <Grid item xs={12} md={5}>
-			      <Button variant="outlined" fullWidth href="/dashboard">
-					Masuk
-				  </Button>
-				</Grid>
-	        </Grid>
-	        <Grid item xs={12}>
-		        <Typography variant="subtitle1" gutterBottom>
-		          Lupa kata sandi? <a href="/recover">Reset</a>
-		        </Typography>
-		        {/*<Typography variant="subtitle1" gutterBottom>
-		          Belum terdaftar? <a href="/dosen/register">Daftar</a>
-		        </Typography>*/}
-	        </Grid>
-	      </Grid>
-      </Box>
-    </Container>
+        </Grid>
+        <Grid item xs={12}>
+	        <Grid item xs={12} md={5}>
+		      <Button variant="outlined" fullWidth href="/dashboard">
+				Masuk
+			  </Button>
+			</Grid>
+        </Grid>
+        <Grid item xs={12}>
+	        <Typography variant="subtitle1" gutterBottom>
+	          Lupa kata sandi? <a href="/recover">Reset</a>
+	        </Typography>
+	        {/*<Typography variant="subtitle1" gutterBottom>
+	          Belum terdaftar? <a href="/dosen/register">Daftar</a>
+	        </Typography>*/}
+        </Grid>
+      </Grid>
+  	</div>
   );
 }

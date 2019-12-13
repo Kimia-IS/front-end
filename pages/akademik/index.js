@@ -20,30 +20,6 @@ function Copyright() {
   );
 }
 
-const useStyles = makeStyles({
-  card: {
-    maxWidth: 345,
-    position: 'relative',
-  },
-  media: {
-    //height: 140,
-    height: 0,
-    paddingTop: '56.25%', // 16:9
-    filter: 'brightness(50%)'
-  },
-  typography: {
-    position: 'absolute',
-    //marginLeft: 'auto',
-    //marginRight: 'auto',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    //left: '0px',
-    //right: '0px',
-    color: 'white'
-  },
-});
-
 export default function Index() {
   const [state, setState] = React.useState({
     columns: [
@@ -76,75 +52,73 @@ export default function Index() {
   const classes = useStyles();
 
   return (
-    <Container>
-      <Box my={12}>
-        <Grid container spacing={3} alignItems="center" alignContent="center" justify="center">
-          <Grid item xs={2}>
-            <Link href="/dashboard">
-              <Typography variant="h6" align="justify" gutterBottom>
-                &lt; Kembali
-              </Typography>
-            </Link>
-          </Grid>
-          <Grid item xs={10}>
-            <Typography variant="h5" align="justify" gutterBottom>
-              Akademik
+    <div>
+      <Grid container spacing={3} alignItems="center" alignContent="center" justify="center">
+        <Grid item xs={2}>
+          <Link href="/dashboard">
+            <Typography variant="h6" align="justify" gutterBottom>
+              &lt; Kembali
             </Typography>
-          </Grid>
+          </Link>
         </Grid>
-        <hr />
-        <br />
-        <br />
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <MaterialTable
-              title="Daftar Mata Kuliah"
-              columns={state.columns}
-              data={state.data}
-              editable={{
-                onRowAdd: newData =>
-                  new Promise(resolve => {
-                    setTimeout(() => {
-                      resolve();
+        <Grid item xs={10}>
+          <Typography variant="h5" align="justify" gutterBottom>
+            Akademik
+          </Typography>
+        </Grid>
+      </Grid>
+      <hr />
+      <br />
+      <br />
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <MaterialTable
+            title="Daftar Mata Kuliah"
+            columns={state.columns}
+            data={state.data}
+            editable={{
+              onRowAdd: newData =>
+                new Promise(resolve => {
+                  setTimeout(() => {
+                    resolve();
+                    setState(prevState => {
+                      const data = [...prevState.data];
+                      data.push(newData);
+                      return { ...prevState, data };
+                    });
+                  }, 600);
+                }),
+              onRowUpdate: (newData, oldData) =>
+                new Promise(resolve => {
+                  setTimeout(() => {
+                    resolve();
+                    if (oldData) {
                       setState(prevState => {
                         const data = [...prevState.data];
-                        data.push(newData);
+                        data[data.indexOf(oldData)] = newData;
                         return { ...prevState, data };
                       });
-                    }, 600);
-                  }),
-                onRowUpdate: (newData, oldData) =>
-                  new Promise(resolve => {
-                    setTimeout(() => {
-                      resolve();
-                      if (oldData) {
-                        setState(prevState => {
-                          const data = [...prevState.data];
-                          data[data.indexOf(oldData)] = newData;
-                          return { ...prevState, data };
-                        });
-                      }
-                    }, 600);
-                  }),
-                onRowDelete: oldData =>
-                  new Promise(resolve => {
-                    setTimeout(() => {
-                      resolve();
-                      setState(prevState => {
-                        const data = [...prevState.data];
-                        data.splice(data.indexOf(oldData), 1);
-                        return { ...prevState, data };
-                      });
-                    }, 600);
-                  }),
-              }}
-            />
-          </Grid>
+                    }
+                  }, 600);
+                }),
+              onRowDelete: oldData =>
+                new Promise(resolve => {
+                  setTimeout(() => {
+                    resolve();
+                    setState(prevState => {
+                      const data = [...prevState.data];
+                      data.splice(data.indexOf(oldData), 1);
+                      return { ...prevState, data };
+                    });
+                  }, 600);
+                }),
+            }}
+          />
         </Grid>
-        <br />
-        <br />
-        <Copyright />
-      </Box>
-    </Container>
+      </Grid>
+      <br />
+      <br />
+      <Copyright />
+    </div>
   );
 }
