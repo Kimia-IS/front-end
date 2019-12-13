@@ -37,9 +37,9 @@ export default function LoginDosen() {
 		        <Typography variant="subtitle1" gutterBottom>
 		          Lupa kata sandi? <a href="/recover">Reset</a>
 		        </Typography>
-		        <Typography variant="subtitle1" gutterBottom>
+		        {/*<Typography variant="subtitle1" gutterBottom>
 		          Belum terdaftar? <a href="/dosen/register">Daftar</a>
-		        </Typography>
+		        </Typography>*/}
 	        </Grid>
 	      </Grid>
       </Box>
