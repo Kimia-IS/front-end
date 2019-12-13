@@ -1,10 +1,13 @@
 import React from 'react';
 import App from 'next/app';
 import Head from 'next/head';
-import { ThemeProvider } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import Box from '@material-ui/core/Box';
 import theme from '../components/theme';
-import Navbar from '../components/nav';
+import Header from '../components/header';
+import Footer from '../components/footer';
+import Container from '@material-ui/core/Container';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { ThemeProvider } from '@material-ui/core/styles';
 
 export default class MyApp extends App {
   componentDidMount() {
@@ -26,8 +29,13 @@ export default class MyApp extends App {
         <ThemeProvider theme={theme}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
-          <Navbar />
-          <Component {...pageProps} />
+          <Header />
+          <Container>
+            <Box my={12}>
+              <Component {...pageProps} />
+            </Box>
+          </Container>
+          <Footer />
         </ThemeProvider>
       </React.Fragment>
     );
