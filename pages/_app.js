@@ -1,13 +1,13 @@
 import React from 'react';
 import App from 'next/app';
 import Head from 'next/head';
-import { ThemeProvider } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
-import Container from '@material-ui/core/Container';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../components/theme';
 import Header from '../components/header';
 import Footer from '../components/footer';
+import Container from '@material-ui/core/Container';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { ThemeProvider } from '@material-ui/core/styles';
 
 export default class MyApp extends App {
   componentDidMount() {

@@ -1,11 +1,8 @@
 import React from 'react';
-import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import MaterialTable from 'material-table';
-import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 
 export default function Index() {
   const [state, setState] = React.useState({
