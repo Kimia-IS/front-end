@@ -1,27 +1,39 @@
 import React from 'react'
-import Link from 'next/link'
+import Link from '@material-ui/core/Link'
 import AppBar from '@material-ui/core/AppBar'
 import Button from '@material-ui/core/Button'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
+import { makeStyles } from '@material-ui/core/styles'
 
-const links = [
-  { href: 'https://zeit.co/now', label: 'ZEIT' },
-  { href: 'https://github.com/zeit/next.js', label: 'GitHub' }
-].map(link => {
-  link.key = `nav-link-${link.href}-${link.label}`
-  return link
-})
+const useStyles = makeStyles(theme => ({
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1,
+  },
+}));
 
-const Nav = () => (
-  <AppBar position="static" color="inherit" style={{marginBottom: "50px"}}>
-    <Toolbar>
-      <IconButton edge="start" color="inherit" aria-label="menu" href="/">
-        Kimia IS
-      </IconButton>
-    </Toolbar>
-  </AppBar>
-)
+export default function Nav() {
+  const classes = useStyles();
 
-export default Nav
+  return (
+    <AppBar position="static" color="inherit" style={{marginBottom: "50px"}}>
+      <Toolbar>
+        <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" href="/">
+          <img src="/static/images/logo-itb.png" style={{'width': '45px'}}/>
+        </IconButton>
+        <Typography variant="h6" className={classes.title}>
+          <Link href="/">
+              Kimia IS
+          </Link>
+        </Typography>
+        <Button color="inherit" href="/">Home</Button>|
+        <Button color="inherit" href="/dosen/login">Login dosen</Button>|
+        <Button color="inherit" href="/admin/login">Login admin</Button>
+      </Toolbar>
+    </AppBar> 
+  );
+}
