@@ -6,7 +6,8 @@ import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../components/theme';
-import Navbar from '../components/nav';
+import Header from '../components/header';
+import Footer from '../components/footer';
 
 export default class MyApp extends App {
   componentDidMount() {
@@ -28,12 +29,13 @@ export default class MyApp extends App {
         <ThemeProvider theme={theme}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
-          <Navbar />
+          <Header />
           <Container>
             <Box my={12}>
               <Component {...pageProps} />
             </Box>
           </Container>
+          <Footer />
         </ThemeProvider>
       </React.Fragment>
     );

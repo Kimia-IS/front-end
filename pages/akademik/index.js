@@ -7,19 +7,6 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="/">
-        Kimia ITB
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
 export default function Index() {
   const [state, setState] = React.useState({
     columns: [
@@ -116,9 +103,6 @@ export default function Index() {
           />
         </Grid>
       </Grid>
-      <br />
-      <br />
-      <Copyright />
     </div>
   );
 }

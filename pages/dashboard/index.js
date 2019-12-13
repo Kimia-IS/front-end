@@ -11,19 +11,6 @@ import CardActions from '@material-ui/core/CardActions';
 import CardMedia from '@material-ui/core/CardMedia';
 import Grid from '@material-ui/core/Grid';
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="/">
-        Kimia ITB
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
 const useStyles = makeStyles({
   card: {
     maxWidth: 345,
@@ -216,9 +203,6 @@ export default function Index() {
           </Card>
         </Grid>
       </Grid>
-      <br />
-      <br />
-      <Copyright />
     </div>
   );
 }
