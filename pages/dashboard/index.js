@@ -75,7 +75,7 @@ export default function Index() {
           <Grid item xs={6} md={3}>
             <Card className={classes.card}>
               <CardActionArea>
-                <Link href="/dosen/login">
+                <Link href="/akademik">
                   <CardMedia
                     className={classes.media}
                     image="/static/images/home-dosen.jpg"
@@ -91,7 +91,7 @@ export default function Index() {
           <Grid item xs={6} md={3}>
             <Card className={classes.card}>
               <CardActionArea>
-                <Link href="http://www.chem.itb.ac.id/" target="_blank">
+                <Link href="/tugas-akhir">
                   <CardMedia
                     className={classes.media}
                     image="/static/images/home-web.jpg"
@@ -107,7 +107,7 @@ export default function Index() {
           <Grid item xs={6} md={3}>
             <Card className={classes.card}>
               <CardActionArea>
-                <Link href="/admin/login">
+                <Link href="/penelitian">
                   <CardMedia
                     className={classes.media}
                     image="/static/images/home-admin.jpg"
@@ -123,7 +123,7 @@ export default function Index() {
           <Grid item xs={6} md={3}>
             <Card className={classes.card}>
               <CardActionArea>
-                <Link href="/dosen/login">
+                <Link href="/publikasi">
                   <CardMedia
                     className={classes.media}
                     image="/static/images/home-dosen.jpg"
@@ -139,7 +139,7 @@ export default function Index() {
           <Grid item xs={6} md={3}>
             <Card className={classes.card}>
               <CardActionArea>
-                <Link href="http://www.chem.itb.ac.id/" target="_blank">
+                <Link href="/pengabdian-masyarakat">
                   <CardMedia
                     className={classes.media}
                     image="/static/images/home-web.jpg"
@@ -155,7 +155,7 @@ export default function Index() {
           <Grid item xs={6} md={3}>
             <Card className={classes.card}>
               <CardActionArea>
-                <Link href="/admin/login">
+                <Link href="/prestasi">
                   <CardMedia
                     className={classes.media}
                     image="/static/images/home-admin.jpg"
@@ -171,7 +171,7 @@ export default function Index() {
           <Grid item xs={6} md={3}>
             <Card className={classes.card}>
               <CardActionArea>
-                <Link href="/dosen/login">
+                <Link href="/organisasi">
                   <CardMedia
                     className={classes.media}
                     image="/static/images/home-dosen.jpg"
@@ -187,7 +187,7 @@ export default function Index() {
           <Grid item xs={6} md={3}>
             <Card className={classes.card}>
               <CardActionArea>
-                <Link href="http://www.chem.itb.ac.id/" target="_blank">
+                <Link href="/riwayat-kerja">
                   <CardMedia
                     className={classes.media}
                     image="/static/images/home-web.jpg"
@@ -203,7 +203,7 @@ export default function Index() {
           <Grid item xs={6} md={3}>
             <Card className={classes.card}>
               <CardActionArea>
-                <Link href="/admin/login">
+                <Link href="/profil">
                   <CardMedia
                     className={classes.media}
                     image="/static/images/home-admin.jpg"
