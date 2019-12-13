@@ -28,7 +28,7 @@ export default function LoginAdmin() {
 	        </Grid>
 	        <Grid item xs={12}>
 		        <Grid item xs={12} md={5}>
-			      <Button variant="outlined" fullWidth>
+			      <Button variant="outlined" fullWidth href="/dashboard">
 					Masuk
 				  </Button>
 				</Grid>

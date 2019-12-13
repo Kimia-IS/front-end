@@ -127,6 +127,7 @@ export default function Index() {
           </Grid>
         </Grid>
         <br />
+        <br />
         <Copyright />
       </Box>
     </Container>
