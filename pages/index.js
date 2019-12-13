@@ -32,7 +32,8 @@ const useStyles = makeStyles({
   media: {
     //height: 140,
     height: 0,
-    paddingTop: '56.25%' // 16:9
+    paddingTop: '56.25%', // 16:9
+    filter: 'brightness(50%)'
   },
   typography: {
     position: 'absolute',
@@ -95,7 +96,7 @@ export default function Index() {
           <Grid item xs={12} md={4}>
             <Card className={classes.card}>
               <CardActionArea>
-                <Link href="http://www.chem.itb.ac.id/">
+                <Link href="http://www.chem.itb.ac.id/" target="_blank">
                   <CardMedia
                     className={classes.media}
                     image="/static/images/home-web.jpg"
