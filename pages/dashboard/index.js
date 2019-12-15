@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import CardActions from '@material-ui/core/CardActions';
 import CardActionArea from '@material-ui/core/CardActionArea';
 
@@ -36,23 +37,23 @@ export default function Index() {
     <div>
       <Grid container spacing={3} alignItems="center" alignContent="center" justify="center">
         <Grid item xs={12}>
-          <Typography variant="h5" align="justify" gutterBottom>
-            Dashboard Dosen
-          </Typography>
+          <Breadcrumbs aria-label="breadcrumb">
+            <Typography color="inherit" variant="h6">Dashboard Dosen</Typography>
+          </Breadcrumbs>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5" gutterBottom>
+          <Typography variant="h4" gutterBottom>
             <Box fontWeight="fontWeightBold">
               Halo, [nama dosen]!
             </Box>
           </Typography>
           <Typography variant="subtitle1" gutterBottom>
-            Silakan pilih menu di bawah ini
+            <Box fontWeight="fontWeightBold">
+              Silakan pilih menu di bawah ini
+            </Box>
           </Typography>
         </Grid>
       </Grid>
-      <hr />
-      <br />
       <br />
       <Grid container spacing={3} justify="center">
         <Grid item xs={6} md={3}>

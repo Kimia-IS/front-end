@@ -3,33 +3,47 @@ import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import MaterialTable from 'material-table';
 import Typography from '@material-ui/core/Typography';
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
 export default function Index() {
   const [state, setState] = React.useState({
     columns: [
-      { title: 'Kode Mata Kuliah', field: 'kode_matkul' },
+      { title: 'No', field: 'no' },
+      { title: 'Kode', field: 'kode_matkul' },
       { title: 'Nama Mata Kuliah', field: 'nama_matkul' },
-      { title: 'Kelas', field: 'kelas', type: 'numeric' },
-      { title: 'Dosen Pengajar', field: 'dosen' }
+      { title: 'SKS', field: 'sks', type: 'numeric' },
+      { title: 'Kelas', field: 'kelas' },
+      { title: 'Dosen', field: 'dosen' },
+      { title: 'SKS Dosen', field: 'sks_dosen' }
     ],
     data: [
       {
+        no: 1,
         kode_matkul: 'KI3121',
         nama_matkul: 'Kimia Murni',
-        kelas: 1,
-        dosen: 'Handajaya Rusli'
+        sks: 3,
+        kelas: '01',
+        dosen: 'Handajaya Rusli',
+        sks_dosen: 3
       },
       {
+        no: 2,
         kode_matkul: 'KI2111',
         nama_matkul: 'Kimia Palsu',
-        kelas: 1,
-        dosen: 'Feby Eliana, Vincent Siauw'
+        sks: 4,
+        kelas: '01',
+        dosen: 'Feby Eliana, Vincent Siauw',
+        sks_dosen: '2, 2'
       },
       {
+        no: 3,
         kode_matkul: 'KI2111',
         nama_matkul: 'Kimia Palsu',
-        kelas: 2,
-        dosen: 'Alfian Maulana'
+        sks: 4,
+        kelas: '02',
+        dosen: 'Alfian Maulana',
+        sks_dosen: 4
       },
     ],
   });
@@ -37,21 +51,15 @@ export default function Index() {
   return (
     <div>
       <Grid container spacing={3} alignItems="center" alignContent="center" justify="center">
-        <Grid item xs={4} md={2}>
-          <Link href="/dashboard">
-            <Typography variant="h6" align="justify" gutterBottom>
-              &lt; Kembali
-            </Typography>
-          </Link>
-        </Grid>
-        <Grid item xs={8} md={10}>
-          <Typography variant="h5" align="justify" gutterBottom>
-            Akademik
-          </Typography>
+        <Grid item xs={12}>
+          <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
+            <Link color="inherit" href="/dashboard">
+              Dashboard
+            </Link>
+            <Typography color="textPrimary">Akademik</Typography>
+          </Breadcrumbs>
         </Grid>
       </Grid>
-      <hr />
-      <br />
       <br />
       <Grid container spacing={3}>
         <Grid item xs={12}>
