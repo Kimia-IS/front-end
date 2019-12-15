@@ -26,7 +26,7 @@ export default function Header() {
           <img src="/static/images/logo-itb.png" style={{'width': '45px'}}/>
         </IconButton>
         <Typography variant="h6" className={classes.title}>
-          <Link href="/">
+          <Link href="/" color="inherit">
               Kimia IS
           </Link>
         </Typography>

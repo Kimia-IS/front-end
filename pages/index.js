@@ -73,38 +73,42 @@ export default function Index() {
             </CardActionArea>
           </Card>
         </Grid>
-        <Grid item xs={12} md={4}>
-          <Card className={classes.card}>
-            <CardActionArea>
-              <Link href="http://www.chem.itb.ac.id/" target="_blank">
-                <CardMedia
-                  className={classes.media}
-                  image="/static/images/home-web.jpg"
-                  title="Web"
-                />
-                <Typography variant="h6" className={classes.typography} align="center" gutterBottom>
-                  Website Kimia ITB
-                </Typography>
-              </Link>
-            </CardActionArea>
-          </Card>
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <Card className={classes.card}>
-            <CardActionArea>
-              <Link href="/admin/login">
-                <CardMedia
-                  className={classes.media}
-                  image="/static/images/home-admin.jpg"
-                  title="Admin"
-                />
-                <Typography variant="h6" className={classes.typography} align="center" gutterBottom>
-                  Login sebagai Admin
-                </Typography>
-              </Link>
-            </CardActionArea>
-          </Card>
-        </Grid>
+        <Box clone order={{ xs: 3, sm: 2 }}>
+          <Grid item xs={12} md={4}>
+            <Card className={classes.card}>
+              <CardActionArea>
+                <Link href="http://www.chem.itb.ac.id/" target="_blank">
+                  <CardMedia
+                    className={classes.media}
+                    image="/static/images/home-web.jpg"
+                    title="Web"
+                  />
+                  <Typography variant="h6" className={classes.typography} align="center" gutterBottom>
+                    Website Kimia ITB
+                  </Typography>
+                </Link>
+              </CardActionArea>
+            </Card>
+          </Grid>
+        </Box>
+        <Box clone order={{ xs: 2, sm: 3 }}>
+          <Grid item xs={12} md={4}>
+            <Card className={classes.card}>
+              <CardActionArea>
+                <Link href="/admin/login">
+                  <CardMedia
+                    className={classes.media}
+                    image="/static/images/home-admin.jpg"
+                    title="Admin"
+                  />
+                  <Typography variant="h6" className={classes.typography} align="center" gutterBottom>
+                    Login sebagai Admin
+                  </Typography>
+                </Link>
+              </CardActionArea>
+            </Card>
+          </Grid>
+        </Box>
       </Grid>
     </div>
   );

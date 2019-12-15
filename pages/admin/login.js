@@ -1,5 +1,6 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
+import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
@@ -32,7 +33,7 @@ export default function LoginAdmin() {
         </Grid>
         <Grid item xs={12}>
 	        <Typography variant="subtitle1" gutterBottom>
-	          Lupa kata sandi? <a href="/recover">Reset</a>
+	          Lupa kata sandi? <Link href="/recover" color="primary">Reset</Link>
 	        </Typography>
 	        {/*<Typography variant="subtitle1" gutterBottom>
 	          Belum terdaftar? <a href="/admin/register">Daftar</a>
