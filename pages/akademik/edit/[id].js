@@ -1,4 +1,5 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
@@ -8,6 +9,8 @@ import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
 export default function CreateAkademik() {
+  const router = useRouter();
+
   return (
     <div>
       <Grid container spacing={3}>
@@ -19,7 +22,7 @@ export default function CreateAkademik() {
             <Link color="inherit" href="/akademik">
               Akademik
             </Link>
-            <Typography color="textPrimary">Edit Akademik [id]</Typography>
+            <Typography color="textPrimary">Edit - {router.query.id}</Typography>
           </Breadcrumbs>
         </Grid>
       	<Grid item xs={12}>
