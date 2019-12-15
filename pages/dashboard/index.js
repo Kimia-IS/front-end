@@ -37,7 +37,7 @@ export default function Index() {
       <Grid container spacing={3} alignItems="center" alignContent="center" justify="center">
         <Grid item xs={12}>
           <Typography variant="h5" align="justify" gutterBottom>
-            Dashhboard Dosen
+            Dashboard Dosen
           </Typography>
         </Grid>
         <Grid item xs={12}>
@@ -45,6 +45,9 @@ export default function Index() {
             <Box fontWeight="fontWeightBold">
               Halo, [nama dosen]!
             </Box>
+          </Typography>
+          <Typography variant="subtitle1" gutterBottom>
+            Silakan pilih menu di bawah ini
           </Typography>
         </Grid>
       </Grid>
@@ -58,8 +61,8 @@ export default function Index() {
               <Link href="/akademik">
                 <CardMedia
                   className={classes.media}
-                  image="/static/images/home-dosen.jpg"
-                  title="Dosen"
+                  image="/static/images/dashboard-akademik.jpg"
+                  title="Akademik"
                 />
                 <Typography variant="h6" className={classes.typography} align="center" gutterBottom>
                   Akademik
@@ -74,8 +77,8 @@ export default function Index() {
               <Link href="/tugas-akhir">
                 <CardMedia
                   className={classes.media}
-                  image="/static/images/home-web.jpg"
-                  title="Web"
+                  image="/static/images/dashboard-tugas-akhir.jpg"
+                  title="Tugas Akhir"
                 />
                 <Typography variant="h6" className={classes.typography} align="center" gutterBottom>
                   Tugas Akhir
@@ -90,8 +93,8 @@ export default function Index() {
               <Link href="/penelitian">
                 <CardMedia
                   className={classes.media}
-                  image="/static/images/home-admin.jpg"
-                  title="Admin"
+                  image="/static/images/dashboard-penelitian.jpg"
+                  title="Penelitian"
                 />
                 <Typography variant="h6" className={classes.typography} align="center" gutterBottom>
                   Penelitian
@@ -106,8 +109,8 @@ export default function Index() {
               <Link href="/publikasi">
                 <CardMedia
                   className={classes.media}
-                  image="/static/images/home-dosen.jpg"
-                  title="Dosen"
+                  image="/static/images/dashboard-publikasi.jpg"
+                  title="Publikasi"
                 />
                 <Typography variant="h6" className={classes.typography} align="center" gutterBottom>
                   Publikasi
@@ -122,8 +125,8 @@ export default function Index() {
               <Link href="/pengabdian-masyarakat">
                 <CardMedia
                   className={classes.media}
-                  image="/static/images/home-web.jpg"
-                  title="Web"
+                  image="/static/images/dashboard-pengabdian-masyarakat.jpg"
+                  title="Pengabdian Masyarakat"
                 />
                 <Typography variant="h6" className={classes.typography} align="center" gutterBottom>
                   Pengabdian Masyarakat
@@ -138,8 +141,8 @@ export default function Index() {
               <Link href="/prestasi">
                 <CardMedia
                   className={classes.media}
-                  image="/static/images/home-admin.jpg"
-                  title="Admin"
+                  image="/static/images/dashboard-prestasi.jpeg"
+                  title="Prestasi"
                 />
                 <Typography variant="h6" className={classes.typography} align="center" gutterBottom>
                   Prestasi
@@ -154,8 +157,8 @@ export default function Index() {
               <Link href="/organisasi">
                 <CardMedia
                   className={classes.media}
-                  image="/static/images/home-dosen.jpg"
-                  title="Dosen"
+                  image="/static/images/dashboard-organisasi.jpg"
+                  title="Organisasi"
                 />
                 <Typography variant="h6" className={classes.typography} align="center" gutterBottom>
                   Organisasi
@@ -170,8 +173,8 @@ export default function Index() {
               <Link href="/riwayat-kerja">
                 <CardMedia
                   className={classes.media}
-                  image="/static/images/home-web.jpg"
-                  title="Web"
+                  image="/static/images/dashboard-riwayat-kerja.jpg"
+                  title="Riwayat Kerja"
                 />
                 <Typography variant="h6" className={classes.typography} align="center" gutterBottom>
                   Riwayat Kerja
@@ -186,8 +189,8 @@ export default function Index() {
               <Link href="/profil">
                 <CardMedia
                   className={classes.media}
-                  image="/static/images/home-admin.jpg"
-                  title="Admin"
+                  image="/static/images/dashboard-profil.jpg"
+                  title="Profil"
                 />
                 <Typography variant="h6" className={classes.typography} align="center" gutterBottom>
                   Profil
