@@ -19,23 +19,63 @@ export default function CreateAkademik() {
             <Link color="inherit" href="/akademik">
               Akademik
             </Link>
-            <Typography color="textPrimary">Create</Typography>
+            <Typography color="textPrimary">Buat Baru</Typography>
           </Breadcrumbs>
         </Grid>
       	<Grid item xs={12}>
           <Typography variant="h4" gutterBottom>
-	        Create Akademik
+	        Buat Mata Kuliah Baru
 	      </Typography>
         </Grid>
-
         <Grid item xs={12}>
 	        <Grid item xs={12} md={5}>
-		      <Button variant="outlined" fullWidth href="/dashboard">
-				Submit
-			  </Button>
+	          <TextField id="kode_matkul" label="Kode mata kuliah" variant="outlined" fullWidth />
+	        </Grid>
+        </Grid>
+        <Grid item xs={12}>
+	        <Grid item xs={12} md={5}>
+	          <TextField id="nama_matkul" label="Nama mata kuliah" variant="outlined" fullWidth />
+	        </Grid>
+        </Grid>
+        <Grid item xs={12}>
+	        <Grid item xs={12} md={5}>
+	          <TextField id="sks" label="Total SKS" variant="outlined" fullWidth />
+	        </Grid>
+        </Grid>
+        <Grid item xs={12}>
+	        <Grid item xs={12} md={5}>
+	          <TextField id="dosen_1" label="Nama dosen 1" variant="outlined" fullWidth />
+	        </Grid>
+        </Grid>
+        <Grid item xs={12}>
+	        <Grid item xs={12} md={5}>
+	          <TextField id="sks_dosen_1" label="SKS dosen 1" variant="outlined" fullWidth />
+	        </Grid>
+        </Grid>
+        <Grid item xs={12}>
+	        <Grid item xs={12} md={5}>
+	          <TextField id="dosen_2" label="Nama dosen 1" variant="outlined" fullWidth />
+	        </Grid>
+        </Grid>
+        <Grid item xs={12}>
+	        <Grid item xs={12} md={5}>
+	          <TextField id="sks_dosen_3" label="SKS dosen 1" variant="outlined" fullWidth />
+	        </Grid>
+        </Grid>
+        <Grid item xs={12}>
+        	<Grid container spacing={3}>
+		        <Grid item xs={12} md={2}>
+			      <Button variant="outlined" color="secondary" fullWidth href="/akademik">
+					Batal
+				  </Button>
+				</Grid>
+		        <Grid item xs={12} md={3}>
+			      <Button variant="outlined" color="primary" fullWidth href="/akademik">
+					Simpan
+				  </Button>
+				</Grid>
 			</Grid>
         </Grid>
-
       </Grid>
   	</div>
   );
