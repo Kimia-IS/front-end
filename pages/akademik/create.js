@@ -64,16 +64,16 @@ export default function CreateAkademik() {
         </Grid>
         <Grid item xs={12}>
         	<Grid container spacing={3}>
-	        <Grid item xs={12} md={2}>
-		      <Button variant="outlined" color="secondary" fullWidth href="/akademik">
-				Batal
-			  </Button>
-			</Grid>
-	        <Grid item xs={12} md={3}>
-		      <Button variant="outlined" color="primary" fullWidth href="/akademik">
-				Simpan
-			  </Button>
-			</Grid>
+		        <Grid item xs={12} md={2}>
+			      <Button variant="outlined" color="secondary" fullWidth href="/akademik">
+					Batal
+				  </Button>
+				</Grid>
+		        <Grid item xs={12} md={3}>
+			      <Button variant="outlined" color="primary" fullWidth href="/akademik">
+					Simpan
+				  </Button>
+				</Grid>
 			</Grid>
         </Grid>
       </Grid>

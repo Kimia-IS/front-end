@@ -1,5 +1,5 @@
 import React from 'react';
-import { useRouter } from 'next/router';
+import { useRouter }  from 'next/router';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
@@ -8,13 +8,13 @@ import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
-export default function CreateAkademik() {
+export default function EditAkademik() {
   const router = useRouter();
 
   return (
     <div>
       <Grid container spacing={3}>
-      	<Grid item xs={12}>
+        <Grid item xs={12}>
           <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
             <Link color="inherit" href="/dashboard">
               Dashboard
@@ -25,21 +25,61 @@ export default function CreateAkademik() {
             <Typography color="textPrimary">Edit - {router.query.id}</Typography>
           </Breadcrumbs>
         </Grid>
-      	<Grid item xs={12}>
-          <Typography variant="h4" gutterBottom>
-  	        Edit Akademik
-  	      </Typography>
-        </Grid>
-
         <Grid item xs={12}>
-	        <Grid item xs={12} md={5}>
-  		      <Button variant="outlined" fullWidth href="/dashboard">
-    				  Submit
-    			  </Button>
-    			</Grid>
+          <Typography variant="h4" gutterBottom>
+            Edit Mata Kuliah {router.query.id}
+          </Typography>
         </Grid>
-
+        <Grid item xs={12}>
+          <Grid item xs={12} md={5}>
+            <TextField id="kode_matkul" label="Kode mata kuliah" variant="outlined" fullWidth />
+          </Grid>
+        </Grid>
+        <Grid item xs={12}>
+          <Grid item xs={12} md={5}>
+            <TextField id="nama_matkul" label="Nama mata kuliah" variant="outlined" fullWidth />
+          </Grid>
+        </Grid>
+        <Grid item xs={12}>
+          <Grid item xs={12} md={5}>
+            <TextField id="sks" label="Total SKS" variant="outlined" fullWidth />
+          </Grid>
+        </Grid>
+        <Grid item xs={12}>
+          <Grid item xs={12} md={5}>
+            <TextField id="dosen_1" label="Nama dosen 1" variant="outlined" fullWidth />
+          </Grid>
+        </Grid>
+        <Grid item xs={12}>
+          <Grid item xs={12} md={5}>
+            <TextField id="sks_dosen_1" label="SKS dosen 1" variant="outlined" fullWidth />
+          </Grid>
+        </Grid>
+        <Grid item xs={12}>
+          <Grid item xs={12} md={5}>
+            <TextField id="dosen_2" label="Nama dosen 1" variant="outlined" fullWidth />
+          </Grid>
+        </Grid>
+        <Grid item xs={12}>
+          <Grid item xs={12} md={5}>
+            <TextField id="sks_dosen_3" label="SKS dosen 1" variant="outlined" fullWidth />
+          </Grid>
+        </Grid>
+        <Grid item xs={12}>
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={2}>
+              <Button variant="outlined" color="secondary" fullWidth href="/akademik">
+                Batal
+                </Button>
+              </Grid>
+              <Grid item xs={12} md={3}>
+              <Button variant="outlined" color="primary" fullWidth href="/akademik">
+                Simpan
+              </Button>
+            </Grid>
+          </Grid>
+        </Grid>
       </Grid>
-  	</div>
+    </div>
   );
 }
