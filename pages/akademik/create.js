@@ -9,42 +9,67 @@ import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
 export default function CreateAkademik() {
-	let openDialog = false;
-	const [count, setCount] = React.useState(2);
+	const [count, setCount] = React.useState(2);	// Pahami lagi perilaku 'count' (lifecycle)
 	const [inputDosen2, setInputDosen2] = React.useState(false);
 	const [inputDosen3, setInputDosen3] = React.useState(false);
-
-	// PAHAMI LAGI KENAPA COUNT NYA BEGITU
 
 	const handleTambahDosen = () => {
 		if (count <= 3) {
 			setCount(count => count + 1);
 			if (count >= 2) {
 				setInputDosen2(true);
-				console.log('setInputDosen2 = ' + inputDosen2)
 			}
 			if (count >= 3) {
 				setInputDosen3(true);
-				console.log('setInputDosen3 = ' + inputDosen3)
 			}
 		}
-		console.log("set count = " + count);
 	};
 
 	const handleKurangDosen = () => {
-		if (count > 2) {
+		if (count >= 3) {
 			setCount(count => count - 1);
 			if (count <= 4) {
 				setInputDosen3(false);
-				console.log('setInputDosen2 = ' + inputDosen2)
 			}
 			if (count <= 3) {
 				setInputDosen2(false);
-				console.log('setInputDosen3 = ' + inputDosen3)
 			}
 		}
-		console.log("set count = " + count);
 	};
+
+	const addFieldDosen2 = () => {
+		if (inputDosen2) {
+			return (
+				<Grid component={Box} item xs={12} md={8}>
+		        	<Grid container spacing={3}>
+				        <Grid item xs={12} md={7}>
+				          <TextField id="dosen_2" label="Nama dosen 2" variant="outlined" fullWidth />
+				        </Grid>
+				        <Grid item xs={12} md={5}>
+				          <TextField id="sks_dosen_2" label="SKS dosen 2" variant="outlined" fullWidth required />
+				        </Grid>
+		        	</Grid>
+		        </Grid>
+			)
+		}
+	}
+
+	const addFieldDosen3 = () => {
+		if (inputDosen3) {
+			return (
+				<Grid component={Box} item xs={12} md={8} visibility={inputDosen3 ? "visible" : "hidden"}>
+		        	<Grid container spacing={3}>
+				        <Grid item xs={12} md={7}>
+				          <TextField id="dosen_3" label="Nama dosen 3" variant="outlined" fullWidth />
+				        </Grid>
+				        <Grid item xs={12} md={5}>
+				          <TextField id="sks_dosen_3" label="SKS dosen 3" variant="outlined" fullWidth required />
+				        </Grid>
+		        	</Grid>
+		        </Grid>
+			)
+		}
+	}
 
 	/*const addFieldDosen = () => {
 		console.log('addFieldDosen')
@@ -110,27 +135,8 @@ export default function CreateAkademik() {
 		        </Grid>
         	</Grid>
         </Grid>
-        <Grid component={Box} item xs={12} md={8} visibility={inputDosen2 ? "visible" : "hidden"}>
-        	<Grid container spacing={3}>
-		        <Grid item xs={12} md={7}>
-		          <TextField id="dosen_2" label="Nama dosen 2" variant="outlined" fullWidth />
-		        </Grid>
-		        <Grid item xs={12} md={5}>
-		          <TextField id="sks_dosen_2" label="SKS dosen 2" variant="outlined" fullWidth required />
-		        </Grid>
-        	</Grid>
-        </Grid>
-        <Grid component={Box} item xs={12} md={8} visibility={inputDosen3 ? "visible" : "hidden"}>
-        	<Grid container spacing={3}>
-		        <Grid item xs={12} md={7}>
-		          <TextField id="dosen_3" label="Nama dosen 3" variant="outlined" fullWidth />
-		        </Grid>
-		        <Grid item xs={12} md={5}>
-		          <TextField id="sks_dosen_3" label="SKS dosen 3" variant="outlined" fullWidth required />
-		        </Grid>
-        	</Grid>
-        </Grid>
-        
+        {addFieldDosen2()}
+        {addFieldDosen3()}
         <Grid item xs={12} md={5}>
         	<Grid container spacing={3}>
 		        <Grid item xs={12} md={6}>
