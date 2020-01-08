@@ -1,4 +1,5 @@
 import React from 'react';
+import Box from "@material-ui/core/Box";
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
@@ -6,26 +7,46 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 
 export default function CreateAkademik() {
 	let openDialog = false;
-	const [count, setCount] = React.useState(1);
-	const [open, setOpen] = React.useState(false); // or use openDialog ? true : false
+	const [count, setCount] = React.useState(2);
+	const [inputDosen2, setInputDosen2] = React.useState(false);
+	const [inputDosen3, setInputDosen3] = React.useState(false);
 
-	const handleClickOpen = () => {
-	    setOpen(true);
+	// PAHAMI LAGI KENAPA COUNT NYA BEGITU
+
+	const handleTambahDosen = () => {
+		if (count <= 3) {
+			setCount(count => count + 1);
+			if (count >= 2) {
+				setInputDosen2(true);
+				console.log('setInputDosen2 = ' + inputDosen2)
+			}
+			if (count >= 3) {
+				setInputDosen3(true);
+				console.log('setInputDosen3 = ' + inputDosen3)
+			}
+		}
+		console.log("set count = " + count);
 	};
 
-	const handleClose = () => {
-	    setOpen(false);
+	const handleKurangDosen = () => {
+		if (count > 2) {
+			setCount(count => count - 1);
+			if (count <= 4) {
+				setInputDosen3(false);
+				console.log('setInputDosen2 = ' + inputDosen2)
+			}
+			if (count <= 3) {
+				setInputDosen2(false);
+				console.log('setInputDosen3 = ' + inputDosen3)
+			}
+		}
+		console.log("set count = " + count);
 	};
 
-	const addFieldDosen = () => {
+	/*const addFieldDosen = () => {
 		console.log('addFieldDosen')
 		console.log('state = ' + count)
 	    let field = [];
@@ -52,7 +73,7 @@ export default function CreateAkademik() {
 	    }
 
 	    return field;
-	 }
+	 }*/
 
   return (
     <div>
@@ -89,34 +110,36 @@ export default function CreateAkademik() {
 		        </Grid>
         	</Grid>
         </Grid>
-        { addFieldDosen() }
-        <Dialog
-	      open={open}
-	      onClose={handleClose}
-	      aria-labelledby="alert-dialog-title"
-	      aria-describedby="alert-dialog-description"
-	    >
-	        <DialogTitle id="alert-dialog-title">{"Oops!"}</DialogTitle>
-	        <DialogContent>
-	          <DialogContentText id="alert-dialog-description">
-	            Maksimal dosen pengajar hanyalah 3 dosen per kelas
-	          </DialogContentText>
-	        </DialogContent>
-	        <DialogActions>
-	          <Button onClick={handleClose} color="primary" autoFocus>
-	            Tutup
-	          </Button>
-	        </DialogActions>
-	    </Dialog>
+        <Grid component={Box} item xs={12} md={8} visibility={inputDosen2 ? "visible" : "hidden"}>
+        	<Grid container spacing={3}>
+		        <Grid item xs={12} md={7}>
+		          <TextField id="dosen_2" label="Nama dosen 2" variant="outlined" fullWidth />
+		        </Grid>
+		        <Grid item xs={12} md={5}>
+		          <TextField id="sks_dosen_2" label="SKS dosen 2" variant="outlined" fullWidth required />
+		        </Grid>
+        	</Grid>
+        </Grid>
+        <Grid component={Box} item xs={12} md={8} visibility={inputDosen3 ? "visible" : "hidden"}>
+        	<Grid container spacing={3}>
+		        <Grid item xs={12} md={7}>
+		          <TextField id="dosen_3" label="Nama dosen 3" variant="outlined" fullWidth />
+		        </Grid>
+		        <Grid item xs={12} md={5}>
+		          <TextField id="sks_dosen_3" label="SKS dosen 3" variant="outlined" fullWidth required />
+		        </Grid>
+        	</Grid>
+        </Grid>
+        
         <Grid item xs={12} md={5}>
         	<Grid container spacing={3}>
 		        <Grid item xs={12} md={6}>
-		        	<Button onClick={() => {setCount(count => count + 1); console.log('set state = ' + count)}}>
+		        	<Button onClick={handleTambahDosen}>
 			          + Tambah dosen pengajar
 		        	</Button>
 		        </Grid>
 		        <Grid item xs={12} md={6}>
-		        	<Button onClick={() => setCount(count => count - 1)}>
+		        	<Button onClick={handleKurangDosen}>
 			          - Kurangi dosen pengajar
 		        	</Button>
 		        </Grid>
