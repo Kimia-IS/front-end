@@ -83,7 +83,7 @@ export default function Index() {
               {
                 icon: 'edit',
                 tooltip: 'Edit',
-                onClick: (event, rowData) => { router.push('/akademik/edit/' + rowData.id) }
+                onClick: (event, rowData) => { router.push('/akademik/edit/' + 'id') }
               },
               {
                 icon: 'delete',
