@@ -36,10 +36,15 @@ export default function Index() {
   return (
     <div>
       <Grid container spacing={3} alignItems="center" alignContent="center" justify="center">
-        <Grid item xs={12}>
+        <Grid item xs={12} md={10}>
           <Breadcrumbs aria-label="breadcrumb">
             <Typography color="inherit" variant="h6">Dashboard Dosen</Typography>
           </Breadcrumbs>
+        </Grid>
+        <Grid item xs={12} md={2}>
+          <Button variant="outlined" fullWidth href="/kelola-akun">
+            Kelola Akun
+          </Button>
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h4" gutterBottom>

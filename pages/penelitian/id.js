@@ -6,11 +6,52 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import { makeStyles } from '@material-ui/core/styles';
+import 'date-fns';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
 
-export default function CreateAkademik() {
+const useStyles = makeStyles(theme => ({
+  formControl: {
+    // margin: theme.spacing(1),
+    minWidth: 300,
+    fullWidth: true,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+}));
+
+export default function LihatTA() {
+	const classes = useStyles();
+
 	const [count, setCount] = React.useState(2);	// Pahami lagi perilaku 'count' (lifecycle)
 	const [inputDosen2, setInputDosen2] = React.useState(false);
 	const [inputDosen3, setInputDosen3] = React.useState(false);
+	const [tipeMahasiswa, setTipeMahasiswa] = React.useState('');
+	const [posisiDosen, setPosisiDosen] = React.useState('');
+	const [selectedDate, setSelectedDate] = React.useState(new Date('2020-01-01T21:11:54'));
+
+	const handleDateChange = date => {
+	    setSelectedDate(date);
+	};
+
+	const handleChangeTipeMahasiswa = event => {
+		setTipeMahasiswa(event.target.value);
+	};
+
+	const handleChangePosisiDosen = event => {
+		setPosisiDosen(event.target.value);
+	};
 
 	const handleTambahDosen = () => {
 		if (count <= 3) {
@@ -70,35 +111,6 @@ export default function CreateAkademik() {
 		}
 	}
 
-	/*const addFieldDosen = () => {
-		console.log('addFieldDosen')
-		console.log('state = ' + count)
-	    let field = [];
-
-	    if (count >= 3) {
-	    	handleClickOpen;
-	    	{() => {setOpen(true); console.log(open);}} // ga dijalanin
-	    	console.log('setOpen = ' + open)
-	    } else {
-		    for (let i = 2; i < count; i++) {
-		      field.push(
-		      	<Grid item xs={12} md={8}>
-		        	<Grid container spacing={3}>
-				      	<Grid item xs={12} md={7}>
-				          <TextField id={"dosen_" + i} label={"Nama dosen " + i} variant="outlined" required fullWidth />
-				        </Grid>
-				        <Grid item xs={12} md={5}>
-				          <TextField id={"sks_dosen_" + i} label={"SKS dosen " + i} variant="outlined" fullWidth required />
-				        </Grid>
-			        </Grid>
-		        </Grid>
-		      );
-		    }
-	    }
-
-	    return field;
-	 }*/
-
   return (
     <div>
       <Grid container spacing={3}>
@@ -107,64 +119,52 @@ export default function CreateAkademik() {
             <Link color="inherit" href="/dashboard">
               Dashboard
             </Link>
-            <Link color="inherit" href="/akademik">
-              Akademik
+            <Link color="inherit" href="/penelitian">
+              Penelitian
             </Link>
-            <Typography color="textPrimary">Buat Kelas Baru</Typography>
+            <Typography color="textPrimary">Penelitian [ID]</Typography>
           </Breadcrumbs>
         </Grid>
       	<Grid item xs={12}>
           <Typography variant="h4" gutterBottom>
-	        Buat Kelas Baru
+	        Penelitian [ID]
 	      </Typography>
         </Grid>
+        <Grid item xs={12} md={5}>
+          <TextField id="nim" label="Nama dosen" variant="outlined" fullWidth required disabled />
+        </Grid>
         <Grid item xs={12} md={3}>
-          <TextField id="kode_matkul" label="Kode mata kuliah" variant="outlined" fullWidth required />
+          <TextField id="nama_mahasiswa" label="Tahun" variant="outlined" fullWidth required disabled />
+        </Grid>
+        <Grid item xs={12} md={8}>
+          <TextField id="tipe" label="Judul penelitian" variant="outlined" fullWidth required disabled />
         </Grid>
         <Grid item xs={12} md={5}>
-          <TextField id="nama_matkul" label="Nama mata kuliah" variant="outlined" fullWidth required />
+          <TextField id="posisi" label="Pemberi dana" variant="outlined" fullWidth required disabled />
+        </Grid>
+        <Grid item xs={12} md={3}>
+          <TextField id="judul_ta" label="Jumlah" variant="outlined" fullWidth required disabled />
+        </Grid>
+        <Grid item xs={12} md={5}>
+          <TextField id="posisi" label="Posisi" variant="outlined" fullWidth required disabled />
         </Grid>
         <Grid item xs={12} md={8}>
         	<Grid container spacing={3}>
-		        <Grid item xs={12} md={7}>
-		          <TextField id="dosen_1" label="Nama dosen 1" value="Feby Eliana Tengry" variant="outlined" disabled fullWidth />
+		        <Grid item xs={12} md={4}>
+					  <Button variant="outlined" fullWidth>
+					    Lihat file
+					  </Button>
 		        </Grid>
-		        <Grid item xs={12} md={5}>
-		          <TextField id="sks_dosen_1" label="SKS dosen 1" variant="outlined" fullWidth required />
-		        </Grid>
-        	</Grid>
-        </Grid>
-        {addFieldDosen2()}
-        {addFieldDosen3()}
-        <Grid item xs={12} md={5}>
-        	<Grid container spacing={3}>
-		        <Grid item xs={12} md={6}>
-		        	<Button onClick={handleTambahDosen}>
-			          + Tambah dosen pengajar
-		        	</Button>
-		        </Grid>
-		        <Grid item xs={12} md={6}>
-		        	<Button onClick={handleKurangDosen}>
-			          - Kurangi dosen pengajar
-		        	</Button>
-		        </Grid>
-	        </Grid>
-        </Grid>
-        <Grid item xs={12}>
-	        <Grid item xs={12} md={4}>
-	          <TextField id="sks" label="Total SKS" value="3" variant="outlined" disabled fullWidth />
-	        </Grid>
-        </Grid>
-        <Grid item xs={12}>
-        	<Grid container spacing={3}>
-		        <Grid item xs={12} md={2}>
-			      <Button variant="outlined" color="secondary" fullWidth href="/akademik">
-					Batal
-				  </Button>
-				</Grid>
 		        <Grid item xs={12} md={3}>
-			      <Button variant="outlined" color="primary" fullWidth href="/akademik">
-					Simpan
+		        	nama_file.extension
+		        </Grid>
+	        </Grid>
+        </Grid>
+        <Grid item xs={12}>
+        	<Grid container spacing={3}>
+		        <Grid item xs={12} md={6}>
+			      <Button variant="outlined" color="secondary" fullWidth href="/penelitian">
+					Kembali
 				  </Button>
 				</Grid>
 			</Grid>

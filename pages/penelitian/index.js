@@ -12,43 +12,31 @@ export default function Index() {
   const [state, setState] = React.useState({
     columns: [
       { title: 'No', field: 'no' },
-      { title: 'Kode', field: 'kode_matkul' },
-      { title: 'Nama Mata Kuliah', field: 'nama_matkul' },
-      { title: 'SKS', field: 'sks', type: 'numeric' },
-      { title: 'Kelas', field: 'kelas' },
-      { title: 'Dosen', field: 'dosen' },
-      { title: 'SKS Dosen', field: 'sks_dosen' }
+      { title: 'Judul', field: 'judul' },
+      { title: 'Nama Dosen', field: 'nama_dosen' },
+      { title: 'Tahun', field: 'tahun' }
     ],
     data: [
       {
         id: 1,
         no: 1,
-        kode_matkul: 'KI3121',
-        nama_matkul: 'Kimia Murni',
-        sks: 3,
-        kelas: '01',
-        dosen: 'Handajaya Rusli',
-        sks_dosen: 3
+        judul: 'Pengaruh CO2 terhadap NO2',
+        tahun: 2012,
+        nama_dosen: 'Handajaya Rusli'
       },
       {
         id: 2,
         no: 2,
-        kode_matkul: 'KI2111',
-        nama_matkul: 'Kimia Palsu',
-        sks: 4,
-        kelas: '01',
-        dosen: 'Feby Eliana, Vincent Siauw',
-        sks_dosen: '2, 2'
+        judul: 'Pengaruh NaOH terhadap CO2',
+        tahun: 2013,
+        nama_dosen: 'Handajaya Rusli'
       },
       {
         id: 3,
         no: 3,
-        kode_matkul: 'KI2111',
-        nama_matkul: 'Kimia Palsu',
-        sks: 4,
-        kelas: '02',
-        dosen: 'Alfian Maulana',
-        sks_dosen: 4
+        judul: 'Pengaruh H2O terhadap O2',
+        tahun: 2014,
+        nama_dosen: 'Handajaya Rusli'
       },
     ],
   });
@@ -63,12 +51,12 @@ export default function Index() {
             <Link color="inherit" href="/dashboard">
               Dashboard
             </Link>
-            <Typography color="textPrimary">Akademik</Typography>
+            <Typography color="textPrimary">Penelitian</Typography>
           </Breadcrumbs>
         </Grid>
         <Grid item xs={8} md={2}>
-          <Button variant="outlined" fullWidth href='/akademik/create'>
-            Buat Kelas Baru
+          <Button variant="outlined" fullWidth href='/penelitian/create'>
+            Buat Penelitian Baru
           </Button>
         </Grid>
       </Grid>
@@ -76,19 +64,24 @@ export default function Index() {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <MaterialTable
-            title="Daftar Mata Kuliah"
+            title="Daftar Penelitian"
             columns={state.columns}
             data={state.data}
             actions={[
               {
+                icon: 'visibility',
+                tooltip: 'See More',
+                onClick: (event, rowData) => { router.push('/penelitian/' + 'id') }
+              },
+              {
                 icon: 'edit',
                 tooltip: 'Edit',
-                onClick: (event, rowData) => { router.push('/akademik/edit/' + 'id') }
+                onClick: (event, rowData) => { router.push('/penelitian/edit/' + 'id') }
               },
               {
                 icon: 'delete',
                 tooltip: 'Delete',
-                onClick: (event, rowData) => { confirm("Apakah Anda yakin ingin menghapus " + rowData.kode_matkul + " - " + rowData.nama_matkul + "?") }
+                onClick: (event, rowData) => { confirm("Apakah Anda yakin ingin menghapus " + rowData.nama_dosen + " - " + rowData.tahun + "?") }
               }
             ]}
           />

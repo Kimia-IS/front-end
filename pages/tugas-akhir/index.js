@@ -12,43 +12,31 @@ export default function Index() {
   const [state, setState] = React.useState({
     columns: [
       { title: 'No', field: 'no' },
-      { title: 'Kode', field: 'kode_matkul' },
-      { title: 'Nama Mata Kuliah', field: 'nama_matkul' },
-      { title: 'SKS', field: 'sks', type: 'numeric' },
-      { title: 'Kelas', field: 'kelas' },
-      { title: 'Dosen', field: 'dosen' },
-      { title: 'SKS Dosen', field: 'sks_dosen' }
+      { title: 'Judul TA', field: 'judul_ta' },
+      { title: 'Nama Mahasiswa', field: 'nama_mahasiswa' },
+      { title: 'Nama Dosen Pembimbing', field: 'nama_dosbing' }
     ],
     data: [
       {
         id: 1,
         no: 1,
-        kode_matkul: 'KI3121',
-        nama_matkul: 'Kimia Murni',
-        sks: 3,
-        kelas: '01',
-        dosen: 'Handajaya Rusli',
-        sks_dosen: 3
+        judul_ta: 'Pengaruh CO2 terhadap NO2',
+        nama_mahasiswa: 'Feby Eliana',
+        nama_dosbing: 'Handajaya Rusli'
       },
       {
         id: 2,
         no: 2,
-        kode_matkul: 'KI2111',
-        nama_matkul: 'Kimia Palsu',
-        sks: 4,
-        kelas: '01',
-        dosen: 'Feby Eliana, Vincent Siauw',
-        sks_dosen: '2, 2'
+        judul_ta: 'Pengaruh NaOH terhadap CO2',
+        nama_mahasiswa: 'Vincent Siauw',
+        nama_dosbing: 'Handajaya Rusli'
       },
       {
         id: 3,
         no: 3,
-        kode_matkul: 'KI2111',
-        nama_matkul: 'Kimia Palsu',
-        sks: 4,
-        kelas: '02',
-        dosen: 'Alfian Maulana',
-        sks_dosen: 4
+        judul_ta: 'Pengaruh H2O terhadap O2',
+        nama_mahasiswa: 'Alfian Maulana',
+        nama_dosbing: 'Handajaya Rusli'
       },
     ],
   });
@@ -63,12 +51,12 @@ export default function Index() {
             <Link color="inherit" href="/dashboard">
               Dashboard
             </Link>
-            <Typography color="textPrimary">Akademik</Typography>
+            <Typography color="textPrimary">Tugas Akhir</Typography>
           </Breadcrumbs>
         </Grid>
         <Grid item xs={8} md={2}>
-          <Button variant="outlined" fullWidth href='/akademik/create'>
-            Buat Kelas Baru
+          <Button variant="outlined" fullWidth href='/tugas-akhir/create'>
+            Buat TA Baru
           </Button>
         </Grid>
       </Grid>
@@ -76,19 +64,24 @@ export default function Index() {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <MaterialTable
-            title="Daftar Mata Kuliah"
+            title="Daftar Tugas Akhir"
             columns={state.columns}
             data={state.data}
             actions={[
               {
+                icon: 'visibility',
+                tooltip: 'See More',
+                onClick: (event, rowData) => { router.push('/tugas-akhir/' + 'id') }
+              },
+              {
                 icon: 'edit',
                 tooltip: 'Edit',
-                onClick: (event, rowData) => { router.push('/akademik/edit/' + 'id') }
+                onClick: (event, rowData) => { router.push('/tugas-akhir/edit/' + 'id') }
               },
               {
                 icon: 'delete',
                 tooltip: 'Delete',
-                onClick: (event, rowData) => { confirm("Apakah Anda yakin ingin menghapus " + rowData.kode_matkul + " - " + rowData.nama_matkul + "?") }
+                onClick: (event, rowData) => { confirm("Apakah Anda yakin ingin menghapus " + rowData.judul_ta + " - " + rowData.nama_mahasiswa + "?") }
               }
             ]}
           />
