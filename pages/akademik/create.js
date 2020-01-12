@@ -1,5 +1,4 @@
 import React from 'react';
-import Box from "@material-ui/core/Box";
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
@@ -40,7 +39,7 @@ export default function CreateAkademik() {
 	const addFieldDosen2 = () => {
 		if (inputDosen2) {
 			return (
-				<Grid component={Box} item xs={12} md={8}>
+				<Grid item xs={12} md={8}>
 		        	<Grid container spacing={3}>
 				        <Grid item xs={12} md={7}>
 				          <TextField id="dosen_2" label="Nama dosen 2" variant="outlined" fullWidth />
@@ -57,7 +56,7 @@ export default function CreateAkademik() {
 	const addFieldDosen3 = () => {
 		if (inputDosen3) {
 			return (
-				<Grid component={Box} item xs={12} md={8} visibility={inputDosen3 ? "visible" : "hidden"}>
+				<Grid item xs={12} md={8}>
 		        	<Grid container spacing={3}>
 				        <Grid item xs={12} md={7}>
 				          <TextField id="dosen_3" label="Nama dosen 3" variant="outlined" fullWidth />
@@ -111,12 +110,12 @@ export default function CreateAkademik() {
             <Link color="inherit" href="/akademik">
               Akademik
             </Link>
-            <Typography color="textPrimary">Buat Baru</Typography>
+            <Typography color="textPrimary">Buat Kelas Baru</Typography>
           </Breadcrumbs>
         </Grid>
       	<Grid item xs={12}>
           <Typography variant="h4" gutterBottom>
-	        Buat Mata Kuliah Baru
+	        Buat Kelas Baru
 	      </Typography>
         </Grid>
         <Grid item xs={12} md={3}>

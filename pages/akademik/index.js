@@ -68,7 +68,7 @@ export default function Index() {
         </Grid>
         <Grid item xs={8} md={2}>
           <Button variant="outlined" fullWidth href='/akademik/create'>
-            Buat Baru
+            Buat Kelas Baru
           </Button>
         </Grid>
       </Grid>
