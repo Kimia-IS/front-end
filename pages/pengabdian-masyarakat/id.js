@@ -119,15 +119,15 @@ export default function LihatTA() {
             <Link color="inherit" href="/dashboard">
               Dashboard
             </Link>
-            <Link color="inherit" href="/penelitian">
-              Penelitian
+            <Link color="inherit" href="/pengabdian-masyarakat">
+              Pengabdian Masyarakat
             </Link>
-            <Typography color="textPrimary">Penelitian [ID]</Typography>
+            <Typography color="textPrimary">Pengabdian Masyarakat [ID]</Typography>
           </Breadcrumbs>
         </Grid>
       	<Grid item xs={12}>
           <Typography variant="h4" gutterBottom>
-	        Penelitian [ID]
+	        Pengabdian Masyarakat [ID]
 	      </Typography>
         </Grid>
         <Grid item xs={12} md={5}>
@@ -137,7 +137,7 @@ export default function LihatTA() {
           <TextField id="nama_mahasiswa" label="Tahun" variant="outlined" fullWidth required disabled />
         </Grid>
         <Grid item xs={12} md={8}>
-          <TextField id="tipe" label="Judul penelitian" variant="outlined" fullWidth required disabled />
+          <TextField id="tipe" label="Judul pengabdian masyarakat" variant="outlined" fullWidth required disabled />
         </Grid>
         <Grid item xs={12} md={5}>
           <TextField id="posisi" label="Pemberi dana" variant="outlined" fullWidth required disabled />
@@ -163,7 +163,7 @@ export default function LihatTA() {
         <Grid item xs={12}>
         	<Grid container spacing={3}>
 		        <Grid item xs={12} md={6}>
-			      <Button variant="outlined" color="secondary" fullWidth href="/penelitian">
+			      <Button variant="outlined" color="secondary" fullWidth href="/pengabdian-masyarakat">
 					Kembali
 				  </Button>
 				</Grid>
