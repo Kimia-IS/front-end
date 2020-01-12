@@ -12,7 +12,7 @@ export default function Index() {
   const [state, setState] = React.useState({
     columns: [
       { title: 'No', field: 'no' },
-      { title: 'Judul', field: 'judul' },
+      { title: 'Nama Organisasi', field: 'judul' },
       { title: 'Nama', field: 'nama_dosen' },
       { title: 'Tahun', field: 'tahun' }
     ],
@@ -20,21 +20,21 @@ export default function Index() {
       {
         id: 1,
         no: 1,
-        judul: 'Penghargaan Nobel',
+        judul: 'Amisca ITB',
         tahun: 2012,
         nama_dosen: 'Handajaya Rusli'
       },
       {
         id: 2,
         no: 2,
-        judul: 'Penghargaan Nobel',
+        judul: 'ITB Jazz',
         tahun: 2013,
         nama_dosen: 'Handajaya Rusli'
       },
       {
         id: 3,
         no: 3,
-        judul: 'Penghargaan Nobel',
+        judul: 'Genshiken',
         tahun: 2014,
         nama_dosen: 'Handajaya Rusli'
       },
