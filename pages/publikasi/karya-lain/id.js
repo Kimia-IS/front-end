@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function LihatTA() {
+export default function LihatKaryaLain() {
 	const classes = useStyles();
 
 	const [count, setCount] = React.useState(2);	// Pahami lagi perilaku 'count' (lifecycle)
@@ -81,14 +81,7 @@ export default function LihatTA() {
 		if (inputDosen2) {
 			return (
 				<Grid item xs={12} md={8}>
-		        	<Grid container spacing={3}>
-				        <Grid item xs={12} md={7}>
-				          <TextField id="dosen_2" label="Nama dosen 2" variant="outlined" fullWidth />
-				        </Grid>
-				        <Grid item xs={12} md={5}>
-				          <TextField id="sks_dosen_2" label="SKS dosen 2" variant="outlined" fullWidth required />
-				        </Grid>
-		        	</Grid>
+		          <TextField id="penulis_2" label="Penulis 2" variant="outlined" fullWidth />
 		        </Grid>
 			)
 		}
@@ -98,14 +91,7 @@ export default function LihatTA() {
 		if (inputDosen3) {
 			return (
 				<Grid item xs={12} md={8}>
-		        	<Grid container spacing={3}>
-				        <Grid item xs={12} md={7}>
-				          <TextField id="dosen_3" label="Nama dosen 3" variant="outlined" fullWidth />
-				        </Grid>
-				        <Grid item xs={12} md={5}>
-				          <TextField id="sks_dosen_3" label="SKS dosen 3" variant="outlined" fullWidth required />
-				        </Grid>
-		        	</Grid>
+		          <TextField id="penulis_3" label="Penulis 3" variant="outlined" fullWidth />
 		        </Grid>
 			)
 		}
@@ -119,83 +105,32 @@ export default function LihatTA() {
             <Link color="inherit" href="/dashboard">
               Dashboard
             </Link>
-            <Link color="inherit" href="/tugas-akhir">
-              Tugas Akhir
+            <Link color="inherit" href="/publikasi">
+              Publikasi
             </Link>
-            <Typography color="textPrimary">Tugas Akhir [ID]</Typography>
+            <Link color="inherit" href="/publikasi/karya-lain">
+              Karya Lain
+            </Link>
+            <Typography color="textPrimary">Karya Lain [ID]</Typography>
           </Breadcrumbs>
         </Grid>
       	<Grid item xs={12}>
           <Typography variant="h4" gutterBottom>
-	        Tugas Akhir [ID]
+	        Karya Lain [ID]
 	      </Typography>
         </Grid>
-        <Grid item xs={12} md={3}>
-          <TextField id="nim" label="NIM" variant="outlined" fullWidth required disabled />
-        </Grid>
-        <Grid item xs={12} md={5}>
-          <TextField id="nama_mahasiswa" label="Nama mahasiswa" variant="outlined" fullWidth required disabled />
+        <Grid item xs={12} md={8}>
+	    	<TextField id="judul" value="filled" label="Judul Karya Lain" variant="outlined" fullWidth disabled required />
         </Grid>
         <Grid item xs={12} md={8}>
-        	<Grid container spacing={3}>
-		        <Grid item xs={12} md={5}>
-		          <TextField id="tipe" label="Tipe mahasiswa" variant="outlined" fullWidth required disabled />
-		        </Grid>
-		        <Grid item xs={12} md={7}>
-		          <TextField id="dosen_1" label="Nama dosen pembimbing" value="Handajaya Rusli" variant="outlined" disabled fullWidth />
-		        </Grid>
-        	</Grid>
+          <TextField id="penulis_1" value="filled" label="Penulis" variant="outlined" fullWidth disabled required />
         </Grid>
-        <Grid item xs={12} md={8}>
-          <TextField id="posisi" label="Posisi dosen" variant="outlined" fullWidth required disabled />
-        </Grid>
-        <Grid item xs={12} md={8}>
-          <TextField id="judul_ta" label="Judul tugas akhir" variant="outlined" fullWidth required disabled />
-        </Grid>
-        <Grid item xs={12} md={8}>
-        	<Grid container spacing={3}>
-		        <Grid item xs={12} md={6}>
-		          	<MuiPickersUtilsProvider utils={DateFnsUtils}>
-				      <Grid container justify="space-around">
-				        <KeyboardDatePicker
-				          disableToolbar
-				          variant="inline"
-				          format="MM/dd/yyyy"
-				          margin="normal"
-				          id="date-picker-inline"
-				          label="Tanggal masuk"
-				          value={selectedDate}
-				          onChange={handleDateChange}
-				          KeyboardButtonProps={{
-				            'aria-label': 'change date',
-				          }}
-				          fullWidth
-				           disabled
-				        />
-				      </Grid>
-				    </MuiPickersUtilsProvider>
-		        </Grid>
-		        <Grid item xs={12} md={6}>
-		          	<MuiPickersUtilsProvider utils={DateFnsUtils}>
-				      <Grid container justify="space-around">
-				        <KeyboardDatePicker
-				          disableToolbar
-				          variant="inline"
-				          format="MM/dd/yyyy"
-				          margin="normal"
-				          id="date-picker-inline"
-				          label="Tanggal lulus"
-				          value={selectedDate}
-				          onChange={handleDateChange}
-				          KeyboardButtonProps={{
-				            'aria-label': 'change date',
-				          }}
-				          fullWidth
-				           disabled
-				        />
-				      </Grid>
-				    </MuiPickersUtilsProvider>
-		        </Grid>
+        <Grid container item spacing={3} xs={12}>
+	        <Grid item xs={12} md={3}>
+	          <TextField id="tahun" value="filled" label="Tanggal" variant="outlined" fullWidth disabled required />
+	        </Grid>
+	        <Grid item xs={12} md={5}>
+	        	<TextField id="tahun" value="filled" label="Penerbit" variant="outlined" fullWidth disabled required />
 	        </Grid>
         </Grid>
         <Grid item xs={12} md={8}>
@@ -213,7 +148,7 @@ export default function LihatTA() {
         <Grid item xs={12}>
         	<Grid container spacing={3}>
 		        <Grid item xs={12} md={6}>
-			      <Button variant="outlined" color="secondary" fullWidth href="/tugas-akhir">
+			      <Button variant="outlined" color="secondary" fullWidth href="/publikasi/karya-lain">
 					Kembali
 				  </Button>
 				</Grid>

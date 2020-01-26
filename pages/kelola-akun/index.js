@@ -12,31 +12,39 @@ export default function Index() {
   const [state, setState] = React.useState({
     columns: [
       { title: 'No', field: 'no' },
-      { title: 'Nama Pekerjaan', field: 'judul' },
-      { title: 'Nama', field: 'nama_dosen' },
-      { title: 'Tahun', field: 'tahun' }
+      { title: 'Nama', field: 'nama' },
+      { title: 'NIP / ID', field: 'user_id' },
+      { title: 'Email', field: 'email' },
+      { title: 'Peran', field: 'role' },
+      { title: 'Verifikasi', field: 'verified' }
     ],
     data: [
       {
         id: 1,
         no: 1,
-        judul: 'Dosen ITB',
-        tahun: 2012,
-        nama_dosen: 'Handajaya Rusli'
+        nama: 'Feby Eliana',
+        user_id: '1234',
+        email: 'feby@chem.itb.ac.id',
+        role: 'Super admin',
+        verified: 'Sudah'
       },
       {
         id: 2,
         no: 2,
-        judul: 'CEO PT. KimiaIndo',
-        tahun: 2013,
-        nama_dosen: 'Handajaya Rusli'
+        nama: 'Vincent Siauw',
+        user_id: '1235',
+        email: 'vincent@chem.itb.ac.id',
+        role: 'Admin akademik',
+        verified: 'Belum'
       },
       {
         id: 3,
         no: 3,
-        judul: 'Presiden RI',
-        tahun: 2014,
-        nama_dosen: 'Handajaya Rusli'
+        nama: 'Handajaya Rusli',
+        user_id: '19123884202',
+        email: 'hans@chem.itb.ac.id',
+        role: 'Dosen',
+        verified: 'Sudah'
       },
     ],
   });
@@ -46,17 +54,17 @@ export default function Index() {
   return (
     <div>
       <Grid container spacing={3} alignItems="center" alignContent="center" justify="center">
-        <Grid item xs={12} md={9}>
+        <Grid item xs={12} md={10}>
           <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
             <Link color="inherit" href="/dashboard">
               Dashboard
             </Link>
-            <Typography color="textPrimary">Riwayat Kerja</Typography>
+            <Typography color="textPrimary">Kelola Akun</Typography>
           </Breadcrumbs>
         </Grid>
-        <Grid item xs={8} md={3}>
-          <Button variant="outlined" fullWidth href='/riwayat-kerja/create'>
-            Buat Riwayat Kerja Baru
+        <Grid item xs={8} md={2}>
+          <Button variant="outlined" fullWidth href='/kelola-akun/create'>
+            Buat Akun Baru
           </Button>
         </Grid>
       </Grid>
@@ -64,24 +72,19 @@ export default function Index() {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <MaterialTable
-            title="Daftar Riwayat Kerja"
+            title="Daftar Akun"
             columns={state.columns}
             data={state.data}
             actions={[
               {
-                icon: 'visibility',
-                tooltip: 'See More',
-                onClick: (event, rowData) => { router.push('/riwayat-kerja/' + 'id') }
-              },
-              {
                 icon: 'edit',
                 tooltip: 'Edit',
-                onClick: (event, rowData) => { router.push('/riwayat-kerja/edit/' + 'id') }
+                onClick: (event, rowData) => { router.push('/kelola-akun/edit/' + 'id') }
               },
               {
                 icon: 'delete',
                 tooltip: 'Delete',
-                onClick: (event, rowData) => { confirm("Apakah Anda yakin ingin menghapus " + rowData.nama_dosen + " - " + rowData.tahun + "?") }
+                onClick: (event, rowData) => { confirm("Apakah Anda yakin ingin menghapus " + rowData.nama + " - " + rowData.user_id + "?") }
               }
             ]}
           />

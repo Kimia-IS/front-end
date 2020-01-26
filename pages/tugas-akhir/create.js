@@ -122,7 +122,7 @@ export default function CreateTA() {
             <Link color="inherit" href="/tugas-akhir">
               Tugas Akhir
             </Link>
-            <Typography color="textPrimary">Buat TA Baru</Typography>
+            <Typography color="textPrimary">Buat Tugas Akhir Baru</Typography>
           </Breadcrumbs>
         </Grid>
       	<Grid item xs={12}>

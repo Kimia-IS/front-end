@@ -6,19 +6,12 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { makeStyles } from '@material-ui/core/styles';
-import 'date-fns';
-import DateFnsUtils from '@date-io/date-fns';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardTimePicker,
-  KeyboardDatePicker,
-} from '@material-ui/pickers';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -31,9 +24,9 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function LihatTA() {
+export default function CreateAkun() {
 	const classes = useStyles();
-
+	
 	const [count, setCount] = React.useState(2);	// Pahami lagi perilaku 'count' (lifecycle)
 	const [inputDosen2, setInputDosen2] = React.useState(false);
 	const [inputDosen3, setInputDosen3] = React.useState(false);
@@ -111,6 +104,35 @@ export default function LihatTA() {
 		}
 	}
 
+	/*const addFieldDosen = () => {
+		console.log('addFieldDosen')
+		console.log('state = ' + count)
+	    let field = [];
+
+	    if (count >= 3) {
+	    	handleClickOpen;
+	    	{() => {setOpen(true); console.log(open);}} // ga dijalanin
+	    	console.log('setOpen = ' + open)
+	    } else {
+		    for (let i = 2; i < count; i++) {
+		      field.push(
+		      	<Grid item xs={12} md={8}>
+		        	<Grid container spacing={3}>
+				      	<Grid item xs={12} md={7}>
+				          <TextField id={"dosen_" + i} label={"Nama dosen " + i} variant="outlined" required fullWidth />
+				        </Grid>
+				        <Grid item xs={12} md={5}>
+				          <TextField id={"sks_dosen_" + i} label={"SKS dosen " + i} variant="outlined" fullWidth required />
+				        </Grid>
+			        </Grid>
+		        </Grid>
+		      );
+		    }
+	    }
+
+	    return field;
+	 }*/
+
   return (
     <div>
       <Grid container spacing={3}>
@@ -119,102 +141,55 @@ export default function LihatTA() {
             <Link color="inherit" href="/dashboard">
               Dashboard
             </Link>
-            <Link color="inherit" href="/tugas-akhir">
-              Tugas Akhir
+            <Link color="inherit" href="/kelola-akun">
+              Kelola Akun
             </Link>
-            <Typography color="textPrimary">Tugas Akhir [ID]</Typography>
+            <Typography color="textPrimary">Edit Akun [ID]</Typography>
           </Breadcrumbs>
         </Grid>
       	<Grid item xs={12}>
           <Typography variant="h4" gutterBottom>
-	        Tugas Akhir [ID]
+	        Edit Akun [ID]
 	      </Typography>
         </Grid>
         <Grid item xs={12} md={3}>
-          <TextField id="nim" label="NIM" variant="outlined" fullWidth required disabled />
+          <TextField id="kode_matkul" value="filled" label="Nama" variant="outlined" fullWidth required />
         </Grid>
         <Grid item xs={12} md={5}>
-          <TextField id="nama_mahasiswa" label="Nama mahasiswa" variant="outlined" fullWidth required disabled />
+          <TextField id="nama_matkul" value="filled" label="NIP / ID" variant="outlined" fullWidth required />
         </Grid>
-        <Grid item xs={12} md={8}>
-        	<Grid container spacing={3}>
-		        <Grid item xs={12} md={5}>
-		          <TextField id="tipe" label="Tipe mahasiswa" variant="outlined" fullWidth required disabled />
-		        </Grid>
-		        <Grid item xs={12} md={7}>
-		          <TextField id="dosen_1" label="Nama dosen pembimbing" value="Handajaya Rusli" variant="outlined" disabled fullWidth />
-		        </Grid>
-        	</Grid>
+        <Grid item xs={12} md={5}>
+          <TextField id="kode_matkul" value="filled" label="Email" variant="outlined" fullWidth required />
         </Grid>
-        <Grid item xs={12} md={8}>
-          <TextField id="posisi" label="Posisi dosen" variant="outlined" fullWidth required disabled />
-        </Grid>
-        <Grid item xs={12} md={8}>
-          <TextField id="judul_ta" label="Judul tugas akhir" variant="outlined" fullWidth required disabled />
-        </Grid>
-        <Grid item xs={12} md={8}>
-        	<Grid container spacing={3}>
-		        <Grid item xs={12} md={6}>
-		          	<MuiPickersUtilsProvider utils={DateFnsUtils}>
-				      <Grid container justify="space-around">
-				        <KeyboardDatePicker
-				          disableToolbar
-				          variant="inline"
-				          format="MM/dd/yyyy"
-				          margin="normal"
-				          id="date-picker-inline"
-				          label="Tanggal masuk"
-				          value={selectedDate}
-				          onChange={handleDateChange}
-				          KeyboardButtonProps={{
-				            'aria-label': 'change date',
-				          }}
-				          fullWidth
-				           disabled
-				        />
-				      </Grid>
-				    </MuiPickersUtilsProvider>
-		        </Grid>
-		        <Grid item xs={12} md={6}>
-		          	<MuiPickersUtilsProvider utils={DateFnsUtils}>
-				      <Grid container justify="space-around">
-				        <KeyboardDatePicker
-				          disableToolbar
-				          variant="inline"
-				          format="MM/dd/yyyy"
-				          margin="normal"
-				          id="date-picker-inline"
-				          label="Tanggal lulus"
-				          value={selectedDate}
-				          onChange={handleDateChange}
-				          KeyboardButtonProps={{
-				            'aria-label': 'change date',
-				          }}
-				          fullWidth
-				           disabled
-				        />
-				      </Grid>
-				    </MuiPickersUtilsProvider>
-		        </Grid>
-	        </Grid>
-        </Grid>
-        <Grid item xs={12} md={8}>
-        	<Grid container spacing={3}>
-		        <Grid item xs={12} md={4}>
-					  <Button variant="outlined" fullWidth>
-					    Lihat file
-					  </Button>
-		        </Grid>
-		        <Grid item xs={12} md={3}>
-		        	nama_file.extension
-		        </Grid>
-	        </Grid>
+        <Grid item xs={12} md={3}>
+          <FormControl variant="outlined" className={classes.formControl}>
+	        <InputLabel id="demo-simple-select-label">Peran</InputLabel>
+	        <Select
+	          labelId="demo-simple-select-label"
+	          id="demo-simple-select"
+	          value={tipeMahasiswa}
+	          onChange={handleChangeTipeMahasiswa}
+	        >
+	          <MenuItem value="dalam">Dosen</MenuItem>
+	          <MenuItem value="dalam">Admin akademik</MenuItem>
+	          <MenuItem value="luar">Admin penelitian</MenuItem>
+	          <MenuItem value="luar">Admin pengabdian masyarakat</MenuItem>
+	          <MenuItem value="luar">Admin publikasi</MenuItem>
+	          <MenuItem value="dalam">Tenaga pendidik</MenuItem>
+	          <MenuItem value="dalam">Kepala program studi</MenuItem>
+	        </Select>
+	      </FormControl>
         </Grid>
         <Grid item xs={12}>
         	<Grid container spacing={3}>
-		        <Grid item xs={12} md={6}>
-			      <Button variant="outlined" color="secondary" fullWidth href="/tugas-akhir">
-					Kembali
+		        <Grid item xs={12} md={2}>
+			      <Button variant="outlined" color="secondary" fullWidth href="/kelola-akun">
+					Batal
+				  </Button>
+				</Grid>
+		        <Grid item xs={12} md={3}>
+			      <Button variant="outlined" color="primary" fullWidth href="/kelola-akun">
+					Simpan
 				  </Button>
 				</Grid>
 			</Grid>

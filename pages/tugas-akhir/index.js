@@ -46,7 +46,7 @@ export default function Index() {
   return (
     <div>
       <Grid container spacing={3} alignItems="center" alignContent="center" justify="center">
-        <Grid item xs={12} md={10}>
+        <Grid item xs={12} md={9}>
           <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
             <Link color="inherit" href="/dashboard">
               Dashboard
@@ -54,9 +54,9 @@ export default function Index() {
             <Typography color="textPrimary">Tugas Akhir</Typography>
           </Breadcrumbs>
         </Grid>
-        <Grid item xs={8} md={2}>
+        <Grid item xs={8} md={3}>
           <Button variant="outlined" fullWidth href='/tugas-akhir/create'>
-            Buat TA Baru
+            Buat Tugas Akhir Baru
           </Button>
         </Grid>
       </Grid>
