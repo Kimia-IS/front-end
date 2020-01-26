@@ -25,7 +25,7 @@ export default function Index() {
         nama: 'Feby Eliana',
         user_id: '1234',
         email: 'feby@chem.itb.ac.id',
-        role: 'Super Admin',
+        role: 'Super admin',
         verified: 'Sudah'
       },
       {
@@ -72,14 +72,14 @@ export default function Index() {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <MaterialTable
-            title="Daftar Mata Kuliah"
+            title="Daftar Akun"
             columns={state.columns}
             data={state.data}
             actions={[
               {
                 icon: 'edit',
                 tooltip: 'Edit',
-                onClick: (event, rowData) => { router.push('/akademik/edit/' + 'id') }
+                onClick: (event, rowData) => { router.push('/kelola-akun/edit/' + 'id') }
               },
               {
                 icon: 'delete',
