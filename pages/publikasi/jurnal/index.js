@@ -12,31 +12,43 @@ export default function Index() {
   const [state, setState] = React.useState({
     columns: [
       { title: 'No', field: 'no' },
-      { title: 'Nama Pekerjaan', field: 'judul' },
-      { title: 'Nama', field: 'nama_dosen' },
-      { title: 'Tahun', field: 'tahun' }
+      { title: 'Kode', field: 'kode_matkul' },
+      { title: 'Nama Mata Kuliah', field: 'nama_matkul' },
+      { title: 'SKS', field: 'sks', type: 'numeric' },
+      { title: 'Kelas', field: 'kelas' },
+      { title: 'Dosen', field: 'dosen' },
+      { title: 'SKS Dosen', field: 'sks_dosen' }
     ],
     data: [
       {
         id: 1,
         no: 1,
-        judul: 'Dosen ITB',
-        tahun: 2012,
-        nama_dosen: 'Handajaya Rusli'
+        kode_matkul: 'KI3121',
+        nama_matkul: 'Kimia Murni',
+        sks: 3,
+        kelas: '01',
+        dosen: 'Handajaya Rusli',
+        sks_dosen: 3
       },
       {
         id: 2,
         no: 2,
-        judul: 'CEO PT. KimiaIndo',
-        tahun: 2013,
-        nama_dosen: 'Handajaya Rusli'
+        kode_matkul: 'KI2111',
+        nama_matkul: 'Kimia Palsu',
+        sks: 4,
+        kelas: '01',
+        dosen: 'Feby Eliana, Vincent Siauw',
+        sks_dosen: '2, 2'
       },
       {
         id: 3,
         no: 3,
-        judul: 'Presiden RI',
-        tahun: 2014,
-        nama_dosen: 'Handajaya Rusli'
+        kode_matkul: 'KI2111',
+        nama_matkul: 'Kimia Palsu',
+        sks: 4,
+        kelas: '02',
+        dosen: 'Alfian Maulana',
+        sks_dosen: 4
       },
     ],
   });
@@ -51,12 +63,15 @@ export default function Index() {
             <Link color="inherit" href="/dashboard">
               Dashboard
             </Link>
-            <Typography color="textPrimary">Riwayat Kerja</Typography>
+            <Link color="inherit" href="/publikasi">
+              Publikasi
+            </Link>
+            <Typography color="textPrimary">Jurnal</Typography>
           </Breadcrumbs>
         </Grid>
         <Grid item xs={8} md={2}>
-          <Button variant="outlined" fullWidth href='/riwayat-kerja/create'>
-            Buat Riwayat Kerja Baru
+          <Button variant="outlined" fullWidth href='/publikasi/jurnal/create'>
+            Buat Jurnal Baru
           </Button>
         </Grid>
       </Grid>
@@ -64,24 +79,19 @@ export default function Index() {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <MaterialTable
-            title="Daftar Riwayat Kerja"
+            title="Daftar Jurnal"
             columns={state.columns}
             data={state.data}
             actions={[
               {
-                icon: 'visibility',
-                tooltip: 'See More',
-                onClick: (event, rowData) => { router.push('/riwayat-kerja/' + 'id') }
-              },
-              {
                 icon: 'edit',
                 tooltip: 'Edit',
-                onClick: (event, rowData) => { router.push('/riwayat-kerja/edit/' + 'id') }
+                onClick: (event, rowData) => { router.push('/publikasi/jurnal/edit/' + 'id') }
               },
               {
                 icon: 'delete',
                 tooltip: 'Delete',
-                onClick: (event, rowData) => { confirm("Apakah Anda yakin ingin menghapus " + rowData.nama_dosen + " - " + rowData.tahun + "?") }
+                onClick: (event, rowData) => { confirm("Apakah Anda yakin ingin menghapus " + rowData.kode_matkul + " - " + rowData.nama_matkul + "?") }
               }
             ]}
           />
