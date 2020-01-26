@@ -71,7 +71,7 @@ export default function Index() {
         </Grid>
         <Grid item xs={8} md={2}>
           <Button variant="outlined" fullWidth href='/publikasi/karya-lain/create'>
-            Buat Karya Baru
+            Buat Karya Lain Baru
           </Button>
         </Grid>
       </Grid>
@@ -79,10 +79,15 @@ export default function Index() {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <MaterialTable
-            title="Daftar Karya"
+            title="Daftar Karya Lain"
             columns={state.columns}
             data={state.data}
             actions={[
+              {
+                icon: 'visibility',
+                tooltip: 'See More',
+                onClick: (event, rowData) => { router.push('/publikasi/karya-lain/' + 'id') }
+              },
               {
                 icon: 'edit',
                 tooltip: 'Edit',
