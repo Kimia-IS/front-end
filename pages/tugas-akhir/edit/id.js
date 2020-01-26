@@ -137,7 +137,7 @@ export default function EditTA() {
           <TextField id="nama_mahasiswa" label="Nama mahasiswa" variant="outlined" fullWidth required />
         </Grid>
         <Grid item xs={12} md={8}>
-        	<Grid container>
+        	<Grid container item spacing={3} xs={12}>
 		        <Grid item xs={12} md={5}>
 		          <FormControl variant="outlined" className={classes.formControl}>
 			        <InputLabel id="demo-simple-select-label">Tipe mahasiswa</InputLabel>
