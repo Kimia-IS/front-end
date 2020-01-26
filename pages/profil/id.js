@@ -70,50 +70,50 @@ export default function LihatProfil() {
 	        <ExpansionPanelDetails>
 	        	<Grid container spacing={3} xs={12}>
 	        		<Grid container item xs={12}>
-	        			<Grid item xs={1}>
+	        			<Grid item xs={2}>
 		          			<Typography color="inherit">
 			          			<Box fontWeight="fontWeightBold">
 					              Nama
 					            </Box>
 				            </Typography>
 	        			</Grid>
-	        			<Grid item xs={11}>
+	        			<Grid item xs={10}>
 	        				<Typography color="inherit">: Feby Eliana</Typography>
 	        			</Grid>
 	          		</Grid>
 	          		<Grid container item xs={12}>
-	          			<Grid item xs={1}>
+	          			<Grid item xs={2}>
 		          			<Typography color="inherit">
 			          			<Box fontWeight="fontWeightBold">
 					              NIP
 					            </Box>
 				            </Typography>
 	        			</Grid>
-	        			<Grid item xs={11}>
+	        			<Grid item xs={10}>
 	        				<Typography color="inherit">: 198609262015051001</Typography>
 	        			</Grid>
 		          	</Grid>
 		          	<Grid container item xs={12}>
-		          		<Grid item xs={1}>
+		          		<Grid item xs={2}>
 		          			<Typography color="inherit">
 			          			<Box fontWeight="fontWeightBold">
 					              Email
 					            </Box>
 				            </Typography>
 	        			</Grid>
-	        			<Grid item xs={11}>
+	        			<Grid item xs={10}>
 	        				<Typography color="inherit">: feby@chem.itb.ac.id</Typography>
 	        			</Grid>
 		          	</Grid>
 		          	<Grid container item xs={12}>
-		          		<Grid item xs={1}>
+		          		<Grid item xs={2}>
 		          			<Typography color="inherit">
 			          			<Box fontWeight="fontWeightBold">
 					              Status
 					            </Box>
 				            </Typography>
 	        			</Grid>
-	        			<Grid item xs={11}>
+	        			<Grid item xs={10}>
 	        				<Typography color="inherit">: Dosen</Typography>
 	        			</Grid>
 		          	</Grid>
