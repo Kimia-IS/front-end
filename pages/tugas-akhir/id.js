@@ -122,7 +122,7 @@ export default function LihatTA() {
             <Link color="inherit" href="/tugas-akhir">
               Tugas Akhir
             </Link>
-            <Typography color="textPrimary">TA [ID]</Typography>
+            <Typography color="textPrimary">Tugas Akhir [ID]</Typography>
           </Breadcrumbs>
         </Grid>
       	<Grid item xs={12}>

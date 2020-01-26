@@ -122,7 +122,7 @@ export default function EditTA() {
             <Link color="inherit" href="/tugas-akhir">
               Tugas Akhir
             </Link>
-            <Typography color="textPrimary">Edit TA [ID]</Typography>
+            <Typography color="textPrimary">Edit Tugas Akhir [ID]</Typography>
           </Breadcrumbs>
         </Grid>
       	<Grid item xs={12}>

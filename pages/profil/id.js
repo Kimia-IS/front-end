@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function CreateTA() {
+export default function LihatProfil() {
 	const classes = useStyles();
 
 	const [count, setCount] = React.useState(2);	// Pahami lagi perilaku 'count' (lifecycle)
@@ -119,38 +119,27 @@ export default function CreateTA() {
             <Link color="inherit" href="/dashboard">
               Dashboard
             </Link>
-            <Link color="inherit" href="/tugas-akhir">
-              Tugas Akhir
+            <Link color="inherit" href="/profil">
+              Profil
             </Link>
-            <Typography color="textPrimary">Buat Tugas Akhir Baru</Typography>
+            <Typography color="textPrimary">Profil [ID]</Typography>
           </Breadcrumbs>
         </Grid>
       	<Grid item xs={12}>
           <Typography variant="h4" gutterBottom>
-	        Buat Tugas Akhir Baru
+	        Profil [ID]
 	      </Typography>
         </Grid>
         <Grid item xs={12} md={3}>
-          <TextField id="nim" label="NIM" variant="outlined" fullWidth required />
+          <TextField id="nim" label="NIM" variant="outlined" fullWidth required disabled />
         </Grid>
         <Grid item xs={12} md={5}>
-          <TextField id="nama_mahasiswa" label="Nama mahasiswa" variant="outlined" fullWidth required />
+          <TextField id="nama_mahasiswa" label="Nama mahasiswa" variant="outlined" fullWidth required disabled />
         </Grid>
         <Grid item xs={12} md={8}>
-        	<Grid container>
+        	<Grid container spacing={3}>
 		        <Grid item xs={12} md={5}>
-		          <FormControl variant="outlined" className={classes.formControl}>
-			        <InputLabel id="demo-simple-select-label">Tipe mahasiswa</InputLabel>
-			        <Select
-			          labelId="demo-simple-select-label"
-			          id="demo-simple-select"
-			          value={tipeMahasiswa}
-			          onChange={handleChangeTipeMahasiswa}
-			        >
-			          <MenuItem value="dalam">Dalam</MenuItem>
-			          <MenuItem value="luar">Luar</MenuItem>
-			        </Select>
-			      </FormControl>
+		          <TextField id="tipe" label="Tipe mahasiswa" variant="outlined" fullWidth required disabled />
 		        </Grid>
 		        <Grid item xs={12} md={7}>
 		          <TextField id="dosen_1" label="Nama dosen pembimbing" value="Handajaya Rusli" variant="outlined" disabled fullWidth />
@@ -158,22 +147,10 @@ export default function CreateTA() {
         	</Grid>
         </Grid>
         <Grid item xs={12} md={8}>
-          <FormControl variant="outlined" className={classes.formControl}>
-	        <InputLabel id="asd">Posisi dosen</InputLabel>
-	        <Select
-	          labelId="asd"
-	          id="asdasd"
-	          value={posisiDosen}
-	          onChange={handleChangePosisiDosen}
-	        >
-	          <MenuItem value="pembimbing">Pembimbing</MenuItem>
-	          <MenuItem value="co-pembimbing">Co-pembimbing</MenuItem>
-	          <MenuItem value="penguji">Penguji</MenuItem>
-	        </Select>
-	      </FormControl>
+          <TextField id="posisi" label="Posisi dosen" variant="outlined" fullWidth required disabled />
         </Grid>
         <Grid item xs={12} md={8}>
-          <TextField id="judul_ta" label="Judul tugas akhir" variant="outlined" fullWidth required />
+          <TextField id="judul_ta" label="Judul Profil" variant="outlined" fullWidth required disabled />
         </Grid>
         <Grid item xs={12} md={8}>
         	<Grid container spacing={3}>
@@ -193,6 +170,7 @@ export default function CreateTA() {
 				            'aria-label': 'change date',
 				          }}
 				          fullWidth
+				           disabled
 				        />
 				      </Grid>
 				    </MuiPickersUtilsProvider>
@@ -213,6 +191,7 @@ export default function CreateTA() {
 				            'aria-label': 'change date',
 				          }}
 				          fullWidth
+				           disabled
 				        />
 				      </Grid>
 				    </MuiPickersUtilsProvider>
@@ -222,36 +201,20 @@ export default function CreateTA() {
         <Grid item xs={12} md={8}>
         	<Grid container spacing={3}>
 		        <Grid item xs={12} md={4}>
-		        	<input
-					  accept="image/*"
-					  style={{ display: 'none' }}
-					  id="raised-button-file"
-					  multiple
-					  type="file"
-					/>
-					<label htmlFor="raised-button-file">
-					  <Button variant="outlined" fullWidth component="span">
-					    Upload file
+					  <Button variant="outlined" fullWidth>
+					    Lihat file
 					  </Button>
-					</label> 
 		        </Grid>
 		        <Grid item xs={12} md={3}>
-		        	<Typography variant="subtitle1" gutterBottom>
-				        nama_file.ext
-				      </Typography>
+		        	nama_file.extension
 		        </Grid>
 	        </Grid>
         </Grid>
         <Grid item xs={12}>
         	<Grid container spacing={3}>
-		        <Grid item xs={12} md={2}>
-			      <Button variant="outlined" color="secondary" fullWidth href="/tugas-akhir">
-					Batal
-				  </Button>
-				</Grid>
-		        <Grid item xs={12} md={3}>
-			      <Button variant="outlined" color="primary" fullWidth href="/tugas-akhir">
-					Simpan
+		        <Grid item xs={12} md={6}>
+			      <Button variant="outlined" color="secondary" fullWidth href="/profil">
+					Kembali
 				  </Button>
 				</Grid>
 			</Grid>
