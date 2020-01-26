@@ -12,6 +12,11 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { makeStyles } from '@material-ui/core/styles';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Box from '@material-ui/core/Box';
 import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
 import {
@@ -28,88 +33,11 @@ const useStyles = makeStyles(theme => ({
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
-  },
+  }
 }));
 
 export default function LihatProfil() {
 	const classes = useStyles();
-
-	const [count, setCount] = React.useState(2);	// Pahami lagi perilaku 'count' (lifecycle)
-	const [inputDosen2, setInputDosen2] = React.useState(false);
-	const [inputDosen3, setInputDosen3] = React.useState(false);
-	const [tipeMahasiswa, setTipeMahasiswa] = React.useState('');
-	const [posisiDosen, setPosisiDosen] = React.useState('');
-	const [selectedDate, setSelectedDate] = React.useState(new Date('2020-01-01T21:11:54'));
-
-	const handleDateChange = date => {
-	    setSelectedDate(date);
-	};
-
-	const handleChangeTipeMahasiswa = event => {
-		setTipeMahasiswa(event.target.value);
-	};
-
-	const handleChangePosisiDosen = event => {
-		setPosisiDosen(event.target.value);
-	};
-
-	const handleTambahDosen = () => {
-		if (count <= 3) {
-			setCount(count => count + 1);
-			if (count >= 2) {
-				setInputDosen2(true);
-			}
-			if (count >= 3) {
-				setInputDosen3(true);
-			}
-		}
-	};
-
-	const handleKurangDosen = () => {
-		if (count >= 3) {
-			setCount(count => count - 1);
-			if (count <= 4) {
-				setInputDosen3(false);
-			}
-			if (count <= 3) {
-				setInputDosen2(false);
-			}
-		}
-	};
-
-	const addFieldDosen2 = () => {
-		if (inputDosen2) {
-			return (
-				<Grid item xs={12} md={8}>
-		        	<Grid container spacing={3}>
-				        <Grid item xs={12} md={7}>
-				          <TextField id="dosen_2" label="Nama dosen 2" variant="outlined" fullWidth />
-				        </Grid>
-				        <Grid item xs={12} md={5}>
-				          <TextField id="sks_dosen_2" label="SKS dosen 2" variant="outlined" fullWidth required />
-				        </Grid>
-		        	</Grid>
-		        </Grid>
-			)
-		}
-	}
-
-	const addFieldDosen3 = () => {
-		if (inputDosen3) {
-			return (
-				<Grid item xs={12} md={8}>
-		        	<Grid container spacing={3}>
-				        <Grid item xs={12} md={7}>
-				          <TextField id="dosen_3" label="Nama dosen 3" variant="outlined" fullWidth />
-				        </Grid>
-				        <Grid item xs={12} md={5}>
-				          <TextField id="sks_dosen_3" label="SKS dosen 3" variant="outlined" fullWidth required />
-				        </Grid>
-		        	</Grid>
-		        </Grid>
-			)
-		}
-	}
 
   return (
     <div>
@@ -130,89 +58,192 @@ export default function LihatProfil() {
 	        Profil [ID]
 	      </Typography>
         </Grid>
-        <Grid item xs={12} md={3}>
-          <TextField id="nim" label="NIM" variant="outlined" fullWidth required disabled />
-        </Grid>
-        <Grid item xs={12} md={5}>
-          <TextField id="nama_mahasiswa" label="Nama mahasiswa" variant="outlined" fullWidth required disabled />
-        </Grid>
-        <Grid item xs={12} md={8}>
-        	<Grid container spacing={3}>
-		        <Grid item xs={12} md={5}>
-		          <TextField id="tipe" label="Tipe mahasiswa" variant="outlined" fullWidth required disabled />
-		        </Grid>
-		        <Grid item xs={12} md={7}>
-		          <TextField id="dosen_1" label="Nama dosen pembimbing" value="Handajaya Rusli" variant="outlined" disabled fullWidth />
-		        </Grid>
-        	</Grid>
-        </Grid>
-        <Grid item xs={12} md={8}>
-          <TextField id="posisi" label="Posisi dosen" variant="outlined" fullWidth required disabled />
-        </Grid>
-        <Grid item xs={12} md={8}>
-          <TextField id="judul_ta" label="Judul Profil" variant="outlined" fullWidth required disabled />
-        </Grid>
-        <Grid item xs={12} md={8}>
-        	<Grid container spacing={3}>
-		        <Grid item xs={12} md={6}>
-		          	<MuiPickersUtilsProvider utils={DateFnsUtils}>
-				      <Grid container justify="space-around">
-				        <KeyboardDatePicker
-				          disableToolbar
-				          variant="inline"
-				          format="MM/dd/yyyy"
-				          margin="normal"
-				          id="date-picker-inline"
-				          label="Tanggal masuk"
-				          value={selectedDate}
-				          onChange={handleDateChange}
-				          KeyboardButtonProps={{
-				            'aria-label': 'change date',
-				          }}
-				          fullWidth
-				           disabled
-				        />
-				      </Grid>
-				    </MuiPickersUtilsProvider>
-		        </Grid>
-		        <Grid item xs={12} md={6}>
-		          	<MuiPickersUtilsProvider utils={DateFnsUtils}>
-				      <Grid container justify="space-around">
-				        <KeyboardDatePicker
-				          disableToolbar
-				          variant="inline"
-				          format="MM/dd/yyyy"
-				          margin="normal"
-				          id="date-picker-inline"
-				          label="Tanggal lulus"
-				          value={selectedDate}
-				          onChange={handleDateChange}
-				          KeyboardButtonProps={{
-				            'aria-label': 'change date',
-				          }}
-				          fullWidth
-				           disabled
-				        />
-				      </Grid>
-				    </MuiPickersUtilsProvider>
-		        </Grid>
-	        </Grid>
-        </Grid>
-        <Grid item xs={12} md={8}>
-        	<Grid container spacing={3}>
-		        <Grid item xs={12} md={4}>
-					  <Button variant="outlined" fullWidth>
-					    Lihat file
-					  </Button>
-		        </Grid>
-		        <Grid item xs={12} md={3}>
-		        	nama_file.extension
-		        </Grid>
-	        </Grid>
+        <Grid item xs={12}>
+          <ExpansionPanel>
+	        <ExpansionPanelSummary
+	          expandIcon={<ExpandMoreIcon />}
+	          aria-controls="panel1a-content"
+	          id="panel1a-header"
+	        >
+	          <Typography variant="h6" className={classes.heading}>Info Umum</Typography>
+	        </ExpansionPanelSummary>
+	        <ExpansionPanelDetails>
+	        	<Grid container spacing={3} xs={12}>
+	        		<Grid container item xs={12}>
+	        			<Grid item xs={1}>
+		          			<Typography color="inherit">
+			          			<Box fontWeight="fontWeightBold">
+					              Nama
+					            </Box>
+				            </Typography>
+	        			</Grid>
+	        			<Grid item xs={11}>
+	        				<Typography color="inherit">: Feby Eliana</Typography>
+	        			</Grid>
+	          		</Grid>
+	          		<Grid container item xs={12}>
+	          			<Grid item xs={1}>
+		          			<Typography color="inherit">
+			          			<Box fontWeight="fontWeightBold">
+					              NIP
+					            </Box>
+				            </Typography>
+	        			</Grid>
+	        			<Grid item xs={11}>
+	        				<Typography color="inherit">: 198609262015051001</Typography>
+	        			</Grid>
+		          	</Grid>
+		          	<Grid container item xs={12}>
+		          		<Grid item xs={1}>
+		          			<Typography color="inherit">
+			          			<Box fontWeight="fontWeightBold">
+					              Email
+					            </Box>
+				            </Typography>
+	        			</Grid>
+	        			<Grid item xs={11}>
+	        				<Typography color="inherit">: feby@chem.itb.ac.id</Typography>
+	        			</Grid>
+		          	</Grid>
+		          	<Grid container item xs={12}>
+		          		<Grid item xs={1}>
+		          			<Typography color="inherit">
+			          			<Box fontWeight="fontWeightBold">
+					              Status
+					            </Box>
+				            </Typography>
+	        			</Grid>
+	        			<Grid item xs={11}>
+	        				<Typography color="inherit">: Dosen</Typography>
+	        			</Grid>
+		          	</Grid>
+	          	</Grid>
+	        </ExpansionPanelDetails>
+	      </ExpansionPanel>
+	      <ExpansionPanel>
+	        <ExpansionPanelSummary
+	          expandIcon={<ExpandMoreIcon />}
+	          aria-controls="panel2a-content"
+	          id="panel2a-header"
+	        >
+	          <Typography className={classes.heading}>Akademik</Typography>
+	        </ExpansionPanelSummary>
+	        <ExpansionPanelDetails>
+	          <Typography>
+	            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+	            sit amet blandit leo lobortis eget.
+	          </Typography>
+	        </ExpansionPanelDetails>
+	      </ExpansionPanel>
+	      <ExpansionPanel>
+	        <ExpansionPanelSummary
+	          expandIcon={<ExpandMoreIcon />}
+	          aria-controls="panel2a-content"
+	          id="panel2a-header"
+	        >
+	          <Typography className={classes.heading}>Tugas Akhir</Typography>
+	        </ExpansionPanelSummary>
+	        <ExpansionPanelDetails>
+	          <Typography>
+	            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+	            sit amet blandit leo lobortis eget.
+	          </Typography>
+	        </ExpansionPanelDetails>
+	      </ExpansionPanel>
+	      <ExpansionPanel>
+	        <ExpansionPanelSummary
+	          expandIcon={<ExpandMoreIcon />}
+	          aria-controls="panel2a-content"
+	          id="panel2a-header"
+	        >
+	          <Typography className={classes.heading}>Penelitian</Typography>
+	        </ExpansionPanelSummary>
+	        <ExpansionPanelDetails>
+	          <Typography>
+	            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+	            sit amet blandit leo lobortis eget.
+	          </Typography>
+	        </ExpansionPanelDetails>
+	      </ExpansionPanel>
+	      <ExpansionPanel>
+	        <ExpansionPanelSummary
+	          expandIcon={<ExpandMoreIcon />}
+	          aria-controls="panel2a-content"
+	          id="panel2a-header"
+	        >
+	          <Typography className={classes.heading}>Publikasi</Typography>
+	        </ExpansionPanelSummary>
+	        <ExpansionPanelDetails>
+	          <Typography>
+	            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+	            sit amet blandit leo lobortis eget.
+	          </Typography>
+	        </ExpansionPanelDetails>
+	      </ExpansionPanel>
+	      <ExpansionPanel>
+	        <ExpansionPanelSummary
+	          expandIcon={<ExpandMoreIcon />}
+	          aria-controls="panel2a-content"
+	          id="panel2a-header"
+	        >
+	          <Typography className={classes.heading}>Pengabdian Masyarakat</Typography>
+	        </ExpansionPanelSummary>
+	        <ExpansionPanelDetails>
+	          <Typography>
+	            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+	            sit amet blandit leo lobortis eget.
+	          </Typography>
+	        </ExpansionPanelDetails>
+	      </ExpansionPanel>
+	      <ExpansionPanel>
+	        <ExpansionPanelSummary
+	          expandIcon={<ExpandMoreIcon />}
+	          aria-controls="panel2a-content"
+	          id="panel2a-header"
+	        >
+	          <Typography className={classes.heading}>Prestasi</Typography>
+	        </ExpansionPanelSummary>
+	        <ExpansionPanelDetails>
+	          <Typography>
+	            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+	            sit amet blandit leo lobortis eget.
+	          </Typography>
+	        </ExpansionPanelDetails>
+	      </ExpansionPanel>
+	      <ExpansionPanel>
+	        <ExpansionPanelSummary
+	          expandIcon={<ExpandMoreIcon />}
+	          aria-controls="panel2a-content"
+	          id="panel2a-header"
+	        >
+	          <Typography className={classes.heading}>Organisasi</Typography>
+	        </ExpansionPanelSummary>
+	        <ExpansionPanelDetails>
+	          <Typography>
+	            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+	            sit amet blandit leo lobortis eget.
+	          </Typography>
+	        </ExpansionPanelDetails>
+	      </ExpansionPanel>
+	      <ExpansionPanel>
+	        <ExpansionPanelSummary
+	          expandIcon={<ExpandMoreIcon />}
+	          aria-controls="panel2a-content"
+	          id="panel2a-header"
+	        >
+	          <Typography className={classes.heading}>Riwayat Kerja</Typography>
+	        </ExpansionPanelSummary>
+	        <ExpansionPanelDetails>
+	          <Typography>
+	            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+	            sit amet blandit leo lobortis eget.
+	          </Typography>
+	        </ExpansionPanelDetails>
+	      </ExpansionPanel>
         </Grid>
         <Grid item xs={12}>
         	<Grid container spacing={3}>
-		        <Grid item xs={12} md={6}>
+		        <Grid item xs={12} md={3}>
 			      <Button variant="outlined" color="secondary" fullWidth href="/profil">
 					Kembali
 				  </Button>
