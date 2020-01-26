@@ -12,43 +12,35 @@ export default function Index() {
   const [state, setState] = React.useState({
     columns: [
       { title: 'No', field: 'no' },
-      { title: 'Kode', field: 'kode_matkul' },
-      { title: 'Nama Mata Kuliah', field: 'nama_matkul' },
-      { title: 'SKS', field: 'sks', type: 'numeric' },
-      { title: 'Kelas', field: 'kelas' },
-      { title: 'Dosen', field: 'dosen' },
-      { title: 'SKS Dosen', field: 'sks_dosen' }
+      { title: 'Judul', field: 'kode_matkul' },
+      { title: 'Penulis', field: 'nama_matkul' },
+      { title: 'Tanggal', field: 'sks' },
+      { title: 'Penerbit', field: 'kelas' }
     ],
     data: [
       {
         id: 1,
         no: 1,
-        kode_matkul: 'KI3121',
-        nama_matkul: 'Kimia Murni',
-        sks: 3,
-        kelas: '01',
-        dosen: 'Handajaya Rusli',
-        sks_dosen: 3
+        kode_matkul: 'Karya Lain 1',
+        nama_matkul: 'Handajaya Rusli',
+        sks: '1 Januari 2019',
+        kelas: 'Penerbit ITB'
       },
       {
         id: 2,
         no: 2,
-        kode_matkul: 'KI2111',
-        nama_matkul: 'Kimia Palsu',
-        sks: 4,
-        kelas: '01',
-        dosen: 'Feby Eliana, Vincent Siauw',
-        sks_dosen: '2, 2'
+        kode_matkul: 'Karya Lain 2',
+        nama_matkul: 'Handajaya Rusli',
+        sks: '19 Februari 2019',
+        kelas: 'Penerbit ITB'
       },
       {
         id: 3,
         no: 3,
-        kode_matkul: 'KI2111',
-        nama_matkul: 'Kimia Palsu',
-        sks: 4,
-        kelas: '02',
-        dosen: 'Alfian Maulana',
-        sks_dosen: 4
+        kode_matkul: 'Karya Lain 1',
+        nama_matkul: 'Feby Eliana',
+        sks: '1 Januari 2020',
+        kelas: 'Erlangga'
       },
     ],
   });
