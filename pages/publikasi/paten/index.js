@@ -84,6 +84,11 @@ export default function Index() {
             data={state.data}
             actions={[
               {
+                icon: 'visibility',
+                tooltip: 'See More',
+                onClick: (event, rowData) => { router.push('/publikasi/paten/' + 'id') }
+              },
+              {
                 icon: 'edit',
                 tooltip: 'Edit',
                 onClick: (event, rowData) => { router.push('/publikasi/paten/edit/' + 'id') }

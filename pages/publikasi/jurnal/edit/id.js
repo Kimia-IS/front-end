@@ -111,39 +111,39 @@ export default function EditJurnal() {
             <Link color="inherit" href="/publikasi/jurnal">
               Jurnal
             </Link>
-            <Typography color="textPrimary">Jurnal [ID]</Typography>
+            <Typography color="textPrimary">Edit Jurnal [ID]</Typography>
           </Breadcrumbs>
         </Grid>
       	<Grid item xs={12}>
           <Typography variant="h4" gutterBottom>
-	        Jurnal [ID]
+	        Edit Jurnal [ID]
 	      </Typography>
         </Grid>
         <Grid item xs={12} md={8}>
-	    	<TextField id="judul" value="filled" label="Judul jurnal" variant="outlined" fullWidth disabled required />
+	    	<TextField id="judul" value="filled" label="Judul jurnal" variant="outlined" fullWidth required />
         </Grid>
         <Grid item xs={12} md={8}>
-          <TextField id="penulis_1" value="filled" label="Penulis 1" variant="outlined" fullWidth disabled required />
+          <TextField id="penulis_1" value="Handajaya Rusli" label="Penulis 1" variant="outlined" fullWidth disabled required />
         </Grid>
         <Grid container item spacing={3} xs={12}>
 	        <Grid item xs={12} md={3}>
-	          <TextField id="tahun" value="filled" label="Tahun" variant="outlined" fullWidth disabled required />
+	          <TextField id="tahun" value="filled" label="Tahun" variant="outlined" fullWidth required />
 	        </Grid>
 	        <Grid item xs={12} md={5}>
-	          <TextField id="nomor" value="filled" label="Nomor" variant="outlined" fullWidth disabled required />
+	          <TextField id="nomor" value="filled" label="Nomor" variant="outlined" fullWidth required />
 	        </Grid>
         </Grid>
         <Grid container item spacing={3} xs={12}>
 	        <Grid item xs={12} md={3}>
-	          <TextField id="issue" value="filled" label="Issue" variant="outlined" fullWidth disabled />
+	          <TextField id="issue" value="filled" label="Issue" variant="outlined" fullWidth />
 	        </Grid>
 	        <Grid item xs={12} md={5}>
-	          <TextField id="halaman" value="filled" label="Halaman" variant="outlined" fullWidth disabled />
+	          <TextField id="halaman" value="filled" label="Halaman" variant="outlined" fullWidth />
 	        </Grid>
         </Grid>
         <Grid container item spacing={3} xs={12}>
 	        <Grid item xs={12} md={5}>
-	          <FormControl variant="outlined" className={classes.formControl} fullWidth disabled>
+	          <FormControl variant="outlined" className={classes.formControl} fullWidth>
 		        <InputLabel id="asd">Jenis jurnal</InputLabel>
 		        <Select
 		          labelId="asd"
@@ -160,11 +160,11 @@ export default function EditJurnal() {
 		      </FormControl>
 	        </Grid>
 	        <Grid item xs={12} md={3}>
-	          <TextField id="doi" value="filled" label="DOI" variant="outlined" fullWidth disabled />
+	          <TextField id="doi" value="filled" label="DOI" variant="outlined" fullWidth />
 	        </Grid>
         </Grid>
         <Grid item xs={12} md={8}>
-	    	<TextField id="link" value="filled" label="Link" variant="outlined" fullWidth disabled required />
+	    	<TextField id="link" value="filled" label="Link" variant="outlined" fullWidth required />
         </Grid>
         <Grid item xs={12} md={8}>
         	<Grid container spacing={3}>
@@ -177,7 +177,7 @@ export default function EditJurnal() {
 					  type="file"
 					/>
 					<label htmlFor="raised-button-file">
-					  <Button variant="outlined" fullWidth disabled component="span">
+					  <Button variant="outlined" fullWidth component="span">
 					    Upload file
 					  </Button>
 					</label> 

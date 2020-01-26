@@ -111,12 +111,12 @@ export default function LihatJurnal() {
             <Link color="inherit" href="/publikasi/jurnal">
               Jurnal
             </Link>
-            <Typography color="textPrimary">Buat Jurnal Baru</Typography>
+            <Typography color="textPrimary">Jurnal [ID]</Typography>
           </Breadcrumbs>
         </Grid>
       	<Grid item xs={12}>
           <Typography variant="h4" gutterBottom>
-	        Buat Jurnal Baru
+	      	Jurnal [ID]
 	      </Typography>
         </Grid>
         <Grid item xs={12} md={8}>
@@ -143,44 +143,30 @@ export default function LihatJurnal() {
         </Grid>
         <Grid container item spacing={3} xs={12}>
 	        <Grid item xs={12} md={3}>
-	          <TextField id="tahun" label="Tahun" variant="outlined" fullWidth required />
+	          <TextField id="tahun" label="Tahun" variant="outlined" fullWidth disabled required />
 	        </Grid>
 	        <Grid item xs={12} md={5}>
-	          <TextField id="nomor" label="Nomor" variant="outlined" fullWidth required />
+	          <TextField id="nomor" label="Nomor" variant="outlined" fullWidth disabled required />
 	        </Grid>
         </Grid>
         <Grid container item spacing={3} xs={12}>
 	        <Grid item xs={12} md={3}>
-	          <TextField id="issue" label="Issue" variant="outlined" fullWidth />
+	          <TextField id="issue" label="Issue" variant="outlined" fullWidth disabled />
 	        </Grid>
 	        <Grid item xs={12} md={5}>
-	          <TextField id="halaman" label="Halaman" variant="outlined" fullWidth />
+	          <TextField id="halaman" label="Halaman" variant="outlined" fullWidth disabled />
 	        </Grid>
         </Grid>
         <Grid container item spacing={3} xs={12}>
 	        <Grid item xs={12} md={5}>
-	          <FormControl variant="outlined" className={classes.formControl} fullWidth>
-		        <InputLabel id="asd">Jenis jurnal</InputLabel>
-		        <Select
-		          labelId="asd"
-		          id="asdasd"
-		          value={posisiDosen}
-		          onChange={handleChangePosisiDosen}
-		        >
-		          <MenuItem value="pembimbing">Nasional</MenuItem>
-		          <MenuItem value="pembimbing">Nasional terakreditasi</MenuItem>
-		          <MenuItem value="pembimbing">Internasional</MenuItem>
-		          <MenuItem value="pembimbing">Internasional terindeks scopus</MenuItem>
-		          <MenuItem value="pembimbing">Internasional terindeks scimago</MenuItem>
-		        </Select>
-		      </FormControl>
+	        	<TextField id="jenis" value="filled" label="Jenis Jurnal" variant="outlined" fullWidth disabled />
 	        </Grid>
 	        <Grid item xs={12} md={3}>
-	          <TextField id="doi" label="DOI" variant="outlined" fullWidth />
+	          <TextField id="doi" label="DOI" variant="outlined" fullWidth disabled />
 	        </Grid>
         </Grid>
         <Grid item xs={12} md={8}>
-	    	<TextField id="link" label="Link" variant="outlined" fullWidth required />
+	    	<TextField id="link" label="Link" variant="outlined" fullWidth disabled required />
         </Grid>
         <Grid item xs={12} md={8}>
         	<Grid container spacing={3}>

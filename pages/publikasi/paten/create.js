@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function CreateJurnal() {
+export default function CreatePaten() {
 	const classes = useStyles();
 
 	const [count, setCount] = React.useState(2);	// Pahami lagi perilaku 'count' (lifecycle)
@@ -108,79 +108,41 @@ export default function CreateJurnal() {
             <Link color="inherit" href="/publikasi">
               Publikasi
             </Link>
-            <Link color="inherit" href="/publikasi/jurnal">
-              Jurnal
+            <Link color="inherit" href="/publikasi/paten">
+              Paten
             </Link>
-            <Typography color="textPrimary">Buat Jurnal Baru</Typography>
+            <Typography color="textPrimary">Buat Paten Baru</Typography>
           </Breadcrumbs>
         </Grid>
       	<Grid item xs={12}>
           <Typography variant="h4" gutterBottom>
-	        Buat Jurnal Baru
+	        Buat Paten Baru
 	      </Typography>
         </Grid>
         <Grid item xs={12} md={8}>
-	    	<TextField id="judul" label="Judul jurnal" variant="outlined" fullWidth required />
+	    	<TextField id="judul" label="Judul Paten" variant="outlined" fullWidth required />
         </Grid>
         <Grid item xs={12} md={8}>
-          <TextField id="penulis_1" value="Handajaya Rusli" label="Penulis 1" variant="outlined" fullWidth disabled required />
-        </Grid>
-        {addFieldDosen2()}
-        {addFieldDosen3()}
-        <Grid item xs={12} md={5}>
-        	<Grid container>
-		        <Grid item xs={6} md={6}>
-		        	<Button onClick={handleTambahDosen}>
-			          + Tambah penulis
-		        	</Button>
-		        </Grid>
-		        <Grid item xs={6} md={6}>
-		        	<Button onClick={handleKurangDosen}>
-			          - Kurangi penulis
-		        	</Button>
-		        </Grid>
-	        </Grid>
+          <TextField id="nama" value="Handajaya Rusli" label="Nama Pengaju" variant="outlined" fullWidth disabled required />
         </Grid>
         <Grid container item spacing={3} xs={12}>
 	        <Grid item xs={12} md={3}>
 	          <TextField id="tahun" label="Tahun" variant="outlined" fullWidth required />
 	        </Grid>
 	        <Grid item xs={12} md={5}>
-	          <TextField id="nomor" label="Nomor" variant="outlined" fullWidth required />
-	        </Grid>
-        </Grid>
-        <Grid container item spacing={3} xs={12}>
-	        <Grid item xs={12} md={3}>
-	          <TextField id="issue" label="Issue" variant="outlined" fullWidth />
-	        </Grid>
-	        <Grid item xs={12} md={5}>
-	          <TextField id="halaman" label="Halaman" variant="outlined" fullWidth />
-	        </Grid>
-        </Grid>
-        <Grid container item spacing={3} xs={12}>
-	        <Grid item xs={12} md={5}>
 	          <FormControl variant="outlined" className={classes.formControl} fullWidth>
-		        <InputLabel id="asd">Jenis jurnal</InputLabel>
+		        <InputLabel id="asd">Status Paten</InputLabel>
 		        <Select
 		          labelId="asd"
 		          id="asdasd"
 		          value={posisiDosen}
 		          onChange={handleChangePosisiDosen}
 		        >
-		          <MenuItem value="pembimbing">Nasional</MenuItem>
-		          <MenuItem value="pembimbing">Nasional terakreditasi</MenuItem>
-		          <MenuItem value="pembimbing">Internasional</MenuItem>
-		          <MenuItem value="pembimbing">Internasional terindeks scopus</MenuItem>
-		          <MenuItem value="pembimbing">Internasional terindeks scimago</MenuItem>
+		          <MenuItem value="terdaftar">Terdaftar</MenuItem>
+		          <MenuItem value="granted">Granted</MenuItem>
 		        </Select>
 		      </FormControl>
 	        </Grid>
-	        <Grid item xs={12} md={3}>
-	          <TextField id="doi" label="DOI" variant="outlined" fullWidth />
-	        </Grid>
-        </Grid>
-        <Grid item xs={12} md={8}>
-	    	<TextField id="link" label="Link" variant="outlined" fullWidth required />
         </Grid>
         <Grid item xs={12} md={8}>
         	<Grid container spacing={3}>
@@ -208,12 +170,12 @@ export default function CreateJurnal() {
         <Grid item xs={12}>
         	<Grid container spacing={3}>
 		        <Grid item xs={12} md={2}>
-			      <Button variant="outlined" color="secondary" fullWidth href="/publikasi/jurnal">
+			      <Button variant="outlined" color="secondary" fullWidth href="/publikasi/paten">
 					Batal
 				  </Button>
 				</Grid>
 		        <Grid item xs={12} md={3}>
-			      <Button variant="outlined" color="primary" fullWidth href="/publikasi/jurnal">
+			      <Button variant="outlined" color="primary" fullWidth href="/publikasi/paten">
 					Simpan
 				  </Button>
 				</Grid>

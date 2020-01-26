@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function CreateJurnal() {
+export default function LihatPaten() {
 	const classes = useStyles();
 
 	const [count, setCount] = React.useState(2);	// Pahami lagi perilaku 'count' (lifecycle)
@@ -108,113 +108,48 @@ export default function CreateJurnal() {
             <Link color="inherit" href="/publikasi">
               Publikasi
             </Link>
-            <Link color="inherit" href="/publikasi/jurnal">
-              Jurnal
+            <Link color="inherit" href="/publikasi/paten">
+              Paten
             </Link>
-            <Typography color="textPrimary">Buat Jurnal Baru</Typography>
+            <Typography color="textPrimary">Paten [ID]</Typography>
           </Breadcrumbs>
         </Grid>
       	<Grid item xs={12}>
           <Typography variant="h4" gutterBottom>
-	        Buat Jurnal Baru
+	        Paten [ID]
 	      </Typography>
         </Grid>
         <Grid item xs={12} md={8}>
-	    	<TextField id="judul" label="Judul jurnal" variant="outlined" fullWidth required />
+	    	<TextField id="judul" value="filled" label="Judul Paten" variant="outlined" fullWidth disabled required />
         </Grid>
         <Grid item xs={12} md={8}>
-          <TextField id="penulis_1" value="Handajaya Rusli" label="Penulis 1" variant="outlined" fullWidth disabled required />
-        </Grid>
-        {addFieldDosen2()}
-        {addFieldDosen3()}
-        <Grid item xs={12} md={5}>
-        	<Grid container>
-		        <Grid item xs={6} md={6}>
-		        	<Button onClick={handleTambahDosen}>
-			          + Tambah penulis
-		        	</Button>
-		        </Grid>
-		        <Grid item xs={6} md={6}>
-		        	<Button onClick={handleKurangDosen}>
-			          - Kurangi penulis
-		        	</Button>
-		        </Grid>
-	        </Grid>
+          <TextField id="penulis_1" value="filled" label="Nama Pengaju" variant="outlined" fullWidth disabled required />
         </Grid>
         <Grid container item spacing={3} xs={12}>
 	        <Grid item xs={12} md={3}>
-	          <TextField id="tahun" label="Tahun" variant="outlined" fullWidth required />
+	          <TextField id="tahun" value="filled" label="Tahun" variant="outlined" fullWidth disabled required />
 	        </Grid>
 	        <Grid item xs={12} md={5}>
-	          <TextField id="nomor" label="Nomor" variant="outlined" fullWidth required />
+	        	<TextField id="tahun" value="filled" label="Status Paten" variant="outlined" fullWidth disabled required />
 	        </Grid>
-        </Grid>
-        <Grid container item spacing={3} xs={12}>
-	        <Grid item xs={12} md={3}>
-	          <TextField id="issue" label="Issue" variant="outlined" fullWidth />
-	        </Grid>
-	        <Grid item xs={12} md={5}>
-	          <TextField id="halaman" label="Halaman" variant="outlined" fullWidth />
-	        </Grid>
-        </Grid>
-        <Grid container item spacing={3} xs={12}>
-	        <Grid item xs={12} md={5}>
-	          <FormControl variant="outlined" className={classes.formControl} fullWidth>
-		        <InputLabel id="asd">Jenis jurnal</InputLabel>
-		        <Select
-		          labelId="asd"
-		          id="asdasd"
-		          value={posisiDosen}
-		          onChange={handleChangePosisiDosen}
-		        >
-		          <MenuItem value="pembimbing">Nasional</MenuItem>
-		          <MenuItem value="pembimbing">Nasional terakreditasi</MenuItem>
-		          <MenuItem value="pembimbing">Internasional</MenuItem>
-		          <MenuItem value="pembimbing">Internasional terindeks scopus</MenuItem>
-		          <MenuItem value="pembimbing">Internasional terindeks scimago</MenuItem>
-		        </Select>
-		      </FormControl>
-	        </Grid>
-	        <Grid item xs={12} md={3}>
-	          <TextField id="doi" label="DOI" variant="outlined" fullWidth />
-	        </Grid>
-        </Grid>
-        <Grid item xs={12} md={8}>
-	    	<TextField id="link" label="Link" variant="outlined" fullWidth required />
         </Grid>
         <Grid item xs={12} md={8}>
         	<Grid container spacing={3}>
 		        <Grid item xs={12} md={4}>
-		        	<input
-					  accept="image/*"
-					  style={{ display: 'none' }}
-					  id="raised-button-file"
-					  multiple
-					  type="file"
-					/>
-					<label htmlFor="raised-button-file">
-					  <Button variant="outlined" fullWidth component="span">
-					    Upload file
+					  <Button variant="outlined" fullWidth>
+					    Lihat file
 					  </Button>
-					</label> 
 		        </Grid>
 		        <Grid item xs={12} md={3}>
-		        	<Typography variant="subtitle1" gutterBottom>
-				        nama_file.ext
-				      </Typography>
+		        	nama_file.extension
 		        </Grid>
 	        </Grid>
         </Grid>
         <Grid item xs={12}>
         	<Grid container spacing={3}>
-		        <Grid item xs={12} md={2}>
-			      <Button variant="outlined" color="secondary" fullWidth href="/publikasi/jurnal">
-					Batal
-				  </Button>
-				</Grid>
-		        <Grid item xs={12} md={3}>
-			      <Button variant="outlined" color="primary" fullWidth href="/publikasi/jurnal">
-					Simpan
+		        <Grid item xs={12} md={6}>
+			      <Button variant="outlined" color="secondary" fullWidth href="/publikasi/paten">
+					Kembali
 				  </Button>
 				</Grid>
 			</Grid>
