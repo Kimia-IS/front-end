@@ -71,17 +71,17 @@ export default function Index() {
               {
                 icon: 'visibility',
                 tooltip: 'See More',
-                onClick: (event, rowData) => { router.push('/penelitian/' + 'id') }
+                onClick: (event, rowData) => { router.push('/penelitian/' + 'id'); }
               },
               {
                 icon: 'edit',
                 tooltip: 'Edit',
-                onClick: (event, rowData) => { router.push('/penelitian/edit/' + 'id') }
+                onClick: (event, rowData) => { router.push('/penelitian/edit/' + 'id'); }
               },
               {
                 icon: 'delete',
                 tooltip: 'Delete',
-                onClick: (event, rowData) => { confirm("Apakah Anda yakin ingin menghapus " + rowData.nama_dosen + " - " + rowData.tahun + "?") }
+                onClick: (event, rowData) => { confirm("Apakah Anda yakin ingin menghapus " + rowData.nama_dosen + " - " + rowData.tahun + "?"); }
               }
             ]}
           />

@@ -78,17 +78,17 @@ export default function Index() {
               {
                 icon: 'visibility',
                 tooltip: 'See More',
-                onClick: (event, rowData) => { router.push('/publikasi/jurnal/' + 'id') }
+                onClick: (event, rowData) => { router.push('/publikasi/jurnal/' + 'id'); }
               },
               {
                 icon: 'edit',
                 tooltip: 'Edit',
-                onClick: (event, rowData) => { router.push('/publikasi/jurnal/edit/' + 'id') }
+                onClick: (event, rowData) => { router.push('/publikasi/jurnal/edit/' + 'id'); }
               },
               {
                 icon: 'delete',
                 tooltip: 'Delete',
-                onClick: (event, rowData) => { confirm("Apakah Anda yakin ingin menghapus " + rowData.kode_matkul + " - " + rowData.nama_matkul + "?") }
+                onClick: (event, rowData) => { confirm("Apakah Anda yakin ingin menghapus " + rowData.kode_matkul + " - " + rowData.nama_matkul + "?"); }
               }
             ]}
           />

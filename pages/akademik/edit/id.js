@@ -52,9 +52,9 @@ export default function EditAkademik() {
                 </Grid>
               </Grid>
             </Grid>
-      )
+      );
     }
-  }
+  };
 
   const addFieldDosen3 = () => {
     if (inputDosen3) {
@@ -69,9 +69,9 @@ export default function EditAkademik() {
                 </Grid>
               </Grid>
             </Grid>
-      )
+      );
     }
-  }
+  };
 
   return (
     <div>

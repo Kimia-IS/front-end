@@ -71,17 +71,17 @@ export default function Index() {
               {
                 icon: 'visibility',
                 tooltip: 'See More',
-                onClick: (event, rowData) => { router.push('/riwayat-kerja/' + 'id') }
+                onClick: (event, rowData) => { router.push('/riwayat-kerja/' + 'id'); }
               },
               {
                 icon: 'edit',
                 tooltip: 'Edit',
-                onClick: (event, rowData) => { router.push('/riwayat-kerja/edit/' + 'id') }
+                onClick: (event, rowData) => { router.push('/riwayat-kerja/edit/' + 'id'); }
               },
               {
                 icon: 'delete',
                 tooltip: 'Delete',
-                onClick: (event, rowData) => { confirm("Apakah Anda yakin ingin menghapus " + rowData.nama_dosen + " - " + rowData.tahun + "?") }
+                onClick: (event, rowData) => { confirm("Apakah Anda yakin ingin menghapus " + rowData.nama_dosen + " - " + rowData.tahun + "?"); }
               }
             ]}
           />

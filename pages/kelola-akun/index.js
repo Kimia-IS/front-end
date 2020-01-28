@@ -79,12 +79,12 @@ export default function Index() {
               {
                 icon: 'edit',
                 tooltip: 'Edit',
-                onClick: (event, rowData) => { router.push('/kelola-akun/edit/' + 'id') }
+                onClick: (event, rowData) => { router.push('/kelola-akun/edit/' + 'id'); }
               },
               {
                 icon: 'delete',
                 tooltip: 'Delete',
-                onClick: (event, rowData) => { confirm("Apakah Anda yakin ingin menghapus " + rowData.nama + " - " + rowData.user_id + "?") }
+                onClick: (event, rowData) => { confirm("Apakah Anda yakin ingin menghapus " + rowData.nama + " - " + rowData.user_id + "?"); }
               }
             ]}
           />

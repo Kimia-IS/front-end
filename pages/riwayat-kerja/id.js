@@ -90,9 +90,9 @@ export default function LihatTA() {
 				        </Grid>
 		        	</Grid>
 		        </Grid>
-			)
+			);
 		}
-	}
+	};
 
 	const addFieldDosen3 = () => {
 		if (inputDosen3) {
@@ -107,9 +107,9 @@ export default function LihatTA() {
 				        </Grid>
 		        	</Grid>
 		        </Grid>
-			)
+			);
 		}
-	}
+	};
 
   return (
     <div>

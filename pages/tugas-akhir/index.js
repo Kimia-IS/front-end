@@ -71,17 +71,17 @@ export default function Index() {
               {
                 icon: 'visibility',
                 tooltip: 'See More',
-                onClick: (event, rowData) => { router.push('/tugas-akhir/' + 'id') }
+                onClick: (event, rowData) => { router.push('/tugas-akhir/' + 'id'); }
               },
               {
                 icon: 'edit',
                 tooltip: 'Edit',
-                onClick: (event, rowData) => { router.push('/tugas-akhir/edit/' + 'id') }
+                onClick: (event, rowData) => { router.push('/tugas-akhir/edit/' + 'id'); }
               },
               {
                 icon: 'delete',
                 tooltip: 'Delete',
-                onClick: (event, rowData) => { confirm("Apakah Anda yakin ingin menghapus " + rowData.judul_ta + " - " + rowData.nama_mahasiswa + "?") }
+                onClick: (event, rowData) => { confirm("Apakah Anda yakin ingin menghapus " + rowData.judul_ta + " - " + rowData.nama_mahasiswa + "?"); }
               }
             ]}
           />

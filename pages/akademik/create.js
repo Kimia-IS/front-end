@@ -49,9 +49,9 @@ export default function CreateAkademik() {
 				        </Grid>
 		        	</Grid>
 		        </Grid>
-			)
+			);
 		}
-	}
+	};
 
 	const addFieldDosen3 = () => {
 		if (inputDosen3) {
@@ -66,9 +66,9 @@ export default function CreateAkademik() {
 				        </Grid>
 		        	</Grid>
 		        </Grid>
-			)
+			);
 		}
-	}
+	};
 
 	/*const addFieldDosen = () => {
 		console.log('addFieldDosen')

@@ -62,7 +62,7 @@ export default function Index() {
               {
                 icon: 'visibility',
                 tooltip: 'See More',
-                onClick: (event, rowData) => { router.push('/profil/' + 'id') }
+                onClick: (event, rowData) => { router.push('/profil/' + 'id'); }
               }
             ]}
           />

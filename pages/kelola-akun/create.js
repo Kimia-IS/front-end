@@ -83,9 +83,9 @@ export default function CreateAkun() {
 				        </Grid>
 		        	</Grid>
 		        </Grid>
-			)
+			);
 		}
-	}
+	};
 
 	const addFieldDosen3 = () => {
 		if (inputDosen3) {
@@ -100,9 +100,9 @@ export default function CreateAkun() {
 				        </Grid>
 		        	</Grid>
 		        </Grid>
-			)
+			);
 		}
-	}
+	};
 
 	/*const addFieldDosen = () => {
 		console.log('addFieldDosen')

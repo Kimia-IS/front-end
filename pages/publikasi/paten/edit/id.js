@@ -83,9 +83,9 @@ export default function EditPaten() {
 				<Grid item xs={12} md={8}>
 		          <TextField id="penulis_2" label="Penulis 2" variant="outlined" fullWidth />
 		        </Grid>
-			)
+			);
 		}
-	}
+	};
 
 	const addFieldDosen3 = () => {
 		if (inputDosen3) {
@@ -93,9 +93,9 @@ export default function EditPaten() {
 				<Grid item xs={12} md={8}>
 		          <TextField id="penulis_3" label="Penulis 3" variant="outlined" fullWidth />
 		        </Grid>
-			)
+			);
 		}
-	}
+	};
 
   return (
     <div>
