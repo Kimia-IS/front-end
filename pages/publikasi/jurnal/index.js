@@ -9,7 +9,7 @@ import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
 export default function Index() {
-  const [state, setState] = React.useState({
+  const [state] = React.useState({
     columns: [
       { title: 'No', field: 'no' },
       { title: 'Judul', field: 'kode_matkul' },
@@ -78,12 +78,12 @@ export default function Index() {
               {
                 icon: 'visibility',
                 tooltip: 'See More',
-                onClick: (event, rowData) => { router.push('/publikasi/jurnal/' + 'id'); }
+                onClick: () => { router.push('/publikasi/jurnal/' + 'id'); }
               },
               {
                 icon: 'edit',
                 tooltip: 'Edit',
-                onClick: (event, rowData) => { router.push('/publikasi/jurnal/edit/' + 'id'); }
+                onClick: () => { router.push('/publikasi/jurnal/edit/' + 'id'); }
               },
               {
                 icon: 'delete',

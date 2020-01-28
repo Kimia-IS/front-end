@@ -9,7 +9,7 @@ import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
 export default function Index() {
-  const [state, setState] = React.useState({
+  const [state] = React.useState({
     columns: [
       { title: 'No', field: 'no' },
       { title: 'Nama', field: 'nama' },
@@ -79,7 +79,7 @@ export default function Index() {
               {
                 icon: 'edit',
                 tooltip: 'Edit',
-                onClick: (event, rowData) => { router.push('/kelola-akun/edit/' + 'id'); }
+                onClick: () => { router.push('/kelola-akun/edit/' + 'id'); }
               },
               {
                 icon: 'delete',

@@ -8,17 +8,9 @@ import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { makeStyles } from '@material-ui/core/styles';
-import 'date-fns';
-import DateFnsUtils from '@date-io/date-fns';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardTimePicker,
-  KeyboardDatePicker,
-} from '@material-ui/pickers';
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -34,67 +26,10 @@ const useStyles = makeStyles(theme => ({
 export default function EditJurnal() {
 	const classes = useStyles();
 
-	const [count, setCount] = React.useState(2);	// Pahami lagi perilaku 'count' (lifecycle)
-	const [inputDosen2, setInputDosen2] = React.useState(false);
-	const [inputDosen3, setInputDosen3] = React.useState(false);
-	const [tipeMahasiswa, setTipeMahasiswa] = React.useState('');
 	const [posisiDosen, setPosisiDosen] = React.useState('');
-	const [selectedDate, setSelectedDate] = React.useState(new Date('2020-01-01T21:11:54'));
-
-	const handleDateChange = date => {
-	    setSelectedDate(date);
-	};
-
-	const handleChangeTipeMahasiswa = event => {
-		setTipeMahasiswa(event.target.value);
-	};
 
 	const handleChangePosisiDosen = event => {
 		setPosisiDosen(event.target.value);
-	};
-
-	const handleTambahDosen = () => {
-		if (count <= 3) {
-			setCount(count => count + 1);
-			if (count >= 2) {
-				setInputDosen2(true);
-			}
-			if (count >= 3) {
-				setInputDosen3(true);
-			}
-		}
-	};
-
-	const handleKurangDosen = () => {
-		if (count >= 3) {
-			setCount(count => count - 1);
-			if (count <= 4) {
-				setInputDosen3(false);
-			}
-			if (count <= 3) {
-				setInputDosen2(false);
-			}
-		}
-	};
-
-	const addFieldDosen2 = () => {
-		if (inputDosen2) {
-			return (
-				<Grid item xs={12} md={8}>
-		          <TextField id="penulis_2" label="Penulis 2" variant="outlined" fullWidth />
-		        </Grid>
-			);
-		}
-	};
-
-	const addFieldDosen3 = () => {
-		if (inputDosen3) {
-			return (
-				<Grid item xs={12} md={8}>
-		          <TextField id="penulis_3" label="Penulis 3" variant="outlined" fullWidth />
-		        </Grid>
-			);
-		}
 	};
 
   return (

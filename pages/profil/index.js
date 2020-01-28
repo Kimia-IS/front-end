@@ -3,13 +3,12 @@ import { useRouter }  from 'next/router';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import MaterialTable from 'material-table';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
 export default function Index() {
-  const [state, setState] = React.useState({
+  const [state] = React.useState({
     columns: [
       { title: 'No', field: 'no' },
       { title: 'NIP', field: 'judul_ta' },
@@ -62,7 +61,7 @@ export default function Index() {
               {
                 icon: 'visibility',
                 tooltip: 'See More',
-                onClick: (event, rowData) => { router.push('/profil/' + 'id'); }
+                onClick: () => { router.push('/profil/' + 'id'); }
               }
             ]}
           />
