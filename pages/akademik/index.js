@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { getTest } from "../../store/actions/usersActions";
 
@@ -106,6 +107,10 @@ const Index = props => {
 Index.getInitialProps = async ctx => {
   const { users } = await ctx.store.dispatch(getTest());
   return { users };
+};
+
+Index.propTypes = {
+  users: PropTypes.any
 };
 
 const mapStateToProps = state => ({
