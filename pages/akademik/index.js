@@ -7,8 +7,12 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import { connect } from "react-redux";
+import { getTest } from "../../store/actions/usersActions";
 
-export default function Index() {
+const Index = props => {
+  const { users } = props;
+
   const [state] = React.useState({
     columns: [
       { title: 'No', field: 'no' },
@@ -73,6 +77,7 @@ export default function Index() {
         </Grid>
       </Grid>
       <br />
+      <Grid>{users && users.map(user => <Typography key={user.id}>{user.nama}</Typography>)}</Grid>
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <MaterialTable
@@ -97,3 +102,14 @@ export default function Index() {
     </div>
   );
 }
+
+Index.getInitialProps = async ctx => {
+  const { users } = await ctx.store.dispatch(getTest());
+  return { users };
+};
+
+const mapStateToProps = state => ({
+  users: state.usersReducer.users
+});
+
+export default connect(mapStateToProps)(Index);

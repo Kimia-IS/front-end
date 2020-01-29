@@ -1,0 +1,1 @@
+export const API = 'https://wiki-region-api.herokuapp.com';
