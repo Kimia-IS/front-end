@@ -16,7 +16,6 @@ const Index = props => {
 
   const [state] = React.useState({
     columns: [
-      /*{ title: 'No', field: 'no' },*/
       { title: 'Kode', field: 'course_id' },
       { title: 'Nama Mata Kuliah', field: 'course_name' },
       { title: 'SKS', field: 'total_credit', type: 'numeric' },
@@ -25,38 +24,6 @@ const Index = props => {
       { title: 'SKS Dosen', field: 'lecturer_credit' },
     ],
     data: courses.results
-    /*data: [
-      {
-        id: 1,
-        no: 1,
-        kode_matkul: 'KI3121',
-        nama_matkul: 'Kimia Murni',
-        sks: 3,
-        kelas: '01',
-        dosen: 'Handajaya Rusli',
-        sks_dosen: 3
-      },
-      {
-        id: 2,
-        no: 2,
-        kode_matkul: 'KI2111',
-        nama_matkul: 'Kimia Palsu',
-        sks: 4,
-        kelas: '01',
-        dosen: 'Feby Eliana, Vincent Siauw',
-        sks_dosen: '2, 2'
-      },
-      {
-        id: 3,
-        no: 3,
-        kode_matkul: 'KI2111',
-        nama_matkul: 'Kimia Palsu',
-        sks: 4,
-        kelas: '02',
-        dosen: 'Alfian Maulana',
-        sks_dosen: 4
-      },
-    ],*/
   });
 
   const router = useRouter();
@@ -84,7 +51,6 @@ const Index = props => {
         </Grid>
       </Grid>
       <br />
-      {/*<Grid>{users && users.map(user => <Typography key={user.id}>{user.nama}</Typography>)}</Grid>*/}
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <MaterialTable
@@ -112,7 +78,6 @@ const Index = props => {
 
 Index.getInitialProps = async ctx => {
   const { courses } = await ctx.store.dispatch(getAllCourses());
-  console.log(courses);
   return { courses };
 };
 

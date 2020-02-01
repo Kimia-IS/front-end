@@ -1,4 +1,5 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
@@ -11,6 +12,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import { makeStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
+import { connect } from "react-redux";
+import { createClass } from "../../../store/actions/akademikActions";
+import axios from "axios";
+import { API } from "../../../config";
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -23,8 +29,9 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function CreateAkademik() {
+const CreateAkademik = props => {
 	const classes = useStyles();
+	const router = useRouter();
 
 	const listMataKuliah = [
 		{
@@ -50,7 +57,7 @@ export default function CreateAkademik() {
 	const [kodeMataKuliah, setKodeMataKuliah] = React.useState("");
 	const [kelas, setKelas] = React.useState("");
 	const [state, setState] = React.useState({
-		namaDosen1: 'Feby Eliana Tengry',
+		nipDosen1: '18217038',
 		sksDosen1: 0,
 		sksDosen2: 0,
 		sksDosen3: 0
@@ -73,9 +80,29 @@ export default function CreateAkademik() {
 	   setTotalSKS(parseInt(state.sksDosen1) + parseInt(state.sksDosen2) + parseInt(state.sksDosen3))
 	}, [state]);
 
-	const handleSubmit = (event) => {
+	const handleSubmit = async (event) => {
 		event.preventDefault();
+		let payload = {
+			course_id: kodeMataKuliah,
+			course_class: kelas,
+			lecturer: [
+				`(${state.nipDosen1},${state.sksDosen1})`
+			]
+		}
+		const result = await axios.post(`${API}/academic/lecturer`, payload)
+                        .then(response => {
+                          console.log(response);
+                        })
+                        .catch(error => {
+                          console.log(error);
+                        });
+		  console.log(result)
+		const results = createClass(payload);
 		console.log('Submitted! State: ', state);
+		console.log('Results: ', results);
+		/*if (results) {
+			router.push('/akademik');
+		}*/
 	}
 
 	const handleTambahDosen = () => {
@@ -108,7 +135,7 @@ export default function CreateAkademik() {
 				<Grid item xs={12} md={8}>
 		        	<Grid container spacing={3}>
 				        <Grid item xs={12} md={7}>
-				          <TextField label="Nama dosen 2" name="namaDosen2" onChange={handleInputChange} variant="outlined" fullWidth required />
+				          <TextField label="NIP dosen 2" name="nipDosen2" onChange={handleInputChange} variant="outlined" fullWidth required />
 				        </Grid>
 				        <Grid item xs={12} md={5}>
 				          <TextField label="SKS dosen 2" type="number" name="sksDosen2" onChange={handleInputChange} variant="outlined" fullWidth required />
@@ -125,7 +152,7 @@ export default function CreateAkademik() {
 				<Grid item xs={12} md={8}>
 		        	<Grid container spacing={3}>
 				        <Grid item xs={12} md={7}>
-				          <TextField label="Nama dosen 3" name="namaDosen3" onChange={handleInputChange} variant="outlined" fullWidth required />
+				          <TextField label="NIP dosen 3" name="nipDosen3" onChange={handleInputChange} variant="outlined" fullWidth required />
 				        </Grid>
 				        <Grid item xs={12} md={5}>
 				          <TextField label="SKS dosen 3" type="number" name="sksDosen3" onChange={handleInputChange} variant="outlined" fullWidth required />
@@ -139,7 +166,7 @@ export default function CreateAkademik() {
 	const fieldKelas = () => {
     	let field = [];
         for (let i = 1; i < jumlahKelas; i++) {
-          field.push(<MenuItem id={i} value={i}>{i}</MenuItem>);
+          field.push(<MenuItem key={i} id={i} value={i}>{i}</MenuItem>);
           console.log(field);
         }
         return field;
@@ -160,7 +187,7 @@ export default function CreateAkademik() {
 		      	<Grid item xs={12} md={8}>
 		        	<Grid container spacing={3}>
 				      	<Grid item xs={12} md={7}>
-				          <TextField id={"dosen_" + i} label={"Nama dosen " + i} variant="outlined" required fullWidth />
+				          <TextField id={"dosen_" + i} label={"NIP dosen " + i} variant="outlined" required fullWidth />
 				        </Grid>
 				        <Grid item xs={12} md={5}>
 				          <TextField id={"sks_dosen_" + i} label={"SKS dosen " + i} variant="outlined" fullWidth required />
@@ -231,7 +258,7 @@ export default function CreateAkademik() {
 	        <Grid item xs={12} md={8}>
 	        	<Grid container spacing={3}>
 			        <Grid item xs={12} md={7}>
-			          <TextField label="Nama dosen 1" name="namaDosen1" value={state.namaDosen1} variant="outlined" disabled fullWidth />
+			          <TextField label="NIP dosen 1" name="nipDosen1" value={state.nipDosen1} variant="outlined" disabled fullWidth />
 			        </Grid>
 			        <Grid item xs={12} md={5}>
 			          <TextField label="SKS dosen 1" type="number" name="sksDosen1" onChange={handleInputChange} variant="outlined" fullWidth required />
@@ -278,3 +305,9 @@ export default function CreateAkademik() {
   	</div>
   );
 }
+
+CreateAkademik.getInitialProps = ctx => {};
+
+//const mapStateToProps = state => ();
+
+export default connect(null, { createClass })(CreateAkademik);
