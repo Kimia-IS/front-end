@@ -208,7 +208,7 @@ export default function CreateAkademik() {
 		            Pilih Mata Kuliah
 		          </MenuItem>
 		          {listMataKuliah.map((value, index) => {
-		            return <MenuItem value={value.course_id}>{value.course_id} - {value.course_name}</MenuItem>;
+		            return <MenuItem key={index} value={value.course_id}>{value.course_id} - {value.course_name}</MenuItem>;
 		          })}
 		        </Select>
 		      </FormControl>

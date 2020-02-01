@@ -14,7 +14,7 @@ import { getAllCourses } from "../../store/actions/akademikActions";
 const Index = props => {
   const { courses } = props;
 
-  const [state, setState] = React.useState({
+  const [state] = React.useState({
     columns: [
       /*{ title: 'No', field: 'no' },*/
       { title: 'Kode', field: 'course_id' },
