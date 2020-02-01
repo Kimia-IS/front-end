@@ -1,4 +1,5 @@
 export default {
   GET_TEST: "GET_TEST",
+  GET_ACADEMICS: "GET_ACADEMICS"
   /*GET_USER: "GET_USER"*/
 };

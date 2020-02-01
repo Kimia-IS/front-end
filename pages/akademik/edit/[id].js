@@ -1,4 +1,5 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
@@ -8,6 +9,9 @@ import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
 export default function EditAkademik() {
+  const router = useRouter();
+  const { id } = router.query;
+
   const [count, setCount] = React.useState(2);  // Pahami lagi perilaku 'count' (lifecycle)
   const [inputDosen2, setInputDosen2] = React.useState(false);
   const [inputDosen3, setInputDosen3] = React.useState(false);
@@ -81,12 +85,12 @@ export default function EditAkademik() {
             <Link color="inherit" href="/akademik">
               Akademik
             </Link>
-            <Typography color="textPrimary">Edit Kelas [ID]</Typography>
+            <Typography color="textPrimary">Edit Kelas {id}</Typography>
           </Breadcrumbs>
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h4" gutterBottom>
-            Edit Kelas [ID]
+            Edit Kelas {id}
           </Typography>
         </Grid>
         <Grid item xs={12} md={3}>

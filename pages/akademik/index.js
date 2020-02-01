@@ -22,7 +22,7 @@ const Index = props => {
       { title: 'SKS', field: 'sks', type: 'numeric' },
       { title: 'Kelas', field: 'kelas' },
       { title: 'Dosen', field: 'dosen' },
-      { title: 'SKS Dosen', field: 'sks_dosen' }
+      { title: 'SKS Dosen', field: 'sks_dosen' },
     ],
     data: [
       {
@@ -78,7 +78,7 @@ const Index = props => {
         </Grid>
       </Grid>
       <br />
-      <Grid>{users && users.map(user => <Typography key={user.id}>{user.nama}</Typography>)}</Grid>
+      {/*<Grid>{users && users.map(user => <Typography key={user.id}>{user.nama}</Typography>)}</Grid>*/}
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <MaterialTable
@@ -89,7 +89,7 @@ const Index = props => {
               {
                 icon: 'edit',
                 tooltip: 'Edit',
-                onClick: () => { router.push('/akademik/edit/' + 'id'); }
+                onClick: (event, rowData) => { router.push('/akademik/edit/' + rowData.id); }
               },
               {
                 icon: 'delete',
