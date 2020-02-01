@@ -9,22 +9,23 @@ import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
-import { getTest } from "../../store/actions/usersActions";
+import { getAllCourses } from "../../store/actions/akademikActions";
 
 const Index = props => {
-  const { users } = props;
+  const { courses } = props;
 
-  const [state] = React.useState({
+  const [state, setState] = React.useState({
     columns: [
-      { title: 'No', field: 'no' },
-      { title: 'Kode', field: 'kode_matkul' },
-      { title: 'Nama Mata Kuliah', field: 'nama_matkul' },
-      { title: 'SKS', field: 'sks', type: 'numeric' },
-      { title: 'Kelas', field: 'kelas' },
-      { title: 'Dosen', field: 'dosen' },
-      { title: 'SKS Dosen', field: 'sks_dosen' },
+      /*{ title: 'No', field: 'no' },*/
+      { title: 'Kode', field: 'course_id' },
+      { title: 'Nama Mata Kuliah', field: 'course_name' },
+      { title: 'SKS', field: 'total_credit', type: 'numeric' },
+      { title: 'Kelas', field: 'class' },
+      { title: 'Dosen', field: 'lecturer(s)' },
+      { title: 'SKS Dosen', field: 'lecturer_credit' },
     ],
-    data: [
+    data: courses.results
+    /*data: [
       {
         id: 1,
         no: 1,
@@ -55,7 +56,7 @@ const Index = props => {
         dosen: 'Alfian Maulana',
         sks_dosen: 4
       },
-    ],
+    ],*/
   });
 
   const router = useRouter();
@@ -63,7 +64,7 @@ const Index = props => {
   return (
     <div>
       <Grid container spacing={3} alignItems="center" alignContent="center" justify="center">
-        <Grid item xs={12} md={10}>
+        <Grid item xs={12} md={7}>
           <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
             <Link color="inherit" href="/dashboard">
               Dashboard
@@ -71,8 +72,13 @@ const Index = props => {
             <Typography color="textPrimary">Akademik</Typography>
           </Breadcrumbs>
         </Grid>
+        <Grid item xs={8} md={3}>
+          <Button variant="outlined" fullWidth href='/akademik/create/mata-kuliah'>
+            Buat/Hapus Mata Kuliah
+          </Button>
+        </Grid>
         <Grid item xs={8} md={2}>
-          <Button variant="outlined" fullWidth href='/akademik/create'>
+          <Button variant="outlined" fullWidth href='/akademik/create/kelas'>
             Buat Kelas Baru
           </Button>
         </Grid>
@@ -105,16 +111,17 @@ const Index = props => {
 }
 
 Index.getInitialProps = async ctx => {
-  const { users } = await ctx.store.dispatch(getTest());
-  return { users };
+  const { courses } = await ctx.store.dispatch(getAllCourses());
+  console.log(courses);
+  return { courses };
 };
 
 Index.propTypes = {
-  users: PropTypes.any
+  courses: PropTypes.any
 };
 
 const mapStateToProps = state => ({
-  users: state.usersReducer.users
+  courses: state.akademikReducer.courses
 });
 
 export default connect(mapStateToProps)(Index);

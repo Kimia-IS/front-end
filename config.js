@@ -1,1 +1,1 @@
-export const API = 'https://wiki-region-api.herokuapp.com';
+export const API = 'http://localhost:5000';
