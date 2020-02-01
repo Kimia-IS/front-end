@@ -12,7 +12,6 @@ export default function CreateAkademik() {
 	const [inputDosen2, setInputDosen2] = React.useState();
 	const [inputDosen3, setInputDosen3] = React.useState();
 	const [totalSKS, setTotalSKS] = React.useState(0);
-
 	const [state, setState] = React.useState({
 		namaDosen1: 'Feby Eliana Tengry',
 		sksDosen1: 0,

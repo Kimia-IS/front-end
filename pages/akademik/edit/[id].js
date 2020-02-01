@@ -15,6 +15,31 @@ export default function EditAkademik() {
   const [count, setCount] = React.useState(2);  // Pahami lagi perilaku 'count' (lifecycle)
   const [inputDosen2, setInputDosen2] = React.useState(false);
   const [inputDosen3, setInputDosen3] = React.useState(false);
+  const [totalSKS, setTotalSKS] = React.useState(0);
+  const [state, setState] = React.useState({
+    kodeMataKuliah: 'KI1234',
+    namaMataKuliah: 'Kimia Murni',
+    namaDosen1: 'Feby Eliana Tengry',
+    namaDosen2: 'Vincent',
+    namaDosen3: 'Siauw',
+    sksDosen1: 1,
+    sksDosen2: 2,
+    sksDosen3: 3
+  });
+
+  const handleInputChange = (e) => setState({
+      ...state,
+      [e.currentTarget.name]: e.currentTarget.value
+  })
+
+  React.useEffect(() => {
+     setTotalSKS(parseInt(state.sksDosen1) + parseInt(state.sksDosen2) + parseInt(state.sksDosen3))
+  }, [state]);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log('Submitted! State: ', state);
+  }
 
   const handleTambahDosen = () => {
     if (count <= 3) {
@@ -46,10 +71,10 @@ export default function EditAkademik() {
         <Grid item xs={12} md={8}>
               <Grid container spacing={3}>
                 <Grid item xs={12} md={7}>
-                  <TextField id="dosen_2" label="Nama dosen 2" variant="outlined" fullWidth />
+                  <TextField label="Nama dosen 2" name="namaDosen2" onChange={handleInputChange} value={state.namaDosen2} variant="outlined" fullWidth required />
                 </Grid>
                 <Grid item xs={12} md={5}>
-                  <TextField id="sks_dosen_2" label="SKS dosen 2" variant="outlined" fullWidth required />
+                  <TextField label="SKS dosen 2" type="number" name="sksDosen2" onChange={handleInputChange} value={state.sksDosen2} variant="outlined" fullWidth required />
                 </Grid>
               </Grid>
             </Grid>
@@ -63,10 +88,10 @@ export default function EditAkademik() {
         <Grid item xs={12} md={8}>
               <Grid container spacing={3}>
                 <Grid item xs={12} md={7}>
-                  <TextField id="dosen_3" label="Nama dosen 3" variant="outlined" fullWidth />
+                  <TextField label="Nama dosen 3" name="namaDosen3" onChange={handleInputChange} value={state.namaDosen3} variant="outlined" fullWidth required />
                 </Grid>
                 <Grid item xs={12} md={5}>
-                  <TextField id="sks_dosen_3" label="SKS dosen 3" variant="outlined" fullWidth required />
+                  <TextField label="SKS dosen 3" type="number" name="sksDosen3" onChange={handleInputChange} value={state.sksDosen3} variant="outlined" fullWidth required />
                 </Grid>
               </Grid>
             </Grid>
@@ -76,75 +101,77 @@ export default function EditAkademik() {
 
   return (
     <div>
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
-          <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
-            <Link color="inherit" href="/dashboard">
-              Dashboard
-            </Link>
-            <Link color="inherit" href="/akademik">
-              Akademik
-            </Link>
-            <Typography color="textPrimary">Edit Kelas {id}</Typography>
-          </Breadcrumbs>
-        </Grid>
-        <Grid item xs={12}>
-          <Typography variant="h4" gutterBottom>
-            Edit Kelas {id}
-          </Typography>
-        </Grid>
-        <Grid item xs={12} md={3}>
-          <TextField id="kode_matkul" label="Kode mata kuliah" value="Filled" variant="outlined" fullWidth required />
-        </Grid>
-        <Grid item xs={12} md={5}>
-          <TextField id="nama_matkul" label="Nama mata kuliah" value="Filled" variant="outlined" fullWidth required />
-        </Grid>
-        <Grid item xs={12} md={8}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={7}>
-              <TextField id="dosen_1" label="Nama dosen 1" value="Feby Eliana Tengry" variant="outlined" disabled fullWidth />
-            </Grid>
-            <Grid item xs={12} md={5}>
-              <TextField id="sks_dosen_1" label="SKS dosen 1" variant="outlined" fullWidth required />
+      <form onSubmit={handleSubmit}>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
+              <Link color="inherit" href="/dashboard">
+                Dashboard
+              </Link>
+              <Link color="inherit" href="/akademik">
+                Akademik
+              </Link>
+              <Typography color="textPrimary">Edit Kelas {id}</Typography>
+            </Breadcrumbs>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant="h4" gutterBottom>
+              Edit Kelas {id}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} md={3}>
+            <TextField label="Kode mata kuliah" name="kodeMataKuliah" onChange={handleInputChange} value={state.kodeMataKuliah} variant="outlined" fullWidth required />
+          </Grid>
+          <Grid item xs={12} md={5}>
+            <TextField label="Nama mata kuliah" name="namaMataKuliah" onChange={handleInputChange} value={state.namaMataKuliah} variant="outlined" fullWidth required />
+          </Grid>
+          <Grid item xs={12} md={8}>
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={7}>
+                <TextField label="Nama dosen 1" name="namaDosen1" value={state.namaDosen1} variant="outlined" disabled fullWidth />
+              </Grid>
+              <Grid item xs={12} md={5}>
+                <TextField label="SKS dosen 1" type="number" name="sksDosen1" onChange={handleInputChange} value={state.sksDosen1} variant="outlined" fullWidth required />
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
-        {addFieldDosen2()}
-        {addFieldDosen3()}
-        <Grid item xs={12} md={5}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={6}>
-              <Button onClick={handleTambahDosen}>
-                + Tambah dosen pengajar
+          {addFieldDosen2()}
+          {addFieldDosen3()}
+          <Grid item xs={12} md={5}>
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={6}>
+                <Button onClick={handleTambahDosen}>
+                  + Tambah dosen pengajar
+                </Button>
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <Button onClick={handleKurangDosen}>
+                  - Kurangi dosen pengajar
+                </Button>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <Grid item xs={12} md={4}>
+              <TextField label="Total SKS" value={totalSKS} variant="outlined" disabled fullWidth />
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={2}>
+              <Button variant="outlined" color="secondary" fullWidth href="/akademik">
+                Batal
               </Button>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Button onClick={handleKurangDosen}>
-                - Kurangi dosen pengajar
-              </Button>
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid item xs={12}>
-          <Grid item xs={12} md={4}>
-            <TextField id="sks" label="Total SKS" value="Filled" variant="outlined" disabled fullWidth />
-          </Grid>
-        </Grid>
-        <Grid item xs={12}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={2}>
-            <Button variant="outlined" color="secondary" fullWidth href="/akademik">
-              Batal
-            </Button>
-            </Grid>
-            <Grid item xs={12} md={3}>
-            <Button variant="outlined" color="primary" fullWidth href="/akademik">
-              Simpan
-              </Button>
+              </Grid>
+              <Grid item xs={12} md={3}>
+              <Button variant="outlined" type="submit" color="primary" fullWidth>
+                Simpan
+                </Button>
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
+      </form>
     </div>
   );
 }
