@@ -9,10 +9,10 @@ import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
-import { getAllCourses } from "../../store/actions/akademikActions";
+import { getAllClasses } from "../../store/actions/akademikActions";
 
 const Index = props => {
-  const { courses } = props;
+  const { classes } = props;
 
   const [state] = React.useState({
     columns: [
@@ -23,7 +23,7 @@ const Index = props => {
       { title: 'Dosen', field: 'lecturer(s)' },
       { title: 'SKS Dosen', field: 'lecturer_credit' },
     ],
-    data: courses.results
+    data: classes.results
   });
 
   const router = useRouter();
@@ -77,16 +77,16 @@ const Index = props => {
 }
 
 Index.getInitialProps = async ctx => {
-  const { courses } = await ctx.store.dispatch(getAllCourses());
-  return { courses };
+  const { classes } = await ctx.store.dispatch(getAllClasses());
+  return { classes };
 };
 
 Index.propTypes = {
-  courses: PropTypes.any
+  classes: PropTypes.any
 };
 
 const mapStateToProps = state => ({
-  courses: state.akademikReducer.courses
+  classes: state.akademikReducer.classes
 });
 
 export default connect(mapStateToProps)(Index);

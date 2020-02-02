@@ -5,6 +5,9 @@ export default (state = {}, action) => {
     case actions.GET_ALL_COURSES:
       return { ...state, courses: action.courses };
 
+    case actions.GET_ALL_CLASSES:
+      return { ...state, classes: action.classes };
+
     case actions.CREATE_COURSE:
       return { ...state, courses: state.courses.push(action.course) };
 

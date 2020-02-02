@@ -11,6 +11,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import { makeStyles } from '@material-ui/core/styles';
+import axios from "axios";
+import { API } from "../../../config";
+import PropTypes from 'prop-types';
+import { connect } from "react-redux";
+import { getAllCourses } from "../../../store/actions/akademikActions";
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -23,10 +28,13 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function CreateAkademik() {
+const CreateMataKuliah = props => {
 	const classes = useStyles();
 
-	const listMataKuliah = [
+	const { courses } = props;
+	const listMataKuliah = courses.results;
+
+	/*const listMataKuliah = [
 		{
 			course_id: 'II1234',
 			course_name: 'Kimia Asli'
@@ -39,9 +47,11 @@ export default function CreateAkademik() {
 			course_id: 'II1242',
 			course_name: 'Kimia STI'
 		},
-	];
+	];*/
 
-	const [kodeMataKuliah, setKodeMataKuliah] = React.useState("");
+
+
+	const [delKodeMataKuliah, setDelKodeMataKuliah] = React.useState("");
 	const [state, setState] = React.useState();
 
 	const handleInputChange = (e) => setState({
@@ -53,18 +63,45 @@ export default function CreateAkademik() {
 	   console.log('hehe')
 	}, [state]);
 
-	const handleSubmit = (event) => {
+	const handleSubmit = async (event) => {
 		event.preventDefault();
+		let payload = {
+			course_id: state.kodeMataKuliah.toUpperCase(),
+			course_name: state.namaMataKuliah,
+			total_classes: state.jumlahKelas,
+			total_credit: 3  // DUMMY
+		}
+		const result = await axios.post(`${API}/academic/courses`, payload)
+                        .then(response => {
+                          console.log(response);
+                        })
+                        .catch(error => {
+                          console.log(error);
+                        });
+		console.log(result);
+		//const results = createClass(payload);
 		console.log('Submitted! State: ', state);
+		//console.log('Results: ', results);
+		/*if (results) {
+			router.push('/akademik');
+		}*/
 	}
 
-	const handleDelete = (event) => {
+	const handleDelete = async (event) => {
 		event.preventDefault();
-		console.log(kodeMataKuliah, ' deleted!');
+		console.log(delKodeMataKuliah, ' deleted!');
+		const result = await axios.delete(`${API}/academic/courses?${delKodeMataKuliah}`)
+                        .then(response => {
+                          console.log(response);
+                        })
+                        .catch(error => {
+                          console.log(error);
+                        });
+		console.log(result);
 	}
 
 	function handleChangeSelectMataKuliah(event) {
-    	setKodeMataKuliah(event.target.value);
+    	setDelKodeMataKuliah(event.target.value);
   	}
 
   return (
@@ -127,7 +164,7 @@ export default function CreateAkademik() {
 			        <InputLabel id="demo-simple-select-label">Mata Kuliah</InputLabel>
 			        <Select
 			          labelId="demo-simple-select-label"
-			          value={kodeMataKuliah}
+			          value={delKodeMataKuliah}
 			          onChange={handleChangeSelectMataKuliah}
 			        >
 			          <MenuItem value="" disabled>
@@ -154,3 +191,19 @@ export default function CreateAkademik() {
   	</div>
   );
 }
+
+CreateMataKuliah.getInitialProps = async ctx => {
+  const { courses } = await ctx.store.dispatch(getAllCourses());
+  console.log(courses);
+  return { courses };
+};
+
+CreateMataKuliah.propTypes = {
+  courses: PropTypes.any
+};
+
+const mapStateToProps = state => ({
+  courses: state.akademikReducer.courses
+});
+
+export default connect(mapStateToProps)(CreateMataKuliah);

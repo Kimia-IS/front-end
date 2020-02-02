@@ -4,9 +4,15 @@ import { API } from "../../config";
 import actions from "./index";
 
 export const getAllCourses = () => async dispatch => {
-  const courses = await axios.get(`${API}/academic/lecturer`);
+  const courses = await axios.get(`${API}/academic/courses`);
   console.log(courses.data);
   return dispatch({ type: actions.GET_ALL_COURSES, courses: courses.data });
+};
+
+export const getAllClasses = () => async dispatch => {
+  const classes = await axios.get(`${API}/academic/lecturer`);
+  console.log(classes.data);
+  return dispatch({ type: actions.GET_ALL_CLASSES, classes: classes.data });
 };
 
 export const createCourse = (payload) => async dispatch => {
