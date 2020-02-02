@@ -12,11 +12,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import { makeStyles } from '@material-ui/core/styles';
-import PropTypes from 'prop-types';
-import { connect } from "react-redux";
-import { createClass } from "../../../store/actions/akademikActions";
 import axios from "axios";
 import { API } from "../../../config";
+import PropTypes from 'prop-types';
+import { connect } from "react-redux";
+import { getAllCourses } from "../../../store/actions/akademikActions";
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -29,11 +29,14 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const CreateAkademik = props => {
+const CreateKelas = props => {		// BUTUH GET LIST DOSEN
 	const classes = useStyles();
 	const router = useRouter();
 
-	const listMataKuliah = [
+	const { courses } = props;
+	const listMataKuliah = courses.results;
+
+	/*const listMataKuliah = [
 		{
 			course_id: 'II1234',
 			course_name: 'Kimia Asli'
@@ -46,7 +49,7 @@ const CreateAkademik = props => {
 			course_id: 'II1242',
 			course_name: 'Kimia STI'
 		},
-	];
+	];*/
 
 	const jumlahKelas = 3;
 
@@ -96,10 +99,10 @@ const CreateAkademik = props => {
                         .catch(error => {
                           console.log(error);
                         });
-		  console.log(result)
-		const results = createClass(payload);
+		console.log(result)
+		//const results = createClass(payload);
 		console.log('Submitted! State: ', state);
-		console.log('Results: ', results);
+		//console.log('Results: ', results);
 		/*if (results) {
 			router.push('/akademik');
 		}*/
@@ -167,7 +170,6 @@ const CreateAkademik = props => {
     	let field = [];
         for (let i = 1; i < jumlahKelas; i++) {
           field.push(<MenuItem key={i} id={i} value={i}>{i}</MenuItem>);
-          console.log(field);
         }
         return field;
 	}
@@ -306,8 +308,18 @@ const CreateAkademik = props => {
   );
 }
 
-CreateAkademik.getInitialProps = ctx => {};
+CreateKelas.getInitialProps = async ctx => {
+  const { courses } = await ctx.store.dispatch(getAllCourses());
+  console.log(courses.results);
+  return { courses };
+};
 
-//const mapStateToProps = state => ();
+CreateKelas.propTypes = {
+  courses: PropTypes.any
+};
 
-export default connect(null, { createClass })(CreateAkademik);
+const mapStateToProps = state => ({
+  courses: state.akademikReducer.courses
+});
+
+export default connect(mapStateToProps)(CreateKelas);
