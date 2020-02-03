@@ -35,22 +35,6 @@ const CreateKelas = props => {		// BUTUH GET LIST DOSEN
 
 	const { courses } = props;
 	const listMataKuliah = courses.results;
-
-	/*const listMataKuliah = [
-		{
-			course_id: 'II1234',
-			course_name: 'Kimia Asli'
-		},
-		{
-			course_id: 'II4312',
-			course_name: 'Rekayasa Kimia'
-		},
-		{
-			course_id: 'II1242',
-			course_name: 'Kimia STI'
-		},
-	];*/
-
 	const jumlahKelas = 3;
 
 	const [count, setCount] = React.useState(2);	// Pahami lagi perilaku 'count' (lifecycle)
@@ -94,12 +78,12 @@ const CreateKelas = props => {		// BUTUH GET LIST DOSEN
 		}
 		const result = await axios.post(`${API}/academic/lecturer`, payload)
                         .then(response => {
-                          console.log(response);
+                          console.log('response = ', response);
                         })
                         .catch(error => {
                           console.log(error);
                         });
-		console.log(result)
+		console.log('result = ', result);
 		//const results = createClass(payload);
 		console.log('Submitted! State: ', state);
 		//console.log('Results: ', results);

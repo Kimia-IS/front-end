@@ -34,23 +34,6 @@ const CreateMataKuliah = props => {
 	const { courses } = props;
 	const listMataKuliah = courses.results;
 
-	/*const listMataKuliah = [
-		{
-			course_id: 'II1234',
-			course_name: 'Kimia Asli'
-		},
-		{
-			course_id: 'II4312',
-			course_name: 'Rekayasa Kimia'
-		},
-		{
-			course_id: 'II1242',
-			course_name: 'Kimia STI'
-		},
-	];*/
-
-
-
 	const [delKodeMataKuliah, setDelKodeMataKuliah] = React.useState("");
 	const [state, setState] = React.useState();
 

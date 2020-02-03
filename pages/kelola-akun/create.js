@@ -11,6 +11,10 @@ import Select from '@material-ui/core/Select';
 import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
+import axios from "axios";
+import { API } from "../../config";
+import PropTypes from 'prop-types';
+import { connect } from "react-redux";
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -26,74 +30,111 @@ const useStyles = makeStyles(theme => ({
 export default function CreateAkun() {
 	const classes = useStyles();
 
-	const [tipeMahasiswa, setTipeMahasiswa] = React.useState('');
+	const [role, setRole] = React.useState("");
+  const [state, setState] = React.useState();
 
-	const handleChangeTipeMahasiswa = event => {
-		setTipeMahasiswa(event.target.value);
-	};
+  const handleInputChange = (e) => setState({
+      ...state,
+      [e.target.name]: e.target.value
+  })
+
+  function handleChangeRole(event) {
+    setRole(event.target.value);
+  }
+
+  React.useEffect(() => {
+     console.log('hehe')
+  }, [state]);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    let payload = {
+      user_id: state.user_id,
+      email: state.email,
+      name: state.name,
+      role: role
+    }
+    const result = await axios.post(`${API}/auth/register`, payload)
+                        .then(response => {
+                          console.log(response);
+                        })
+                        .catch(error => {
+                          console.log(error);
+                        });
+    console.log(result);
+    //const results = createClass(payload);
+    console.log('Submitted! State: ', state);
+    //console.log('Results: ', results);
+    /*if (results) {
+      router.push('/akademik');
+    }*/
+  }
 
   return (
     <div>
-      <Grid container spacing={3}>
-      	<Grid item xs={12}>
-          <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
-            <Link color="inherit" href="/dashboard">
-              Dashboard
-            </Link>
-            <Link color="inherit" href="/kelola-akun">
-              Kelola Akun
-            </Link>
-            <Typography color="textPrimary">Buat Akun Baru</Typography>
-          </Breadcrumbs>
+      <form onSubmit={handleSubmit}>
+        <Grid container spacing={3}>
+        	<Grid item xs={12}>
+            <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
+              <Link color="inherit" href="/dashboard">
+                Dashboard
+              </Link>
+              <Link color="inherit" href="/kelola-akun">
+                Kelola Akun
+              </Link>
+              <Typography color="textPrimary">Buat Akun Baru</Typography>
+            </Breadcrumbs>
+          </Grid>
+        	<Grid item xs={12}>
+            <Typography variant="h4" gutterBottom>
+  	        Buat Akun Baru
+  	      </Typography>
+          </Grid>
+          <Grid item xs={12} md={3}>
+            <TextField label="Nama" name="name" onChange={handleInputChange} variant="outlined" fullWidth required />
+          </Grid>
+          <Grid item xs={12} md={5}>
+            <TextField label="NIP / ID" name="user_id" onChange={handleInputChange} variant="outlined" fullWidth required />
+          </Grid>
+          <Grid item xs={12} md={5}>
+            <TextField label="Email" name="email" onChange={handleInputChange} variant="outlined" fullWidth required />
+          </Grid>
+          <Grid item xs={12} md={3}>
+            <FormControl variant="outlined" required className={classes.formControl}>
+    	        <InputLabel id="demo-simple-select-label">Peran</InputLabel>
+    	        <Select
+    	          labelId="demo-simple-select-label"
+    	          value={role}
+    	          onChange={handleChangeRole}
+    	        >
+                <MenuItem value="" disabled>
+                  Pilih Peran
+                </MenuItem>
+    	          <MenuItem value={1}>Super admin</MenuItem>
+    	          <MenuItem value={2}>Admin akademik</MenuItem>
+    	          <MenuItem value={3}>Admin non-akademik</MenuItem>
+    	          <MenuItem value={4}>Tenaga pendidik</MenuItem>
+                <MenuItem value={5}>Dosen</MenuItem>
+    	          <MenuItem value={6}>Kepala program studi</MenuItem>
+    	        </Select>
+    	      </FormControl>
+          </Grid>
+          <Grid item xs={12}>
+          	<Grid container spacing={3}>
+  		        <Grid item xs={12} md={2}>
+    			      <Button variant="outlined" color="secondary" fullWidth href="/kelola-akun">
+        					Batal
+      				  </Button>
+      				</Grid>
+  		        <Grid item xs={12} md={3}>
+    			      <Button variant="outlined" type="submit" color="primary" fullWidth>
+        					Buat
+      				  </Button>
+      				</Grid>
+      			</Grid>
+          </Grid>
         </Grid>
-      	<Grid item xs={12}>
-          <Typography variant="h4" gutterBottom>
-	        Buat Akun Baru
-	      </Typography>
-        </Grid>
-        <Grid item xs={12} md={3}>
-          <TextField id="kode_matkul" label="Nama" variant="outlined" fullWidth required />
-        </Grid>
-        <Grid item xs={12} md={5}>
-          <TextField id="nama_matkul" label="NIP / ID" variant="outlined" fullWidth required />
-        </Grid>
-        <Grid item xs={12} md={5}>
-          <TextField id="kode_matkul" label="Email" variant="outlined" fullWidth required />
-        </Grid>
-        <Grid item xs={12} md={3}>
-          <FormControl variant="outlined" className={classes.formControl}>
-	        <InputLabel id="demo-simple-select-label">Peran</InputLabel>
-	        <Select
-	          labelId="demo-simple-select-label"
-	          id="demo-simple-select"
-	          value={tipeMahasiswa}
-	          onChange={handleChangeTipeMahasiswa}
-	        >
-	          <MenuItem value="dalam">Dosen</MenuItem>
-	          <MenuItem value="dalam">Admin akademik</MenuItem>
-	          <MenuItem value="luar">Admin penelitian</MenuItem>
-	          <MenuItem value="luar">Admin pengabdian masyarakat</MenuItem>
-	          <MenuItem value="luar">Admin publikasi</MenuItem>
-	          <MenuItem value="dalam">Tenaga pendidik</MenuItem>
-	          <MenuItem value="dalam">Kepala program studi</MenuItem>
-	        </Select>
-	      </FormControl>
-        </Grid>
-        <Grid item xs={12}>
-        	<Grid container spacing={3}>
-		        <Grid item xs={12} md={2}>
-			      <Button variant="outlined" color="secondary" fullWidth href="/kelola-akun">
-					Batal
-				  </Button>
-				</Grid>
-		        <Grid item xs={12} md={3}>
-			      <Button variant="outlined" color="primary" fullWidth href="/kelola-akun">
-					Buat
-				  </Button>
-				</Grid>
-			</Grid>
-        </Grid>
-      </Grid>
+      </form>
   	</div>
   );
 }
