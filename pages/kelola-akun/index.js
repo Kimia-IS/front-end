@@ -16,9 +16,8 @@ const Index = props => {
 
   const [state] = React.useState({
     columns: [
-      { title: 'No', field: 'no' },
-      { title: 'Nama', field: 'name' },
       { title: 'NIP / ID', field: 'user_id' },
+      { title: 'Nama', field: 'name' },
       { title: 'Email', field: 'email' },
       { title: 'Peran', field: 'role' }
     ],
