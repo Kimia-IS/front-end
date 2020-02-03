@@ -11,7 +11,7 @@ export default function LoginDosen() {
       <Grid container spacing={3}>
       	<Grid item xs={12}>
           <Typography variant="h4" gutterBottom>
-	        Login sebagai Dosen
+	        Login sebagai Dosen atau Tendik
 	      </Typography>
         </Grid>
         <Grid item xs={12}>
@@ -36,7 +36,7 @@ export default function LoginDosen() {
 	          Lupa kata sandi? <Link href="/recover">Reset</Link>
 	        </Typography>
 	        {/*<Typography variant="subtitle1" gutterBottom>
-	          Belum terdaftar? <a href="/dosen/register">Daftar</a>
+	          Belum terdaftar? <a href="/user/register">Daftar</a>
 	        </Typography>*/}
         </Grid>
       </Grid>

@@ -53,7 +53,7 @@ export default function Header() {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          <MenuItem><Link color="inherit" href="/dosen/login">Login dosen</Link></MenuItem>
+          <MenuItem><Link color="inherit" href="/user/login">Login pengguna</Link></MenuItem>
           <MenuItem><Link color="inherit" href="/admin/login">Login admin</Link></MenuItem>
         </Menu>
       </Toolbar>

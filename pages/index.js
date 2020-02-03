@@ -58,14 +58,14 @@ export default function Index() {
         <Grid item xs={12} md={4}>
           <Card className={classes.card}>
             <CardActionArea>
-              <Link href="/dosen/login">
+              <Link href="/user/login">
                 <CardMedia
                   className={classes.media}
                   image="/static/images/home-dosen.jpg"
-                  title="Dosen"
+                  title="User"
                 />
                 <Typography variant="h6" className={classes.typography} align="center" gutterBottom>
-                  Login sebagai Dosen
+                  Login sebagai Pengguna
                 </Typography>
               </Link>
             </CardActionArea>
