@@ -7,46 +7,22 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import PropTypes from 'prop-types';
+import { connect } from "react-redux";
+import { getAllUsers } from "../../store/actions/usersActions";
 
-export default function Index() {
+const Index = props => {
+  const { users } = props;
+
   const [state] = React.useState({
     columns: [
       { title: 'No', field: 'no' },
-      { title: 'Nama', field: 'nama' },
+      { title: 'Nama', field: 'name' },
       { title: 'NIP / ID', field: 'user_id' },
       { title: 'Email', field: 'email' },
-      { title: 'Peran', field: 'role' },
-      { title: 'Verifikasi', field: 'verified' }
+      { title: 'Peran', field: 'role' }
     ],
-    data: [
-      {
-        id: 1,
-        no: 1,
-        nama: 'Feby Eliana',
-        user_id: '1234',
-        email: 'feby@chem.itb.ac.id',
-        role: 'Super admin',
-        verified: 'Sudah'
-      },
-      {
-        id: 2,
-        no: 2,
-        nama: 'Vincent Siauw',
-        user_id: '1235',
-        email: 'vincent@chem.itb.ac.id',
-        role: 'Admin akademik',
-        verified: 'Belum'
-      },
-      {
-        id: 3,
-        no: 3,
-        nama: 'Handajaya Rusli',
-        user_id: '19123884202',
-        email: 'hans@chem.itb.ac.id',
-        role: 'Dosen',
-        verified: 'Sudah'
-      },
-    ],
+    data: users,
   });
 
   const router = useRouter();
@@ -79,7 +55,7 @@ export default function Index() {
               {
                 icon: 'edit',
                 tooltip: 'Edit',
-                onClick: () => { router.push('/kelola-akun/edit/' + 'id'); }
+                onClick: () => { router.push('/kelola-akun/edit/' + rowData.id); }
               },
               {
                 icon: 'delete',
@@ -93,3 +69,18 @@ export default function Index() {
     </div>
   );
 }
+
+Index.getInitialProps = async ctx => {
+  const { users } = await ctx.store.dispatch(getAllUsers());
+  return { users };
+};
+
+Index.propTypes = {
+  users: PropTypes.any
+};
+
+const mapStateToProps = state => ({
+  users: state.usersReducer.users
+});
+
+export default connect(mapStateToProps)(Index);

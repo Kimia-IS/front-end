@@ -14,9 +14,6 @@ export default (state = {}, action) => {
       case actions.CREATE_CLASS:
       return { ...state };   // BENERIN
 
-    /*case actions.GET_USER:
-      return { ...state, user: action.user };*/
-
     default:
       return state;
   }

@@ -48,8 +48,8 @@ export default function CreateAkun() {
         </Grid>
       	<Grid item xs={12}>
           <Typography variant="h4" gutterBottom>
-	        Edit Akun [ID]
-	      </Typography>
+  	        Edit Akun [ID]
+  	      </Typography>
         </Grid>
         <Grid item xs={12} md={3}>
           <TextField id="kode_matkul" value="filled" label="Nama" variant="outlined" fullWidth required />

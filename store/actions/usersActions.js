@@ -3,13 +3,12 @@ import { API } from "../../config";
 
 import actions from "./index";
 
-export const getTest = () => async dispatch => {
-  const users = await axios.get(`${API}/id/province`);
-  console.log(users.data);
-  return dispatch({ type: actions.GET_TEST, users: users.data });
+export const getAllUsers = () => async dispatch => {
+  const lecturers = await axios.get(`${API}/lecturer`);
+  console.log('lecturers = ', lecturers.data);
+  const admins = await axios.get(`${API}/admin`);
+  console.log('admins = ', admins.data);
+  let users = [...lecturers.data.results, ...admins.data.results];
+  console.log('users = ', users);
+  return dispatch({ type: actions.GET_ALL_USERS, users: users });
 };
-
-/*export const getUser = id => async dispatch => {
-  const user = await axios.get(`/users/${id}`);
-  return dispatch({ type: actions.GET_USER, user: user.data });
-};*/
