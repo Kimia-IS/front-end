@@ -55,7 +55,7 @@ const Index = props => {
               {
                 icon: 'edit',
                 tooltip: 'Edit',
-                onClick: () => { router.push('/kelola-akun/edit/' + rowData.id); }
+                onClick: (event, rowData) => { router.push('/kelola-akun/edit/' + rowData.user_id); }
               },
               {
                 icon: 'delete',
