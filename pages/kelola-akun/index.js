@@ -10,6 +10,9 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { getAllUsers } from "../../store/actions/usersActions";
+import Swal from 'sweetalert2';
+import axios from "axios";
+import { API } from "../../config";
 
 const Index = props => {
   const { users } = props;
@@ -68,7 +71,61 @@ const Index = props => {
               {
                 icon: 'delete',
                 tooltip: 'Delete',
-                onClick: (event, rowData) => { confirm("Apakah Anda yakin ingin menghapus " + rowData.nama + " - " + rowData.user_id + "?"); }
+                onClick: (event, rowData) => { 
+                  event.preventDefault();
+                  Swal.fire({
+                    title: `Hapus akun ${rowData.name}?`,
+                    text: 'Akun akan dihapus secara permanen',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Hapus',
+                    cancelButtonText: 'Batal',
+                  }).then(async (result) => {
+                    if (result.value) {
+                      if ((rowData.role == 'Dosen') || (rowData.role == 'Admin Akademik') || (rowData.role == 'Admin Non-Akademik')) {
+                        const result = await axios.delete(`${API}/auth/lecturer/delete/${rowData.user_id}`)
+                                            .then(response => {
+                                              Swal.fire(
+                                                'Berhasil!',
+                                                'Akun berhasil dihapus.',
+                                                'success'
+                                              );
+                                            })
+                                            .catch(error => {
+                                              Swal.fire(
+                                                'Gagal!',
+                                                'Akun gagal dihapus.',
+                                                'error'
+                                              );
+                                            });
+                      }
+                      else if ((rowData.role == 'Tendik') || (rowData.role == 'Dosen') || (rowData.role == 'Kaprodi')) {
+                        const result = await axios.delete(`${API}/auth/admin/delete/${rowData.user_id}`)
+                                            .then(response => {
+                                              Swal.fire(
+                                                'Tersimpan!',
+                                                'Akun berhasil dihapus.',
+                                                'success'
+                                              );
+                                            })
+                                            .catch(error => {
+                                              Swal.fire(
+                                                'Gagal!',
+                                                'Akun gagal dihapus.',
+                                                'error'
+                                              );
+                                            });
+                      }
+                      else {
+                        Swal.fire(
+                          'Gagal!',
+                          'No role selected.',
+                          'error'
+                        );
+                      }
+                    }
+                  })
+                }
               }
             ]}
           />

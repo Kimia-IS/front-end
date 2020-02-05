@@ -15,6 +15,7 @@ import axios from "axios";
 import { API } from "../../config";
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
+import Swal from 'sweetalert2';
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -48,26 +49,44 @@ export default function CreateAkun() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    let payload = {
-      user_id: state.user_id,
-      email: state.email,
-      name: state.name,
-      role: role
-    }
-    const result = await axios.post(`${API}/auth/register`, payload)
-                        .then(response => {
-                          console.log(response);
-                        })
-                        .catch(error => {
-                          console.log(error);
-                        });
-    console.log(result);
-    //const results = createClass(payload);
-    console.log('Submitted! State: ', state);
-    //console.log('Results: ', results);
-    /*if (results) {
-      router.push('/akademik');
-    }*/
+    Swal.fire({
+      title: 'Buat baru?',
+      text: 'Pastikan data sudah terisi dengan benar',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Buat',
+      cancelButtonText: 'Batal',
+    }).then(async (result) => {
+      if (result.value) {
+        const payload = {
+          user_id: state.user_id,
+          email: state.email,
+          name: state.name,
+          role: role
+        }
+        const result = await axios.post(`${API}/auth/register`, payload)
+                                  .then(response => {
+                                    setState({
+                                      user_id: "",
+                                      email: "",
+                                      name: "",
+                                      role: ""
+                                    });
+                                    Swal.fire(
+                                      'Tersimpan!',
+                                      'Akun berhasil dibuat.',
+                                      'success'
+                                    );
+                                  })
+                                  .catch(error => {
+                                    Swal.fire(
+                                      'Gagal!',
+                                      'Akun gagal dibuat.',
+                                      'error'
+                                    );
+                                  });
+      }
+    })
   }
 
   return (

@@ -21,7 +21,6 @@ import Swal from 'sweetalert2';
 
 const useStyles = makeStyles(theme => ({
   formControl: {
-    // margin: theme.spacing(1),
     minWidth: 300,
     fullWidth: true,
   },
@@ -137,7 +136,7 @@ const Edit = props => {
           </Grid>
           <Grid item xs={12}>
             <Typography variant="h4" gutterBottom>
-              Edit Akun - {state.id}
+              Edit Akun - {user.name}
             </Typography>
           </Grid>
           <Grid item xs={12} md={3}>
