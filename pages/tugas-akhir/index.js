@@ -7,38 +7,24 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import PropTypes from 'prop-types';
+import { connect } from "react-redux";
+import { getAllFinalTasks } from "../../store/actions/tugasAkhirActions";
+import Swal from 'sweetalert2';
+import axios from "axios";
+import { API } from "../../config";
 
-export default function Index() {
+const Index = props => {
+  const { finalTasks } = props;
+
   const [state] = React.useState({
     columns: [
-      { title: 'No', field: 'no' },
-      { title: 'Judul TA', field: 'judul_ta' },
-      { title: 'Nama Mahasiswa', field: 'nama_mahasiswa' },
-      { title: 'Nama Dosen Pembimbing', field: 'nama_dosbing' }
+      { title: 'Judul Tugas Akhir', field: 'title' },
+      { title: 'Nama Mahasiswa', field: 'student_name' },
+      { title: 'Nama Dosen Pembimbing', field: 'lecturer_name' },
+      { title: 'Tanggal Mulai', field: 'starting_date' }
     ],
-    data: [
-      {
-        id: 1,
-        no: 1,
-        judul_ta: 'Pengaruh CO2 terhadap NO2',
-        nama_mahasiswa: 'Feby Eliana',
-        nama_dosbing: 'Handajaya Rusli'
-      },
-      {
-        id: 2,
-        no: 2,
-        judul_ta: 'Pengaruh NaOH terhadap CO2',
-        nama_mahasiswa: 'Vincent Siauw',
-        nama_dosbing: 'Handajaya Rusli'
-      },
-      {
-        id: 3,
-        no: 3,
-        judul_ta: 'Pengaruh H2O terhadap O2',
-        nama_mahasiswa: 'Alfian Maulana',
-        nama_dosbing: 'Handajaya Rusli'
-      },
-    ],
+    data: finalTasks.results,
   });
 
   const router = useRouter();
@@ -71,18 +57,46 @@ export default function Index() {
               {
                 icon: 'visibility',
                 tooltip: 'See More',
-                onClick: () => { router.push('/tugas-akhir/' + 'id'); }
+                onClick: (event, rowData) => { router.push('/tugas-akhir/' + rowData.id); }
               },
               {
                 icon: 'edit',
                 tooltip: 'Edit',
-                onClick: () => { router.push('/tugas-akhir/edit/' + 'id'); }
+                onClick: (event, rowData) => { router.push('/tugas-akhir/edit/' + rowData.id); }
               },
               {
                 icon: 'delete',
                 tooltip: 'Delete',
-                onClick: (event, rowData) => { confirm("Apakah Anda yakin ingin menghapus " + rowData.judul_ta + " - " + rowData.nama_mahasiswa + "?"); }
-              }
+                onClick: (event, rowData) => {
+                  event.preventDefault();
+                  Swal.fire({
+                    title: `Hapus TA ${rowData.title} - ${rowData.student_name}?`,
+                    text: 'Tugas akhir akan dihapus secara permanen',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Hapus',
+                    cancelButtonText: 'Batal',
+                  }).then(async (result) => {
+                    if (result.value) {
+                      await axios.delete(`${API}/finalTask?id=${rowData.id}`)
+                                  .then(() => {
+                                    Swal.fire(
+                                      'Berhasil!',
+                                      'Tugas akhir berhasil dihapus.',
+                                      'success'
+                                    );
+                                  })
+                                  .catch(error => {
+                                    Swal.fire(
+                                      'Gagal!',
+                                      error,
+                                      'error'
+                                    );
+                                  });
+                      }
+                    })
+                  }
+                }
             ]}
           />
         </Grid>
@@ -90,3 +104,18 @@ export default function Index() {
     </div>
   );
 }
+
+Index.getInitialProps = async ctx => {
+  const { finalTasks } = await ctx.store.dispatch(getAllFinalTasks());
+  return { finalTasks };
+};
+
+Index.propTypes = {
+  finalTasks: PropTypes.any
+};
+
+const mapStateToProps = state => ({
+  finalTasks: state.tugasAkhirReducer.finalTasks
+});
+
+export default connect(mapStateToProps)(Index);
