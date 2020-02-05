@@ -63,10 +63,6 @@ const CreateKelas = props => {
 	    [e.target.name]: e.target.value
 	})
 
-  	function handleChangeSelectSksDosen(event) {
-    	setSksDosen(event.target.value);
-  	}
-
   	function handleChangeSelectKelas(event) {
     	setKelas(event.target.value);
   	}
@@ -79,9 +75,7 @@ const CreateKelas = props => {
 		setTotalSKS(sum);
 
 		let temp = listMataKuliah.find(obj => { return obj.course_id == kodeMataKuliah });
-		if (temp) {
-			setJumlahKelas(temp.total_classes);
-		}
+		if (temp) { setJumlahKelas(temp.total_classes) }
 	}, [sksDosen, kodeMataKuliah]);
 
 	const handleSubmit = async (event) => {

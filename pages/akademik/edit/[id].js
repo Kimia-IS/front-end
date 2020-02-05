@@ -44,7 +44,7 @@ const EditKelas = props => {
   const currentClass = listKelas.find(obj => { return obj.id == id });
   const tempTotalKelas = listMataKuliah.find(obj => { return obj.course_id == currentClass.course_id }).total_classes;
 
-  const [count, setCount] = React.useState(2);
+  const [count/*, setCount*/] = React.useState(2);
   const [jumlahKelas, setJumlahKelas] = React.useState(tempTotalKelas);
   const [kelas, setKelas] = React.useState(currentClass.class);
   const [totalSKS, setTotalSKS] = React.useState(currentClass.total_credit);
@@ -71,10 +71,6 @@ const EditKelas = props => {
       ...sksDosen,
       [e.target.name]: e.target.value
   })
-
-    function handleChangeSelectSksDosen(event) {
-      setSksDosen(event.target.value);
-    }
 
     function handleChangeSelectKelas(event) {
       setKelas(event.target.value);
@@ -112,7 +108,6 @@ const EditKelas = props => {
               total_credit: totalSKS,
               lecturer: [lecturer]
             }
-            console.log(payload);
             await axios.put(`${API}/academic/lecturer?id=${id}`, payload)
                       .then(() => {
                         Swal.fire(
@@ -133,13 +128,13 @@ const EditKelas = props => {
       })
   }
 
-  const handleTambahDosen = () => {
+  /*const handleTambahDosen = () => {
     setCount(count => count + 1);
   };
 
   const handleKurangDosen = () => {
     setCount(count => count - 1);
-  };
+  };*/
 
   const fieldKelas = () => {
       let field = [];
