@@ -82,7 +82,7 @@ const Index = props => {
                     cancelButtonText: 'Batal',
                   }).then(async (result) => {
                     if (result.value) {
-                      if ((rowData.role == 'Dosen') || (rowData.role == 'Admin Akademik') || (rowData.role == 'Admin Non-Akademik')) {
+                      if ((rowData.role == 'Dosen') || (rowData.role == 'Tendik') || (rowData.role == 'Kaprodi')) {
                         await axios.delete(`${API}/auth/lecturer/delete/${rowData.user_id}`)
                                     .then(() => {
                                       Swal.fire(
@@ -99,11 +99,11 @@ const Index = props => {
                                       );
                                     });
                       }
-                      else if ((rowData.role == 'Tendik') || (rowData.role == 'Dosen') || (rowData.role == 'Kaprodi')) {
+                      else if ((rowData.role == 'Super Admin') || (rowData.role == 'Admin Akademik') || (rowData.role == 'Admin Non-Akademik')) {
                         await axios.delete(`${API}/auth/admin/delete/${rowData.user_id}`)
                                     .then(() => {
                                       Swal.fire(
-                                        'Tersimpan!',
+                                        'Berhasil!',
                                         'Akun berhasil dihapus.',
                                         'success'
                                       );
