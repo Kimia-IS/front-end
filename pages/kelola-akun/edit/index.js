@@ -1,5 +1,4 @@
 import React from 'react';
-import { useRouter }  from 'next/router';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
@@ -69,21 +68,21 @@ const Edit = props => {
             name: state.name,
             role: role
           }
-          const result = await axios.put(`${API}/auth/lecturer/edit/${state.user_id}`, payload)
-                              .then(response => {
-                                Swal.fire(
-                                  'Tersimpan!',
-                                  'Data berhasil diubah.',
-                                  'success'
-                                );
-                              })
-                              .catch(error => {
-                                Swal.fire(
-                                  'Gagal!',
-                                  'Data gagal diubah.',
-                                  'error'
-                                );
-                              });
+          await axios.put(`${API}/auth/lecturer/edit/${state.user_id}`, payload)
+                      .then(() => {
+                        Swal.fire(
+                          'Tersimpan!',
+                          'Data berhasil diubah.',
+                          'success'
+                        );
+                      })
+                      .catch(error => {
+                        Swal.fire(
+                          'Gagal!',
+                          error,
+                          'error'
+                        );
+                      });
         }
         else if ((role == 1) || (role == 2) || (role == 3)) {
           const payload = {
@@ -92,21 +91,21 @@ const Edit = props => {
             name: state.name,
             role: role
           }
-          const result = await axios.put(`${API}/auth/admin/edit/${state.user_id}`, payload)
-                              .then(response => {
-                                Swal.fire(
-                                  'Tersimpan!',
-                                  'Data berhasil diubah.',
-                                  'success'
-                                );
-                              })
-                              .catch(error => {
-                                Swal.fire(
-                                  'Gagal!',
-                                  'Data gagal diubah.',
-                                  'error'
-                                );
-                              });
+          await axios.put(`${API}/auth/admin/edit/${state.user_id}`, payload)
+                      .then(() => {
+                        Swal.fire(
+                          'Tersimpan!',
+                          'Data berhasil diubah.',
+                          'success'
+                        );
+                      })
+                      .catch(error => {
+                        Swal.fire(
+                          'Gagal!',
+                          error,
+                          'error'
+                        );
+                      });
         }
         else {
           Swal.fire(

@@ -13,13 +13,10 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import axios from "axios";
 import { API } from "../../config";
-import PropTypes from 'prop-types';
-import { connect } from "react-redux";
 import Swal from 'sweetalert2';
 
 const useStyles = makeStyles(theme => ({
   formControl: {
-    // margin: theme.spacing(1),
     minWidth: 300,
     fullWidth: true,
   },
@@ -64,28 +61,22 @@ export default function CreateAkun() {
           name: state.name,
           role: role
         }
-        const result = await axios.post(`${API}/auth/register`, payload)
-                                  .then(response => {
-                                    setState({
-                                      user_id: "",
-                                      email: "",
-                                      name: "",
-                                      role: ""
-                                    });
-                                    Swal.fire(
-                                      'Tersimpan!',
-                                      'Akun berhasil dibuat.',
-                                      'success'
-                                    );
-                                  })
-                                  .catch(error => {
-                                    Swal.fire(
-                                      'Gagal!',
-                                      'Akun gagal dibuat.',
-                                      'error'
-                                    );
-                                  });
-      }
+        await axios.post(`${API}/auth/register`, payload)
+                    .then(() => {
+                      Swal.fire(
+                        'Tersimpan!',
+                        'Akun berhasil dibuat.',
+                        'success'
+                      );
+                    })
+                    .catch(error => {
+                      Swal.fire(
+                        'Gagal!',
+                        error,
+                        'error'
+                      );
+                    });
+}
     })
   }
 

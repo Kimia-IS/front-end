@@ -83,38 +83,38 @@ const Index = props => {
                   }).then(async (result) => {
                     if (result.value) {
                       if ((rowData.role == 'Dosen') || (rowData.role == 'Admin Akademik') || (rowData.role == 'Admin Non-Akademik')) {
-                        const result = await axios.delete(`${API}/auth/lecturer/delete/${rowData.user_id}`)
-                                            .then(response => {
-                                              Swal.fire(
-                                                'Berhasil!',
-                                                'Akun berhasil dihapus.',
-                                                'success'
-                                              );
-                                            })
-                                            .catch(error => {
-                                              Swal.fire(
-                                                'Gagal!',
-                                                'Akun gagal dihapus.',
-                                                'error'
-                                              );
-                                            });
+                        await axios.delete(`${API}/auth/lecturer/delete/${rowData.user_id}`)
+                                    .then(() => {
+                                      Swal.fire(
+                                        'Berhasil!',
+                                        'Akun berhasil dihapus.',
+                                        'success'
+                                      );
+                                    })
+                                    .catch(error => {
+                                      Swal.fire(
+                                        'Gagal!',
+                                        error,
+                                        'error'
+                                      );
+                                    });
                       }
                       else if ((rowData.role == 'Tendik') || (rowData.role == 'Dosen') || (rowData.role == 'Kaprodi')) {
-                        const result = await axios.delete(`${API}/auth/admin/delete/${rowData.user_id}`)
-                                            .then(response => {
-                                              Swal.fire(
-                                                'Tersimpan!',
-                                                'Akun berhasil dihapus.',
-                                                'success'
-                                              );
-                                            })
-                                            .catch(error => {
-                                              Swal.fire(
-                                                'Gagal!',
-                                                'Akun gagal dihapus.',
-                                                'error'
-                                              );
-                                            });
+                        await axios.delete(`${API}/auth/admin/delete/${rowData.user_id}`)
+                                    .then(() => {
+                                      Swal.fire(
+                                        'Tersimpan!',
+                                        'Akun berhasil dihapus.',
+                                        'success'
+                                      );
+                                    })
+                                    .catch(error => {
+                                      Swal.fire(
+                                        'Gagal!',
+                                        error,
+                                        'error'
+                                      );
+                                    });
                       }
                       else {
                         Swal.fire(

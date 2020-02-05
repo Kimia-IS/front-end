@@ -1,5 +1,4 @@
 import React from 'react';
-import { useRouter } from 'next/router';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
@@ -31,7 +30,6 @@ const useStyles = makeStyles(theme => ({
 
 const CreateKelas = props => {		// BUTUH GET LIST DOSEN
 	const classes = useStyles();
-	const router = useRouter();
 
 	const { courses } = props;
 	const listMataKuliah = courses.results;
