@@ -17,6 +17,7 @@
     "@material-ui/icons": "^4.5.1",
     "@material-ui/pickers": "^3.2.8",
     "axios": "^0.19.2",
+    "form-data": "^3.0.0",
     "material-table": "^1.54.2",
     "next": "9.1.1",
     "next-redux-wrapper": "^4.0.1",

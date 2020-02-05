@@ -17,10 +17,16 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
+import axios from "axios";
+import { API } from "../../config";
+import PropTypes from 'prop-types';
+import { connect } from "react-redux";
+import { getAllLecturers } from "../../store/actions/usersActions";
+import Swal from 'sweetalert2';
+import FormData from 'form-data';
 
 const useStyles = makeStyles(theme => ({
   formControl: {
-    // margin: theme.spacing(1),
     minWidth: 300,
     fullWidth: true,
   },
@@ -29,171 +35,284 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function CreateTA() {
+const CreateTA = props => {
 	const classes = useStyles();
 
-	const [tipeMahasiswa, setTipeMahasiswa] = React.useState('');
-	const [posisiDosen, setPosisiDosen] = React.useState('');
-	const [selectedDate, setSelectedDate] = React.useState(new Date('2020-01-01T21:11:54'));
+	const listDosen = props.lecturers;
 
-	const handleDateChange = date => {
-	    setSelectedDate(date);
+	var tempStore = new FormData();
+
+	const [tipeMahasiswa, setTipeMahasiswa] = React.useState('');
+	const [nipDosen, setNipDosen] = React.useState('');
+	const [posisiDosen, setPosisiDosen] = React.useState('');
+	const [tanggalMasuk, setTanggalMasuk] = React.useState(new Date('2020-01-01T21:11:54'));
+	const [tanggalLulus, setTanggalLulus] = React.useState(new Date('2020-01-01T21:11:54'));
+	const [finalTaskFiles, setFinalTaskFiles] = React.useState(new FormData());
+	const [state, setState] = React.useState();
+
+	const handleChangeState = (e) => setState({
+	    ...state,
+	    [e.target.name]: e.target.value
+	});
+
+	const handleDateChangeMasuk = date => {
+	    setTanggalMasuk(date);
+	};
+
+	const handleDateChangeLulus = date => {
+	    setTanggalLulus(date);
 	};
 
 	const handleChangeTipeMahasiswa = event => {
 		setTipeMahasiswa(event.target.value);
 	};
 
+	const handleChangeSelectNipDosen = event => {
+    	setNipDosen(event.target.value);
+  	};
+
 	const handleChangePosisiDosen = event => {
 		setPosisiDosen(event.target.value);
 	};
 
+	const handleFileUpload = (e) => {
+		const files = e.target.files; 
+		
+		for (let i = 0, file; file = files[i]; i++) {
+			console.log('file = ', file);
+			tempStore.append("file", file);
+		}
+		console.log('tempStore = ', tempStore);
+		setFinalTaskFiles(finalTaskFiles => tempStore);
+		console.log(finalTaskFiles);
+	}
+
+	const handleSubmit = async (event) => {
+		event.preventDefault();
+		Swal.fire({
+	      title: 'Buat baru?',
+	      text: 'Pastikan data sudah terisi dengan benar',
+	      icon: 'warning',
+	      showCancelButton: true,
+	      confirmButtonText: 'Buat',
+	      cancelButtonText: 'Batal',
+	    }).then(async (result) => {
+	      if (result.value) {
+			let payload = {
+				student_name: state.student_name,
+				student_nim: state.student_nim,
+				student_type: tipeMahasiswa,
+				title: state.title,
+				starting_date: tanggalMasuk,
+				graduation_date: tanggalLulus,
+				lecturer_nip: nipDosen,
+				lecturer_position: posisiDosen,
+				final_task_file: tempStore
+			}
+			console.log(payload);
+	        await axios.post(`${API}/finalTask`, payload, {
+					    headers: {
+					      'Content-Type': 'multipart/form-data'
+					    }
+					})
+                    .then((response) => {
+                      console.log(response);
+                      Swal.fire(
+                        'Tersimpan!',
+                        'Tugas akhir berhasil dibuat.',
+                        'success'
+                      );
+                    })
+                    .catch(error => {
+                      Swal.fire(
+                        'Gagal!',
+                        error,
+                        'error'
+                      );
+                    });
+	      }
+	    })
+	}
+
   return (
     <div>
-      <Grid container spacing={3}>
-      	<Grid item xs={12}>
-          <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
-            <Link color="inherit" href="/dashboard">
-              Dashboard
-            </Link>
-            <Link color="inherit" href="/tugas-akhir">
-              Tugas Akhir
-            </Link>
-            <Typography color="textPrimary">Buat Tugas Akhir Baru</Typography>
-          </Breadcrumbs>
-        </Grid>
-      	<Grid item xs={12}>
-          <Typography variant="h4" gutterBottom>
-	        Buat Tugas Akhir Baru
-	      </Typography>
-        </Grid>
-        <Grid item xs={12} md={3}>
-          <TextField id="nim" label="NIM" variant="outlined" fullWidth required />
-        </Grid>
-        <Grid item xs={12} md={5}>
-          <TextField id="nama_mahasiswa" label="Nama mahasiswa" variant="outlined" fullWidth required />
-        </Grid>
-        <Grid item xs={12} md={8}>
-        	<Grid container item spacing={3} xs={12}>
-		        <Grid item xs={12} md={5}>
-		          <FormControl variant="outlined" className={classes.formControl}>
-			        <InputLabel id="demo-simple-select-label">Tipe mahasiswa</InputLabel>
-			        <Select
-			          labelId="demo-simple-select-label"
-			          id="demo-simple-select"
-			          value={tipeMahasiswa}
-			          onChange={handleChangeTipeMahasiswa}
-			        >
-			          <MenuItem value="dalam">Dalam</MenuItem>
-			          <MenuItem value="luar">Luar</MenuItem>
-			        </Select>
-			      </FormControl>
-		        </Grid>
-		        <Grid item xs={12} md={7}>
-		          <TextField id="dosen_1" label="Nama dosen pembimbing" value="Handajaya Rusli" variant="outlined" disabled fullWidth />
-		        </Grid>
-        	</Grid>
-        </Grid>
-        <Grid item xs={12} md={8}>
-          <FormControl variant="outlined" className={classes.formControl}>
-	        <InputLabel id="asd">Posisi dosen</InputLabel>
-	        <Select
-	          labelId="asd"
-	          id="asdasd"
-	          value={posisiDosen}
-	          onChange={handleChangePosisiDosen}
-	        >
-	          <MenuItem value="pembimbing">Pembimbing</MenuItem>
-	          <MenuItem value="co-pembimbing">Co-pembimbing</MenuItem>
-	          <MenuItem value="penguji">Penguji</MenuItem>
-	        </Select>
-	      </FormControl>
-        </Grid>
-        <Grid item xs={12} md={8}>
-          <TextField id="judul_ta" label="Judul tugas akhir" variant="outlined" fullWidth required />
-        </Grid>
-        <Grid item xs={12} md={8}>
-        	<Grid container spacing={3}>
-		        <Grid item xs={12} md={6}>
-		          	<MuiPickersUtilsProvider utils={DateFnsUtils}>
-				      <Grid container justify="space-around">
-				        <KeyboardDatePicker
-				          disableToolbar
-				          variant="inline"
-				          format="MM/dd/yyyy"
-				          margin="normal"
-				          id="date-picker-inline"
-				          label="Tanggal masuk"
-				          value={selectedDate}
-				          onChange={handleDateChange}
-				          KeyboardButtonProps={{
-				            'aria-label': 'change date',
-				          }}
-				          fullWidth
-				        />
-				      </Grid>
-				    </MuiPickersUtilsProvider>
-		        </Grid>
-		        <Grid item xs={12} md={6}>
-		          	<MuiPickersUtilsProvider utils={DateFnsUtils}>
-				      <Grid container justify="space-around">
-				        <KeyboardDatePicker
-				          disableToolbar
-				          variant="inline"
-				          format="MM/dd/yyyy"
-				          margin="normal"
-				          id="date-picker-inline"
-				          label="Tanggal lulus"
-				          value={selectedDate}
-				          onChange={handleDateChange}
-				          KeyboardButtonProps={{
-				            'aria-label': 'change date',
-				          }}
-				          fullWidth
-				        />
-				      </Grid>
-				    </MuiPickersUtilsProvider>
+    	<form onSubmit={handleSubmit}>
+	      <Grid container spacing={3}>
+	      	<Grid item xs={12}>
+	          <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
+	            <Link color="inherit" href="/dashboard">
+	              Dashboard
+	            </Link>
+	            <Link color="inherit" href="/tugas-akhir">
+	              Tugas Akhir
+	            </Link>
+	            <Typography color="textPrimary">Buat Tugas Akhir Baru</Typography>
+	          </Breadcrumbs>
+	        </Grid>
+	      	<Grid item xs={12}>
+	          <Typography variant="h4" gutterBottom>
+		        Buat Tugas Akhir Baru
+		      </Typography>
+	        </Grid>
+	        <Grid item xs={12} md={3}>
+	          <TextField label="NIM" name="student_nim" type="number" onChange={handleChangeState} variant="outlined" fullWidth required />
+	        </Grid>
+	        <Grid item xs={12} md={5}>
+	          <TextField label="Nama mahasiswa" name="student_name" onChange={handleChangeState} variant="outlined" fullWidth required />
+	        </Grid>
+	        <Grid item xs={12} md={3}>
+	          <FormControl variant="outlined" required className={classes.formControl}>
+		        <InputLabel id="tipe">Tipe mahasiswa</InputLabel>
+		        <Select
+		          labelId="tipe"
+		          value={tipeMahasiswa}
+		          onChange={handleChangeTipeMahasiswa}
+		        >
+			      <MenuItem value="" disabled>
+		            Pilih Tipe Mahasiswa
+		          </MenuItem>
+		          <MenuItem value="dalam">Dalam</MenuItem>
+		          <MenuItem value="luar">Luar</MenuItem>
+		        </Select>
+		      </FormControl>
+	        </Grid>
+	        <Grid item xs={12} md={3}>
+	          <FormControl variant="outlined" fullWidth required className={classes.formControl}>
+		        <InputLabel id="demo-simple-select-label1">Dosen Pembimbing</InputLabel>
+		        <Select
+		          labelId="demo-simple-select-label1"
+		          value={nipDosen}
+		          onChange={handleChangeSelectNipDosen}
+		        >
+		          <MenuItem value="" disabled>
+		            Pilih Dosen
+		          </MenuItem>
+		          {listDosen.map((value, index) => {
+		            return <MenuItem key={index} value={value.user_id}>{value.user_id} - {value.name}</MenuItem>;
+		          })}
+		        </Select>
+		      </FormControl>
+	        </Grid>
+	        <Grid item xs={12} md={3}>
+	          <FormControl variant="outlined" required className={classes.formControl}>
+		        <InputLabel id="asd">Posisi dosen</InputLabel>
+		        <Select
+		          labelId="asd"
+		          value={posisiDosen}
+		          onChange={handleChangePosisiDosen}
+		        >
+		          <MenuItem value="" disabled>
+		            Pilih Posisi Dosen
+		          </MenuItem>
+		          <MenuItem value="pembimbing">Pembimbing</MenuItem>
+		          <MenuItem value="co-pembimbing">Co-pembimbing</MenuItem>
+		          <MenuItem value="penguji">Penguji</MenuItem>
+		        </Select>
+		      </FormControl>
+	        </Grid>
+	        <Grid item xs={12} md={5}>
+	          <TextField label="Judul tugas akhir" name="title" onChange={handleChangeState} variant="outlined" fullWidth required />
+	        </Grid>
+	        <Grid item xs={12} md={8}>
+	        	<Grid container spacing={3}>
+			        <Grid item xs={12} md={6}>
+			          	<MuiPickersUtilsProvider utils={DateFnsUtils}>
+					      <Grid container justify="space-around">
+					        <KeyboardDatePicker
+					          disableToolbar
+					          variant="inline"
+					          format="MM/dd/yyyy"
+					          margin="normal"
+					          id="date-picker-inline1"
+					          label="Tanggal masuk"
+					          value={tanggalMasuk}
+					          onChange={handleDateChangeMasuk}
+					          KeyboardButtonProps={{
+					            'aria-label': 'change date',
+					          }}
+					          fullWidth
+					        />
+					      </Grid>
+					    </MuiPickersUtilsProvider>
+			        </Grid>
+			        <Grid item xs={12} md={6}>
+			          	<MuiPickersUtilsProvider utils={DateFnsUtils}>
+					      <Grid container justify="space-around">
+					        <KeyboardDatePicker
+					          disableToolbar
+					          variant="inline"
+					          format="MM/dd/yyyy"
+					          margin="normal"
+					          id="date-picker-inline2"
+					          label="Tanggal lulus"
+					          value={tanggalLulus}
+					          onChange={handleDateChangeLulus}
+					          KeyboardButtonProps={{
+					            'aria-label': 'change date',
+					          }}
+					          fullWidth
+					        />
+					      </Grid>
+					    </MuiPickersUtilsProvider>
+			        </Grid>
 		        </Grid>
 	        </Grid>
-        </Grid>
-        <Grid item xs={12} md={8}>
-        	<Grid container spacing={3}>
-		        <Grid item xs={12} md={4}>
-		        	<input
-					  accept="image/*"
-					  style={{ display: 'none' }}
-					  id="raised-button-file"
-					  multiple
-					  type="file"
-					/>
-					<label htmlFor="raised-button-file">
-					  <Button variant="outlined" fullWidth component="span">
-					    Upload file
+	        <Grid item xs={12} md={8}>
+	        	<Grid container spacing={3}>
+			        <Grid item xs={12} md={4}>
+			        	<input
+						  style={{ display: 'none' }}
+						  id="raised-button-file"
+						  multiple
+						  type="file"
+						  onChange={handleFileUpload}
+						/>
+						<label htmlFor="raised-button-file">
+						  <Button variant="outlined" fullWidth component="span">
+						    Upload file
+						  </Button>
+						</label> 
+			        </Grid>
+			        <Grid item xs={12} md={8}>
+			        	<Typography variant="subtitle1" gutterBottom>
+				        	{tempStore.forEach((value, index) => {
+					            return <span key={index}>{index + 1}. {value.name}<br /></span>;
+					        })}
+					    </Typography>
+			        </Grid>
+		        </Grid>
+	        </Grid>
+	        <Grid item xs={12}>
+	        	<Grid container spacing={3}>
+			        <Grid item xs={12} md={2}>
+				      <Button variant="outlined" color="secondary" fullWidth href="/tugas-akhir">
+						Batal
 					  </Button>
-					</label> 
-		        </Grid>
-		        <Grid item xs={12} md={3}>
-		        	<Typography variant="subtitle1" gutterBottom>
-				        nama_file.ext
-				      </Typography>
-		        </Grid>
+					</Grid>
+			        <Grid item xs={12} md={3}>
+				      <Button variant="outlined" type="submit" color="primary" fullWidth>
+						Simpan
+					  </Button>
+					</Grid>
+				</Grid>
 	        </Grid>
-        </Grid>
-        <Grid item xs={12}>
-        	<Grid container spacing={3}>
-		        <Grid item xs={12} md={2}>
-			      <Button variant="outlined" color="secondary" fullWidth href="/tugas-akhir">
-					Batal
-				  </Button>
-				</Grid>
-		        <Grid item xs={12} md={3}>
-			      <Button variant="outlined" color="primary" fullWidth href="/tugas-akhir">
-					Simpan
-				  </Button>
-				</Grid>
-			</Grid>
-        </Grid>
-      </Grid>
+	      </Grid>
+      </form>
   	</div>
   );
 }
+
+CreateTA.getInitialProps = async ctx => {
+  const { lecturers } = await ctx.store.dispatch(getAllLecturers());
+  return { lecturers };
+};
+
+CreateTA.propTypes = {
+  lecturers: PropTypes.any
+};
+
+const mapStateToProps = state => ({
+  lecturers: state.usersReducer.lecturers
+});
+
+export default connect(mapStateToProps)(CreateTA);
