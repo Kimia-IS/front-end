@@ -17,6 +17,7 @@ import { API } from "../../../config";
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { getUserById } from "../../../store/actions/usersActions";
+import Swal from 'sweetalert2';
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -51,54 +52,72 @@ const Edit = props => {
     setRole(event.target.value);
   }
 
-  React.useEffect(() => {
-     console.log('hehe')
-  }, [state]);
-
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    if ((role == 4) || (role == 5) || (role == 6)) {
-      const payload = {
-        nip: state.user_id,
-        email: state.email,
-        name: state.name,
-        role: role
+    Swal.fire({
+      title: 'Simpan perubahan?',
+      text: 'Pastikan data sudah terisi dengan benar',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Simpan',
+      cancelButtonText: 'Batal',
+    }).then(async (result) => {
+      if (result.value) {
+        if ((role == 4) || (role == 5) || (role == 6)) {
+          const payload = {
+            nip: state.user_id,
+            email: state.email,
+            name: state.name,
+            role: role
+          }
+          const result = await axios.put(`${API}/auth/lecturer/edit/${state.user_id}`, payload)
+                              .then(response => {
+                                Swal.fire(
+                                  'Tersimpan!',
+                                  'Data berhasil diubah.',
+                                  'success'
+                                );
+                              })
+                              .catch(error => {
+                                Swal.fire(
+                                  'Gagal!',
+                                  'Data gagal diubah.',
+                                  'error'
+                                );
+                              });
+        }
+        else if ((role == 1) || (role == 2) || (role == 3)) {
+          const payload = {
+            nip: state.user_id,
+            email: state.email,
+            name: state.name,
+            role: role
+          }
+          const result = await axios.put(`${API}/auth/admin/edit/${state.user_id}`, payload)
+                              .then(response => {
+                                Swal.fire(
+                                  'Tersimpan!',
+                                  'Data berhasil diubah.',
+                                  'success'
+                                );
+                              })
+                              .catch(error => {
+                                Swal.fire(
+                                  'Gagal!',
+                                  'Data gagal diubah.',
+                                  'error'
+                                );
+                              });
+        }
+        else {
+          Swal.fire(
+            'Gagal!',
+            'No role selected.',
+            'error'
+          );
+        }
       }
-      const result = await axios.put(`${API}/auth/lecturer/edit/${state.user_id}`, payload)
-                          .then(response => {
-                            console.log(response);
-                          })
-                          .catch(error => {
-                            console.log(error);
-                          });
-      console.log(result);
-    }
-    else if ((role == 1) || (role == 2) || (role == 3)) {
-      const payload = {
-        nip: state.user_id,
-        email: state.email,
-        name: state.name,
-        role: role
-      }
-      const result = await axios.put(`${API}/auth/admin/edit/${state.user_id}`, payload)
-                          .then(response => {
-                            console.log(response);
-                          })
-                          .catch(error => {
-                            console.log(error);
-                          });
-      console.log(result);
-    }
-    else {
-      console.log('No role selected!')
-    }
-
-    //const results = createClass(payload);
-    console.log('Submitted! State: ', state);
-    //console.log('Results: ', results);
-    /*if (results) {
-      router.push('/akademik');
-    }*/
+    })
   }
 
   return (
