@@ -24,8 +24,8 @@ export default function LihatTA() {
         </Grid>
       	<Grid item xs={12}>
           <Typography variant="h4" gutterBottom>
-	        Organisasi [ID]
-	      </Typography>
+  	        Organisasi [ID]
+  	      </Typography>
         </Grid>
         <Grid item xs={12} md={5}>
           <TextField id="nim" label="Nama" variant="outlined" fullWidth required disabled />

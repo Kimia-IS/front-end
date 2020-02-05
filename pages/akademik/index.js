@@ -10,6 +10,9 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { getAllClasses } from "../../store/actions/akademikActions";
+import Swal from 'sweetalert2';
+import axios from "axios";
+import { API } from "../../config";
 
 const Index = props => {
   const { classes } = props;
@@ -66,7 +69,35 @@ const Index = props => {
               {
                 icon: 'delete',
                 tooltip: 'Delete',
-                onClick: (event, rowData) => { confirm("Apakah Anda yakin ingin menghapus " + rowData.kode_matkul + " - " + rowData.nama_matkul + "?"); }
+                onClick: (event, rowData) => {
+                  event.preventDefault();
+                  Swal.fire({
+                    title: `Hapus kelas ${rowData.course_name} - K${rowData.class}?`,
+                    text: 'Kelas akan dihapus secara permanen',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Hapus',
+                    cancelButtonText: 'Batal',
+                  }).then(async (result) => {
+                    if (result.value) {
+                      await axios.delete(`${API}/academic/lecturer?id=${rowData.id}`)
+                                  .then(() => {
+                                    Swal.fire(
+                                      'Berhasil!',
+                                      'Kelas berhasil dihapus.',
+                                      'success'
+                                    );
+                                  })
+                                  .catch(error => {
+                                    Swal.fire(
+                                      'Gagal!',
+                                      error,
+                                      'error'
+                                    );
+                                  });
+                    }
+                  })
+                }
               }
             ]}
           />

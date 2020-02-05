@@ -11,7 +11,7 @@ export default (state = {}, action) => {
     case actions.CREATE_COURSE:
       return { ...state, courses: state.courses.push(action.course) };
 
-      case actions.CREATE_CLASS:
+    case actions.CREATE_CLASS:
       return { ...state };   // BENERIN
 
     default:

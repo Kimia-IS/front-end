@@ -8,6 +8,9 @@ export default (state = {}, action) => {
     case actions.GET_USER_BY_ID:
       return { ...state, user: action.user };
 
+    case actions.GET_ALL_LECTURERS:
+      return { ...state, lecturers: action.lecturers };
+
     //case actions.LOGIN:
     //  return { ...state, self: action.self };
 

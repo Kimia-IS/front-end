@@ -13,13 +13,13 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from "axios";
 import { API } from "../../../config";
+import Swal from 'sweetalert2';
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { getAllCourses } from "../../../store/actions/akademikActions";
 
 const useStyles = makeStyles(theme => ({
   formControl: {
-    // margin: theme.spacing(1),
     minWidth: 300,
     fullWidth: true,
   },
@@ -34,58 +34,82 @@ const CreateMataKuliah = props => {
 	const { courses } = props;
 	const listMataKuliah = courses.results;
 
-	const [delKodeMataKuliah, setDelKodeMataKuliah] = React.useState("");
+	const [delMataKuliah, setDelMataKuliah] = React.useState("");
 	const [state, setState] = React.useState();
 
 	const handleInputChange = (e) => setState({
 	    ...state,
 	    [e.target.name]: e.target.value
-	})
+	});
 
-	React.useEffect(() => {
-	   console.log('hehe')
-	}, [state]);
+	function handleChangeSelectMataKuliah(event) {
+    	setDelMataKuliah(event.target.value);
+  	}
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
-		let payload = {
-			course_id: state.kodeMataKuliah.toUpperCase(),
-			course_name: state.namaMataKuliah,
-			total_classes: state.jumlahKelas,
-			total_credit: 3  // DUMMY
-		}
-		const result = await axios.post(`${API}/academic/courses`, payload)
-                        .then(response => {
-                          console.log(response);
-                        })
-                        .catch(error => {
-                          console.log(error);
-                        });
-		console.log(result);
-		//const results = createClass(payload);
-		console.log('Submitted! State: ', state);
-		//console.log('Results: ', results);
-		/*if (results) {
-			router.push('/akademik');
-		}*/
+		Swal.fire({
+	      title: 'Buat baru?',
+	      text: 'Pastikan data sudah terisi dengan benar',
+	      icon: 'warning',
+	      showCancelButton: true,
+	      confirmButtonText: 'Buat',
+	      cancelButtonText: 'Batal',
+	    }).then(async (result) => {
+	      if (result.value) {
+	        const payload = {
+				course_id: state.kodeMataKuliah.toUpperCase(),
+				course_name: state.namaMataKuliah,
+				total_classes: state.jumlahKelas
+			}
+	        await axios.post(`${API}/academic/courses`, payload)
+	                    .then(() => {
+	                      Swal.fire(
+	                        'Tersimpan!',
+	                        'Mata kuliah berhasil dibuat.',
+	                        'success'
+	                      );
+	                    })
+	                    .catch(error => {
+	                      Swal.fire(
+	                        'Gagal!',
+	                        error,
+	                        'error'
+	                      );
+	                    });
+	        }
+	    })
 	}
 
 	const handleDelete = async (event) => {
 		event.preventDefault();
-		console.log(delKodeMataKuliah, ' deleted!');
-		const result = await axios.delete(`${API}/academic/courses?${delKodeMataKuliah}`)
-                        .then(response => {
-                          console.log(response);
-                        })
-                        .catch(error => {
-                          console.log(error);
-                        });
-		console.log(result);
+		Swal.fire({
+	        title: `Hapus mata kuliah?`,
+	        text: 'Mata kuliah akan dihapus secara permanen',
+	        icon: 'warning',
+	        showCancelButton: true,
+	        confirmButtonText: 'Hapus',
+	        cancelButtonText: 'Batal',
+	      }).then(async (result) => {
+	        if (result.value) {
+	          await axios.delete(`${API}/academic/courses?id=${delMataKuliah}`)
+	                      .then(() => {
+	                        Swal.fire(
+	                          'Berhasil!',
+	                          'Mata kuliah berhasil dihapus.',
+	                          'success'
+	                        );
+	                      })
+	                      .catch(error => {
+	                        Swal.fire(
+	                          'Gagal!',
+	                          error,
+	                          'error'
+	                        );
+	                      });
+	        }
+	      })
 	}
-
-	function handleChangeSelectMataKuliah(event) {
-    	setDelKodeMataKuliah(event.target.value);
-  	}
 
   return (
     <div>
@@ -103,7 +127,7 @@ const CreateMataKuliah = props => {
 	          </Breadcrumbs>
 	        </Grid>
 	        <Grid item xs={12} md={2}>
-		      <Button variant="outlined" color="secondary" fullWidth href="/akademik">
+		      <Button variant="outlined" fullWidth href="/akademik">
 				Kembali
 			  </Button>
 			</Grid>
@@ -147,14 +171,14 @@ const CreateMataKuliah = props => {
 			        <InputLabel id="demo-simple-select-label">Mata Kuliah</InputLabel>
 			        <Select
 			          labelId="demo-simple-select-label"
-			          value={delKodeMataKuliah}
+			          value={delMataKuliah}
 			          onChange={handleChangeSelectMataKuliah}
 			        >
 			          <MenuItem value="" disabled>
 			            Pilih Mata Kuliah
 			          </MenuItem>
 			          {listMataKuliah.map((value, index) => {
-			            return <MenuItem key={index} value={value.course_id}>{value.course_id} - {value.course_name}</MenuItem>;
+			            return <MenuItem key={index} value={value.id}>{value.course_id} - {value.course_name}</MenuItem>;
 			          })}
 			        </Select>
 			    </FormControl>
@@ -162,7 +186,7 @@ const CreateMataKuliah = props => {
 	        <Grid item xs={12}>
 	        	<Grid container spacing={3}>
 			        <Grid item xs={12} md={3}>
-				      <Button variant="outlined" onClick={handleDelete} color="primary" fullWidth>
+				      <Button variant="outlined" onClick={handleDelete} color="secondary" fullWidth>
 						Hapus
 					  </Button>
 					</Grid>
@@ -177,7 +201,6 @@ const CreateMataKuliah = props => {
 
 CreateMataKuliah.getInitialProps = async ctx => {
   const { courses } = await ctx.store.dispatch(getAllCourses());
-  console.log(courses);
   return { courses };
 };
 
