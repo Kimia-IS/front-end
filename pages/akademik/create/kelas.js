@@ -16,10 +16,11 @@ import { API } from "../../../config";
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { getAllCourses } from "../../../store/actions/akademikActions";
+import { getAllLecturers } from "../../../store/actions/usersActions";
+import Swal from 'sweetalert2';
 
 const useStyles = makeStyles(theme => ({
   formControl: {
-    // margin: theme.spacing(1),
     minWidth: 300,
     fullWidth: true,
   },
@@ -28,33 +29,42 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const CreateKelas = props => {		// BUTUH GET LIST DOSEN
+const CreateKelas = props => {
 	const classes = useStyles();
 
-	const { courses } = props;
-	const listMataKuliah = courses.results;
-	const jumlahKelas = 3;
+	const listMataKuliah = props.courses.results;
+	const listDosen = props.lecturers;
 
-	const [count, setCount] = React.useState(2);	// Pahami lagi perilaku 'count' (lifecycle)
-	const [inputDosen2, setInputDosen2] = React.useState();
-	const [inputDosen3, setInputDosen3] = React.useState();
+	const [count, setCount] = React.useState(2);
+	const [jumlahKelas, setJumlahKelas] = React.useState();
+	const [kelas, setKelas] = React.useState("");
 	const [totalSKS, setTotalSKS] = React.useState(0);
 	const [kodeMataKuliah, setKodeMataKuliah] = React.useState("");
-	const [kelas, setKelas] = React.useState("");
-	const [state, setState] = React.useState({
-		nipDosen1: '18217038',
-		sksDosen1: 0,
-		sksDosen2: 0,
-		sksDosen3: 0
+	const [nipDosen, setNipDosen] = React.useState({
+		nipDosen1: ''
 	});
-
-	const handleInputChange = (e) => setState({
-	    ...state,
-	    [e.target.name]: e.target.value
-	})
+	const [sksDosen, setSksDosen] = React.useState({
+		sksDosen1: 0
+	});
 
 	function handleChangeSelectMataKuliah(event) {
     	setKodeMataKuliah(event.target.value);
+  	}
+
+  	function handleChangeSelectNipDosen(order, value) {
+    	setNipDosen({
+    		...nipDosen,
+    		[`nipDosen${order}`]: value
+    	});
+  	}
+
+	const handleChangeSksDosen = (e) => setSksDosen({
+	    ...sksDosen,
+	    [e.target.name]: e.target.value
+	})
+
+  	function handleChangeSelectSksDosen(event) {
+    	setSksDosen(event.target.value);
   	}
 
   	function handleChangeSelectKelas(event) {
@@ -62,130 +72,107 @@ const CreateKelas = props => {		// BUTUH GET LIST DOSEN
   	}
 
 	React.useEffect(() => {
-	   setTotalSKS(parseInt(state.sksDosen1) + parseInt(state.sksDosen2) + parseInt(state.sksDosen3))
-	}, [state]);
+		let sum = 0
+		for (let j = 1; j <= Object.keys(sksDosen).length; j++) {
+			sum = sum + parseInt(sksDosen[`sksDosen${j}`]);
+		}
+		setTotalSKS(sum);
+
+		let temp = listMataKuliah.find(obj => { return obj.course_id == kodeMataKuliah });
+		if (temp) {
+			setJumlahKelas(temp.total_classes);
+		}
+	}, [sksDosen, kodeMataKuliah]);
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
-		let payload = {
-			course_id: kodeMataKuliah,
-			course_class: kelas,
-			lecturer: [
-				`(${state.nipDosen1},${state.sksDosen1})`
-			]
-		}
-		const result = await axios.post(`${API}/academic/lecturer`, payload)
-                        .then(response => {
-                          console.log('response = ', response);
-                        })
-                        .catch(error => {
-                          console.log(error);
-                        });
-		console.log('result = ', result);
-		//const results = createClass(payload);
-		console.log('Submitted! State: ', state);
-		//console.log('Results: ', results);
-		/*if (results) {
-			router.push('/akademik');
-		}*/
+		Swal.fire({
+	      title: 'Buat baru?',
+	      text: 'Pastikan data sudah terisi dengan benar',
+	      icon: 'warning',
+	      showCancelButton: true,
+	      confirmButtonText: 'Buat',
+	      cancelButtonText: 'Batal',
+	    }).then(async (result) => {
+	      if (result.value) {
+	      	for (let k = 1; k <= Object.keys(sksDosen).length; k++) {
+				let lecturer = `(${nipDosen['nipDosen' + k]},${sksDosen['sksDosen' + k]})`
+				let payload = {
+					course_id: kodeMataKuliah,
+					course_class: kelas,
+					total_credit: totalSKS,
+					lecturer: [lecturer]
+				}
+		        await axios.post(`${API}/academic/lecturer`, payload)
+	                    .then(() => {
+	                      Swal.fire(
+	                        'Tersimpan!',
+	                        'Kelas berhasil dibuat.',
+	                        'success'
+	                      );
+	                    })
+	                    .catch(error => {
+	                      Swal.fire(
+	                        'Gagal!',
+	                        error,
+	                        'error'
+	                      );
+	                    });
+			}
+	      }
+	    })
 	}
 
 	const handleTambahDosen = () => {
-		if (count <= 3) {
-			setCount(count => count + 1);
-			if (count >= 2) {
-				setInputDosen2(true);
-			}
-			if (count >= 3) {
-				setInputDosen3(true);
-			}
-		}
+		setCount(count => count + 1);
 	};
 
 	const handleKurangDosen = () => {
-		if (count >= 3) {
-			setCount(count => count - 1);
-			if (count <= 4) {
-				setInputDosen3(false);
-			}
-			if (count <= 3) {
-				setInputDosen2(false);
-			}
-		}
-	};
-
-	const addFieldDosen2 = () => {
-		if (inputDosen2) {
-			return (
-				<Grid item xs={12} md={8}>
-		        	<Grid container spacing={3}>
-				        <Grid item xs={12} md={7}>
-				          <TextField label="NIP dosen 2" name="nipDosen2" onChange={handleInputChange} variant="outlined" fullWidth required />
-				        </Grid>
-				        <Grid item xs={12} md={5}>
-				          <TextField label="SKS dosen 2" type="number" name="sksDosen2" onChange={handleInputChange} variant="outlined" fullWidth required />
-				        </Grid>
-		        	</Grid>
-		        </Grid>
-			);
-		}
-	};
-
-	const addFieldDosen3 = () => {
-		if (inputDosen3) {
-			return (
-				<Grid item xs={12} md={8}>
-		        	<Grid container spacing={3}>
-				        <Grid item xs={12} md={7}>
-				          <TextField label="NIP dosen 3" name="nipDosen3" onChange={handleInputChange} variant="outlined" fullWidth required />
-				        </Grid>
-				        <Grid item xs={12} md={5}>
-				          <TextField label="SKS dosen 3" type="number" name="sksDosen3" onChange={handleInputChange} variant="outlined" fullWidth required />
-				        </Grid>
-		        	</Grid>
-		        </Grid>
-			);
-		}
+		setCount(count => count - 1);
 	};
 
 	const fieldKelas = () => {
     	let field = [];
-        for (let i = 1; i < jumlahKelas; i++) {
+        for (let i = 1; i <= jumlahKelas; i++) {
           field.push(<MenuItem key={i} id={i} value={i}>{i}</MenuItem>);
         }
         return field;
 	}
 
-	/*const addFieldDosen = () => {
-		console.log('addFieldDosen')
-		console.log('state = ' + count)
+	const addFieldDosen = () => {
 	    let field = [];
-
-	    if (count >= 3) {
-	    	handleClickOpen;
-	    	{() => {setOpen(true); console.log(open);}} // ga dijalanin
-	    	console.log('setOpen = ' + open)
-	    } else {
+	    if (count >= 0) {
 		    for (let i = 2; i < count; i++) {
 		      field.push(
-		      	<Grid item xs={12} md={8}>
+		        <Grid item xs={12} md={8}>
 		        	<Grid container spacing={3}>
-				      	<Grid item xs={12} md={7}>
-				          <TextField id={"dosen_" + i} label={"NIP dosen " + i} variant="outlined" required fullWidth />
+				        <Grid item xs={12} md={7}>
+				          <FormControl variant="outlined" fullWidth required className={classes.formControl}>
+					        <InputLabel id={`demo-simple-select-label${i}`}>Dosen {i}</InputLabel>
+					        <Select
+					          labelId={`demo-simple-select-label${i}`}
+					          value={nipDosen[`nipDosen${i}`]}
+					          onChange={event => handleChangeSelectNipDosen(i, event.target.value)}
+					        >
+					          <MenuItem value="" disabled>
+					            Pilih Dosen {i}
+					          </MenuItem>
+					          {listDosen.map((value, index) => {
+					            return <MenuItem key={index} value={value.user_id}>{value.user_id} - {value.name}</MenuItem>;
+					          })}
+					        </Select>
+					      </FormControl>
 				        </Grid>
 				        <Grid item xs={12} md={5}>
-				          <TextField id={"sks_dosen_" + i} label={"SKS dosen " + i} variant="outlined" fullWidth required />
+				          <TextField label={`SKS dosen ${i}`} type="number" name={`sksDosen${i}`} onChange={handleChangeSksDosen} variant="outlined" fullWidth required />
 				        </Grid>
-			        </Grid>
+		        	</Grid>
 		        </Grid>
 		      );
 		    }
 	    }
-
 	    return field;
-	 }*/
-
-
+	 }
 
   return (
     <div>
@@ -242,15 +229,28 @@ const CreateKelas = props => {		// BUTUH GET LIST DOSEN
 	        <Grid item xs={12} md={8}>
 	        	<Grid container spacing={3}>
 			        <Grid item xs={12} md={7}>
-			          <TextField label="NIP dosen 1" name="nipDosen1" value={state.nipDosen1} variant="outlined" disabled fullWidth />
+			          <FormControl variant="outlined" fullWidth required className={classes.formControl}>
+				        <InputLabel id="demo-simple-select-label1">Dosen 1</InputLabel>
+				        <Select
+				          labelId="demo-simple-select-label1"
+				          value={nipDosen.nipDosen1}
+				          onChange={event => handleChangeSelectNipDosen(1, event.target.value)}
+				        >
+				          <MenuItem value="" disabled>
+				            Pilih Dosen 1
+				          </MenuItem>
+				          {listDosen.map((value, index) => {
+				            return <MenuItem key={index} value={value.user_id}>{value.user_id} - {value.name}</MenuItem>;
+				          })}
+				        </Select>
+				      </FormControl>
 			        </Grid>
 			        <Grid item xs={12} md={5}>
-			          <TextField label="SKS dosen 1" type="number" name="sksDosen1" onChange={handleInputChange} variant="outlined" fullWidth required />
+			          <TextField label="SKS dosen 1" type="number" name="sksDosen1" onChange={handleChangeSksDosen} variant="outlined" fullWidth required />
 			        </Grid>
 	        	</Grid>
 	        </Grid>
-	        {addFieldDosen2()}
-	        {addFieldDosen3()}
+	        {addFieldDosen()}
 	        <Grid item xs={12} md={5}>
 	        	<Grid container spacing={3}>
 			        <Grid item xs={12} md={6}>
@@ -292,16 +292,22 @@ const CreateKelas = props => {		// BUTUH GET LIST DOSEN
 
 CreateKelas.getInitialProps = async ctx => {
   const { courses } = await ctx.store.dispatch(getAllCourses());
-  console.log(courses.results);
-  return { courses };
+  const { lecturers } = await ctx.store.dispatch(getAllLecturers());
+  const data = {
+  	courses: courses,
+  	lecturers: lecturers
+  }
+  return data;
 };
 
 CreateKelas.propTypes = {
-  courses: PropTypes.any
+  courses: PropTypes.any,
+  lecturers: PropTypes.any
 };
 
 const mapStateToProps = state => ({
-  courses: state.akademikReducer.courses
+  courses: state.akademikReducer.courses,
+  lecturers: state.usersReducer.lecturers
 });
 
 export default connect(mapStateToProps)(CreateKelas);
