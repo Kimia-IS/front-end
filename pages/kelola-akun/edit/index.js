@@ -34,13 +34,12 @@ const Edit = props => {
 
 	const classes = useStyles();
 
-	const [role, setRole] = React.useState("");
+	const [role, setRole] = React.useState(user.role);
   const [state, setState] = React.useState({
     id: user.id,
     name: user.name,
-    user_id: user.user_id,
+    user_id: user.auth_id || user.nip,
     email: user.email,
-    role: user.role,
   });
 
   const handleInputChange = (e) => setState({
@@ -58,35 +57,42 @@ const Edit = props => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    let payload = {
-      user_id: state.user_id,
-      email: state.email,
-      name: state.name,
-      role: role
-    }
-    if ((state.role == 4) || (state.role == 5) || (state.role == 6)) {
-      const result = await axios.post(`${API}/auth/lecturer/edit/${state.user_id}`, payload)
+    if ((role == 4) || (role == 5) || (role == 6)) {
+      const payload = {
+        nip: state.user_id,
+        email: state.email,
+        name: state.name,
+        role: role
+      }
+      const result = await axios.put(`${API}/auth/lecturer/edit/${state.user_id}`, payload)
                           .then(response => {
                             console.log(response);
                           })
                           .catch(error => {
                             console.log(error);
                           });
+      console.log(result);
     }
-    else if ((state.role == 1) || (state.role == 2) || (state.role == 3)) {
-      const result = await axios.post(`${API}/auth/admin/edit/${state.user_id}`, payload)
+    else if ((role == 1) || (role == 2) || (role == 3)) {
+      const payload = {
+        nip: state.user_id,
+        email: state.email,
+        name: state.name,
+        role: role
+      }
+      const result = await axios.put(`${API}/auth/admin/edit/${state.user_id}`, payload)
                           .then(response => {
                             console.log(response);
                           })
                           .catch(error => {
                             console.log(error);
                           });
+      console.log(result);
     }
     else {
       console.log('No role selected!')
     }
 
-    console.log(result);
     //const results = createClass(payload);
     console.log('Submitted! State: ', state);
     //console.log('Results: ', results);
@@ -116,13 +122,13 @@ const Edit = props => {
             </Typography>
           </Grid>
           <Grid item xs={12} md={3}>
-            <TextField label="Nama" name="name" onChange={handleInputChange} variant="outlined" fullWidth required />
+            <TextField label="Nama" name="name" value={state.name} onChange={handleInputChange} variant="outlined" fullWidth required />
           </Grid>
           <Grid item xs={12} md={5}>
-            <TextField label="NIP / ID" name="user_id" onChange={handleInputChange} variant="outlined" fullWidth required />
+            <TextField label="NIP / ID" name="user_id" value={state.user_id} onChange={handleInputChange} variant="outlined" fullWidth required />
           </Grid>
           <Grid item xs={12} md={5}>
-            <TextField label="Email" name="email" onChange={handleInputChange} variant="outlined" fullWidth required />
+            <TextField label="Email" name="email" value={state.email} onChange={handleInputChange} variant="outlined" fullWidth required />
           </Grid>
           <Grid item xs={12} md={3}>
             <FormControl variant="outlined" required className={classes.formControl}>
@@ -153,7 +159,7 @@ const Edit = props => {
               </Grid>
               <Grid item xs={12} md={3}>
                 <Button variant="outlined" type="submit" color="primary" fullWidth>
-                  Buat
+                  Simpan
                 </Button>
               </Grid>
             </Grid>

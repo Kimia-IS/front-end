@@ -55,13 +55,13 @@ const Index = props => {
                 icon: 'edit',
                 tooltip: 'Edit',
                 onClick: (event, rowData) => {
-                  if (rowData.role == 'Super Admin') { const queryRole = 1 }
-                    else if (rowData.role == 'Admin Akademik') { const queryRole = 2 }
-                    else if (rowData.role == 'Admin Non-Akademik') { const queryRole = 3 }
-                    else if (rowData.role == 'Tendik') { const queryRole = 4 }
-                    else if (rowData.role == 'Dosen') { const queryRole = 5 }
-                    else if (rowData.role == 'Kaprodi') { const queryRole = 6 }
-                    else { queryRole = 0 }                 
+                  let queryRole = 0;
+                  if (rowData.role == 'Super Admin') { queryRole = 1 }
+                    else if (rowData.role == 'Admin Akademik') { queryRole = 2 }
+                    else if (rowData.role == 'Admin Non-Akademik') { queryRole = 3 }
+                    else if (rowData.role == 'Tendik') { queryRole = 4 }
+                    else if (rowData.role == 'Dosen') { queryRole = 5 }
+                    else if (rowData.role == 'Kaprodi') { queryRole = 6 }       
                   router.push('/kelola-akun/edit?id=' + rowData.id + '&role=' + queryRole); 
                 }
               },
