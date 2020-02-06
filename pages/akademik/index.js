@@ -57,7 +57,7 @@ const Index = props => {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <MaterialTable
-            title="Daftar Mata Kuliah"
+            title="Daftar Kelas"
             columns={state.columns}
             data={state.data}
             actions={[

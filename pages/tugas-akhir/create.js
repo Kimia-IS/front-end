@@ -23,7 +23,6 @@ import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { getAllLecturers } from "../../store/actions/usersActions";
 import Swal from 'sweetalert2';
-import FormData from 'form-data';
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -40,14 +39,12 @@ const CreateTA = props => {
 
 	const listDosen = props.lecturers;
 
-	var tempStore = new FormData();
-
 	const [tipeMahasiswa, setTipeMahasiswa] = React.useState('');
 	const [nipDosen, setNipDosen] = React.useState('');
 	const [posisiDosen, setPosisiDosen] = React.useState('');
-	const [tanggalMasuk, setTanggalMasuk] = React.useState(new Date('2020-01-01T21:11:54'));
-	const [tanggalLulus, setTanggalLulus] = React.useState(new Date('2020-01-01T21:11:54'));
-	const [finalTaskFiles, setFinalTaskFiles] = React.useState(new FormData());
+	const [tanggalMasuk, setTanggalMasuk] = React.useState(new Date());
+	const [tanggalLulus, setTanggalLulus] = React.useState(new Date());
+	const [finalTaskFiles, setFinalTaskFiles] = React.useState();
 	const [state, setState] = React.useState();
 
 	const handleChangeState = (e) => setState({
@@ -76,16 +73,8 @@ const CreateTA = props => {
 	};
 
 	const handleFileUpload = (e) => {
-		const files = e.target.files; 
-		
-		for (let i = 0, file; file = files[i]; i++) {
-			console.log('file = ', file);
-			tempStore.append("file", file);
-		}
-		console.log('tempStore = ', tempStore);
-		setFinalTaskFiles(finalTaskFiles => tempStore);
-		console.log(finalTaskFiles);
-	}
+		setFinalTaskFiles(e.target.files);
+	};
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
@@ -98,19 +87,22 @@ const CreateTA = props => {
 	      cancelButtonText: 'Batal',
 	    }).then(async (result) => {
 	      if (result.value) {
-			let payload = {
-				student_name: state.student_name,
-				student_nim: state.student_nim,
-				student_type: tipeMahasiswa,
-				title: state.title,
-				starting_date: tanggalMasuk,
-				graduation_date: tanggalLulus,
-				lecturer_nip: nipDosen,
-				lecturer_position: posisiDosen,
-				final_task_file: tempStore
+	      	// Create files form data
+	      	const formData = new FormData();
+	      	for (let i = 0; i < finalTaskFiles.length; i++) {
+				formData.append('final_task_file', finalTaskFiles[i]);
 			}
-			console.log(payload);
-	        await axios.post(`${API}/finalTask`, payload, {
+			// Uploading
+			formData.append('student_name', state.student_name);
+			formData.append('student_nim', state.student_nim);
+			formData.append('student_type', tipeMahasiswa);
+			formData.append('title', state.title);
+			formData.append('starting_date', tanggalMasuk);			// DATE FORMAT DALAM BENTUK APA
+			formData.append('graduation_date', tanggalLulus);
+			formData.append('lecturer_nip', nipDosen);
+			formData.append('lecturer_position', posisiDosen);
+			console.log(formData);
+	        await axios.post(`${API}/finalTask`, formData, {
 					    headers: {
 					      'Content-Type': 'multipart/form-data'
 					    }
@@ -132,6 +124,16 @@ const CreateTA = props => {
                     });
 	      }
 	    })
+	}
+
+	const fieldListFiles = () => {
+        let field = []
+        if (finalTaskFiles) {
+        	for (let i = 0; i < finalTaskFiles.length; i++) {
+        		field.push(<span key={i}>{i + 1}. {finalTaskFiles[i].name}<br /></span>);
+        	}
+        }
+        return field;
 	}
 
   return (
@@ -221,7 +223,7 @@ const CreateTA = props => {
 					        <KeyboardDatePicker
 					          disableToolbar
 					          variant="inline"
-					          format="MM/dd/yyyy"
+					          format="dd/MM/yyyy"
 					          margin="normal"
 					          id="date-picker-inline1"
 					          label="Tanggal masuk"
@@ -241,7 +243,7 @@ const CreateTA = props => {
 					        <KeyboardDatePicker
 					          disableToolbar
 					          variant="inline"
-					          format="MM/dd/yyyy"
+					          format="dd/MM/yyyy"
 					          margin="normal"
 					          id="date-picker-inline2"
 					          label="Tanggal lulus"
@@ -275,9 +277,7 @@ const CreateTA = props => {
 			        </Grid>
 			        <Grid item xs={12} md={8}>
 			        	<Typography variant="subtitle1" gutterBottom>
-				        	{tempStore.forEach((value, index) => {
-					            return <span key={index}>{index + 1}. {value.name}<br /></span>;
-					        })}
+				        	{fieldListFiles()}
 					    </Typography>
 			        </Grid>
 		        </Grid>
