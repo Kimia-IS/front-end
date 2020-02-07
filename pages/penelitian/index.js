@@ -18,12 +18,12 @@ import { API } from "../../config";
 const Index = props => {
   const listDosen = props.lecturers;
   const researches = props.researches.results ? props.researches.results : [];
+  console.log(researches);
   let newResearches = [];
   researches.map((item, index) => {
     newResearches[index] = item;
     let namaDosen = listDosen.find(obj => { return obj.user_id == item.lecturer_nip }).name;
     newResearches[index].lecturer_name = namaDosen;
-    newResearches[index].year = newResearches[index].year.slice(0, 16);
   });
 
   const [state] = React.useState({
