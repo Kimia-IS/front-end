@@ -57,11 +57,11 @@ export default function LihatTA() {
         <Grid item xs={12}>
         	<Grid container spacing={3}>
 		        <Grid item xs={12} md={6}>
-			      <Button variant="outlined" color="secondary" fullWidth href="/riwayat-kerja">
-					Kembali
-				  </Button>
-				</Grid>
-			</Grid>
+  			      <Button variant="outlined" color="secondary" fullWidth href="/riwayat-kerja">
+      					Kembali
+    				  </Button>
+    				</Grid>
+    			</Grid>
         </Grid>
       </Grid>
   	</div>

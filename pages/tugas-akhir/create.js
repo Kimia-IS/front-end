@@ -181,8 +181,8 @@ const CreateTA = props => {
 			      <MenuItem value="" disabled>
 		            Pilih Tipe Mahasiswa
 		          </MenuItem>
-		          <MenuItem value="dalam">Dalam</MenuItem>
-		          <MenuItem value="luar">Luar</MenuItem>
+		          <MenuItem value="Dalam">Dalam</MenuItem>
+		          <MenuItem value="Luar">Luar</MenuItem>
 		        </Select>
 		      </FormControl>
 	        </Grid>
@@ -214,9 +214,9 @@ const CreateTA = props => {
 		          <MenuItem value="" disabled>
 		            Pilih Posisi Dosen
 		          </MenuItem>
-		          <MenuItem value="pembimbing">Pembimbing</MenuItem>
-		          <MenuItem value="co-pembimbing">Co-pembimbing</MenuItem>
-		          <MenuItem value="penguji">Penguji</MenuItem>
+		          <MenuItem value="Pembimbing">Pembimbing</MenuItem>
+		          <MenuItem value="Co-pembimbing">Co-pembimbing</MenuItem>
+		          <MenuItem value="Penguji">Penguji</MenuItem>
 		        </Select>
 		      </FormControl>
 	        </Grid>
@@ -235,7 +235,7 @@ const CreateTA = props => {
 					          format="dd/MM/yyyy"
 					          margin="normal"
 					          id="date-picker-inline1"
-					          label="Tanggal masuk"
+					          label="Tanggal mulai"
 					          value={tanggalMasuk}
 					          onChange={handleDateChangeMasuk}
 					          KeyboardButtonProps={{
