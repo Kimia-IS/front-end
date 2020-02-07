@@ -68,12 +68,12 @@ const Index = props => {
               {
                 icon: 'visibility',
                 tooltip: 'See More',
-                onClick: (event, rowData) => { router.push('/tugas-akhir/' + rowData.id); }
+                onClick: (event, rowData) => { router.push('/tugas-akhir/' + rowData.final_task_id); }
               },
               {
                 icon: 'edit',
                 tooltip: 'Edit',
-                onClick: (event, rowData) => { router.push('/tugas-akhir/edit/' + rowData.id); }
+                onClick: (event, rowData) => { router.push('/tugas-akhir/edit/' + rowData.final_task_id); }
               },
               {
                 icon: 'delete',
@@ -89,7 +89,7 @@ const Index = props => {
                     cancelButtonText: 'Batal',
                   }).then(async (result) => {
                     if (result.value) {
-                      await axios.delete(`${API}/finalTask?id=${rowData.id}`)
+                      await axios.delete(`${API}/finalTask?id=${rowData.final_task_id}`)
                                   .then(() => {
                                     Swal.fire(
                                       'Berhasil!',

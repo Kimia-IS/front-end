@@ -67,7 +67,7 @@ const SeeTA = props => {
 	        </Grid>
 	      	<Grid item xs={12}>
 	          <Typography variant="h4" gutterBottom>
-		        Tugas Akhir {data.id}
+		        Tugas Akhir - {data.title}
 		      </Typography>
 	        </Grid>
 	        <Grid item xs={12} md={3}>
