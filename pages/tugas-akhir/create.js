@@ -78,52 +78,60 @@ const CreateTA = props => {
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
-		Swal.fire({
-	      title: 'Buat baru?',
-	      text: 'Pastikan data sudah terisi dengan benar',
-	      icon: 'warning',
-	      showCancelButton: true,
-	      confirmButtonText: 'Buat',
-	      cancelButtonText: 'Batal',
-	    }).then(async (result) => {
-	      if (result.value) {
-	      	// Create files form data
-	      	const formData = new FormData();
-	      	for (let i = 0; i < finalTaskFiles.length; i++) {
-				formData.append('final_task_file', finalTaskFiles[i]);
-			}
-			// Uploading
-			formData.append('student_name', state.student_name);
-			formData.append('student_nim', state.student_nim);
-			formData.append('student_type', tipeMahasiswa);
-			formData.append('title', state.title);
-			formData.append('starting_date', tanggalMasuk);			// DATE FORMAT DALAM BENTUK APA
-			formData.append('graduation_date', tanggalLulus);
-			formData.append('lecturer_nip', nipDosen);
-			formData.append('lecturer_position', posisiDosen);
-			console.log(formData);
-	        await axios.post(`${API}/finalTask`, formData, {
-					    headers: {
-					      'Content-Type': 'multipart/form-data'
-					    }
-					})
-                    .then((response) => {
-                      console.log(response);
-                      Swal.fire(
-                        'Tersimpan!',
-                        'Tugas akhir berhasil dibuat.',
-                        'success'
-                      );
-                    })
-                    .catch(error => {
-                      Swal.fire(
-                        'Gagal!',
-                        error,
-                        'error'
-                      );
-                    });
-	      }
-	    })
+		if (finalTaskFiles) {
+			Swal.fire({
+		      title: 'Buat baru?',
+		      text: 'Pastikan data sudah terisi dengan benar',
+		      icon: 'warning',
+		      showCancelButton: true,
+		      confirmButtonText: 'Buat',
+		      cancelButtonText: 'Batal',
+		    }).then(async (result) => {
+		      if (result.value) {
+		      	// Create form data
+		      	const formData = new FormData();
+		      	for (let i = 0; i < finalTaskFiles.length; i++) {
+					formData.append('final_task_file', finalTaskFiles[i]);
+				}
+				formData.append('student_name', state.student_name);
+				formData.append('student_nim', state.student_nim);
+				formData.append('student_type', tipeMahasiswa);
+				formData.append('title', state.title);
+				formData.append('starting_date', tanggalMasuk.toJSON().slice(0, 10));
+				formData.append('graduation_date', tanggalLulus.toJSON().slice(0, 10));
+				formData.append('lecturer_nip', nipDosen);
+				formData.append('lecturer_position', posisiDosen);
+				// Uploading
+		        await axios.post(`${API}/finalTask`, formData, {
+						    headers: {
+						      'Content-Type': 'multipart/form-data'
+						    }
+						})
+	                    .then((response) => {
+	                      console.log(response);
+	                      Swal.fire(
+	                        'Tersimpan!',
+	                        'Tugas akhir berhasil dibuat.',
+	                        'success'
+	                      );
+	                    })
+	                    .catch(error => {
+	                      Swal.fire(
+	                        'Gagal!',
+	                        error,
+	                        'error'
+	                      );
+	                    });
+		      }
+		    })
+		}
+		else {
+			Swal.fire(
+	            'Oops!',
+	            'Wajib upload minimal 1 file.',
+	            'warning'
+	        );
+		}
 	}
 
 	const fieldListFiles = () => {
@@ -180,7 +188,7 @@ const CreateTA = props => {
 	        </Grid>
 	        <Grid item xs={12} md={3}>
 	          <FormControl variant="outlined" fullWidth required className={classes.formControl}>
-		        <InputLabel id="demo-simple-select-label1">Dosen Pembimbing</InputLabel>
+		        <InputLabel id="demo-simple-select-label1">Dosen pembimbing</InputLabel>
 		        <Select
 		          labelId="demo-simple-select-label1"
 		          value={nipDosen}
@@ -221,8 +229,9 @@ const CreateTA = props => {
 			          	<MuiPickersUtilsProvider utils={DateFnsUtils}>
 					      <Grid container justify="space-around">
 					        <KeyboardDatePicker
-					          disableToolbar
 					          variant="inline"
+					          inputVariant="outlined"
+					          required
 					          format="dd/MM/yyyy"
 					          margin="normal"
 					          id="date-picker-inline1"
@@ -241,8 +250,9 @@ const CreateTA = props => {
 			          	<MuiPickersUtilsProvider utils={DateFnsUtils}>
 					      <Grid container justify="space-around">
 					        <KeyboardDatePicker
-					          disableToolbar
 					          variant="inline"
+					          inputVariant="outlined"
+					          required
 					          format="dd/MM/yyyy"
 					          margin="normal"
 					          id="date-picker-inline2"
