@@ -107,8 +107,7 @@ const CreateTA = props => {
 						      'Content-Type': 'multipart/form-data'
 						    }
 						})
-	                    .then((response) => {
-	                      console.log(response);
+	                    .then(() => {
 	                      Swal.fire(
 	                        'Tersimpan!',
 	                        'Tugas akhir berhasil dibuat.',

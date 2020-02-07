@@ -10,6 +10,5 @@ export const getAllFinalTasks = () => async dispatch => {
 
 export const getFinalTaskById = (id) => async dispatch => {
   const finalTask = await axios.get(`${API}/finalTask?id=${id}`);
-  console.log(finalTask);
   return dispatch({ type: actions.GET_FINAL_TASK_BY_ID, finalTask: finalTask.data });
 };
