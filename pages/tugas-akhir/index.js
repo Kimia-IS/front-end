@@ -10,21 +10,32 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { getAllFinalTasks } from "../../store/actions/tugasAkhirActions";
+import { getAllLecturers } from "../../store/actions/usersActions";
 import Swal from 'sweetalert2';
 import axios from "axios";
 import { API } from "../../config";
 
 const Index = props => {
-  const { finalTasks } = props;
+  const listDosen = props.lecturers;
+  const finalTasks = props.finalTasks.results;
+  let newFinalTasks = [];
+  finalTasks.map((item, index) => {
+    newFinalTasks[index] = item;
+    let namaDosen = listDosen.find(obj => { return obj.user_id == item.lecturer_nip }).name;
+    newFinalTasks[index].lecturer_name = namaDosen;
+    newFinalTasks[index].starting_date = newFinalTasks[index].starting_date.slice(0, 16);
+    newFinalTasks[index].graduation_date = newFinalTasks[index].graduation_date.slice(0, 16);
+  });
 
   const [state] = React.useState({
     columns: [
       { title: 'Judul Tugas Akhir', field: 'title' },
       { title: 'Nama Mahasiswa', field: 'student_name' },
       { title: 'Nama Dosen Pembimbing', field: 'lecturer_name' },
-      { title: 'Tanggal Mulai', field: 'starting_date' }
+      { title: 'Tanggal Mulai', field: 'starting_date' },
+      { title: 'Tanggal Mulai', field: 'graduation_date' }
     ],
-    data: finalTasks.results,
+    data: newFinalTasks ? newFinalTasks : finalTasks,
   });
 
   const router = useRouter();
@@ -107,15 +118,22 @@ const Index = props => {
 
 Index.getInitialProps = async ctx => {
   const { finalTasks } = await ctx.store.dispatch(getAllFinalTasks());
-  return { finalTasks };
+  const { lecturers } = await ctx.store.dispatch(getAllLecturers());
+  const data = {
+    finalTasks: finalTasks,
+    lecturers: lecturers
+  }
+  return data;
 };
 
 Index.propTypes = {
-  finalTasks: PropTypes.any
+  finalTasks: PropTypes.any,
+  lecturers: PropTypes.any
 };
 
 const mapStateToProps = state => ({
-  finalTasks: state.tugasAkhirReducer.finalTasks
+  finalTasks: state.tugasAkhirReducer.finalTasks,
+  lecturers: state.usersReducer.lecturers
 });
 
 export default connect(mapStateToProps)(Index);
