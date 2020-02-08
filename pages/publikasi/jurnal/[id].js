@@ -114,7 +114,18 @@ const SeeJurnal = props => {
 	        </Grid>
         </Grid>
         <Grid item xs={12} md={8}>
-	    	<TextField value={data.link} label="Link" variant="outlined" fullWidth disabled />
+          <Grid container spacing={3}>
+            <Grid item xs={4} md={3}>
+              <Button variant="outlined" fullWidth target="_blank" href={`${data.link}`}>
+                Lihat link
+              </Button>
+            </Grid>
+            <Grid item xs={8} md={9}>
+              <Typography variant="subtitle1" gutterBottom>
+                {data.link}
+              </Typography>
+            </Grid>
+          </Grid>
         </Grid>
         <Grid item xs={12} md={8}>
           <Grid container spacing={3}>
@@ -123,7 +134,7 @@ const SeeJurnal = props => {
                   List files
               </Typography>
             </Grid>
-                {fieldListFiles(files)}
+            {fieldListFiles(files)}
           </Grid>
         </Grid>
         <Grid item xs={12}>
