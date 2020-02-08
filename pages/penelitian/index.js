@@ -66,12 +66,12 @@ const Index = props => {
               {
                 icon: 'visibility',
                 tooltip: 'See More',
-                onClick: (event, rowData) => { router.push('/penelitian/' + rowData.research_id); }
+                onClick: (event, rowData) => { router.push('/penelitian/' + rowData.id); }
               },
               {
                 icon: 'edit',
                 tooltip: 'Edit',
-                onClick: (event, rowData) => { router.push('/penelitian/edit/' + rowData.research_id); }
+                onClick: (event, rowData) => { router.push('/penelitian/edit/' + rowData.id); }
               },
               {
                 icon: 'delete',
@@ -87,7 +87,7 @@ const Index = props => {
                     cancelButtonText: 'Batal',
                   }).then(async (result) => {
                     if (result.value) {
-                      await axios.delete(`${API}/research?id=${rowData.research_id}`)
+                      await axios.delete(`${API}/research?id=${rowData.id}`)
                                   .then(() => {
                                     Swal.fire(
                                       'Berhasil!',
