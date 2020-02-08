@@ -13,12 +13,9 @@ import { getResearchById } from "../../store/actions/penelitianActions";
 import { getAllLecturers } from "../../store/actions/usersActions";
 
 const SeePenelitian = props => {
-  console.log(props);
   const listDosen = props.lecturers;
   const data = props.research.results;
-  console.log(data)
   const namaDosen = listDosen.find(obj => { return obj.user_id == data.lecturer_nip }).name;
-  console.log(namaDosen)
   const files = data.filepath.slice(2, -2).split("', '");
 
   const fieldListFiles = (files) => {

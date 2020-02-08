@@ -70,12 +70,12 @@ const Index = props => {
               {
                 icon: 'visibility',
                 tooltip: 'See More',
-                onClick: () => { router.push('/publikasi/jurnal/' + rowData.id); }
+                onClick: (event, rowData) => { router.push('/publikasi/jurnal/' + rowData.id); }
               },
               {
                 icon: 'edit',
                 tooltip: 'Edit',
-                onClick: () => { router.push('/publikasi/jurnal/edit/' + rowData.id); }
+                onClick: (event, rowData) => { router.push('/publikasi/jurnal/edit/' + rowData.id); }
               },
               {
                 icon: 'delete',
@@ -125,6 +125,7 @@ Index.getInitialProps = async ctx => {
     journals: journals,
     lecturers: lecturers
   }
+  console.log('data = ', data);
   return data;
 };
 
