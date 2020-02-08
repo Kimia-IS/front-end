@@ -167,13 +167,13 @@ const CreatePenelitian = props => {
             <TextField name="year" type="number" onChange={handleChangeState} label="Tahun" variant="outlined" fullWidth required />
           </Grid>
           <Grid item xs={12} md={8}>
-  	    	<TextField name="title" onChange={handleChangeState} label="Judul penelitian" variant="outlined" fullWidth required />
+    	    	<TextField name="title" onChange={handleChangeState} label="Judul penelitian" variant="outlined" fullWidth required />
           </Grid>
           <Grid item xs={12} md={5}>
-  	    	<TextField name="investor" onChange={handleChangeState} label="Pemberi dana" variant="outlined" fullWidth required />
+    	    	<TextField name="investor" onChange={handleChangeState} label="Pemberi dana" variant="outlined" fullWidth required />
           </Grid>
           <Grid item xs={12} md={3}>
-  	    	<TextField name="amount" onChange={handleChangeState} label="Jumlah" type="number" variant="outlined" fullWidth required />
+    	    	<TextField name="amount" onChange={handleChangeState} label="Jumlah (Rp)" type="number" variant="outlined" fullWidth required />
           </Grid>
           <Grid item xs={12} md={8}>
             <FormControl variant="outlined" className={classes.formControl}>

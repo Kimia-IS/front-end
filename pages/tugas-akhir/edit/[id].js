@@ -300,6 +300,7 @@ const EditTA = props => {
 			        </Grid>
 			        <Grid item xs={12} md={8}>
 			        	<Typography variant="subtitle1" gutterBottom>
+			        		Note: Jika upload file baru, file lama akan terhapus<br />
 				        	{fieldListFiles()}
 					    </Typography>
 			        </Grid>
