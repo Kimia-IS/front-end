@@ -287,7 +287,7 @@ const CreateJurnal = props => {
 	            <Grid item xs={12}>
 	              <Grid container spacing={3}>
 	                <Grid item xs={12} md={2}>
-	                    <Button variant="outlined" color="secondary" fullWidth href="publikasi/jurnal">
+	                    <Button variant="outlined" color="secondary" fullWidth href="/publikasi/jurnal">
 	                      Batal
 	                    </Button>
 	                  </Grid>
