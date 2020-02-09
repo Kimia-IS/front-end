@@ -78,7 +78,6 @@ const Index = props => {
                 icon: 'delete',
                 tooltip: 'Delete',
                 onClick: (event, rowData) => {
-                  confirm("Apakah Anda yakin ingin menghapus " + rowData.nama_dosen + " - " + rowData.tahun + "?");
                   event.preventDefault();
                   Swal.fire({
                     title: `Hapus Pengmas ${rowData.title} - ${rowData.year}?`,

@@ -78,7 +78,6 @@ const CreatePengmas = props => {
 		        formData.append('position', state.position);
 		        formData.append('investor', state.investor);
 		        formData.append('amount', state.amount);
-		        formData.append('filepath', state.filepath);
 		        formData.append('other_parties', state.other_parties);
 		        console.log('formData = ', formData);
 		        // Uploading
