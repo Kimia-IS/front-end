@@ -7,38 +7,34 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import PropTypes from 'prop-types';
+import { connect } from "react-redux";
+import { getAllSocreses } from "../../store/actions/pengmasActions";
+import { getAllLecturers } from "../../store/actions/usersActions";
+import Swal from 'sweetalert2';
+import axios from "axios";
+import { API } from "../../config";
 
-export default function Index() {
+const Index = props => {
+  const listDosen = props.lecturers;
+  const socreses = props.socreses.results ? props.socreses.results : [];
+  console.log(socreses);
+  let newSocreses = [];
+  socreses.map((item, index) => {
+    newSocreses[index] = item;
+    let namaDosen = listDosen.find(obj => { return obj.user_id == item.lecturer_nip }).name;
+    newSocreses[index].lecturer_name = namaDosen;
+  });
+
   const [state] = React.useState({
     columns: [
-      { title: 'No', field: 'no' },
-      { title: 'Judul', field: 'judul' },
-      { title: 'Nama Dosen', field: 'nama_dosen' },
-      { title: 'Tahun', field: 'tahun' }
+      { title: 'Judul', field: 'title' },
+      { title: 'Nama Dosen', field: 'lecturer_name' },
+      { title: 'Posisi', field: 'position' },
+      { title: 'Tahun', field: 'year' },
+      { title: 'Pemberi dana', field: 'investor' }
     ],
-    data: [
-      {
-        id: 1,
-        no: 1,
-        judul: 'Desa Mranggen',
-        tahun: 2012,
-        nama_dosen: 'Handajaya Rusli'
-      },
-      {
-        id: 2,
-        no: 2,
-        judul: 'Desa Sumilir',
-        tahun: 2013,
-        nama_dosen: 'Handajaya Rusli'
-      },
-      {
-        id: 3,
-        no: 3,
-        judul: 'Desa Ungaran',
-        tahun: 2014,
-        nama_dosen: 'Handajaya Rusli'
-      },
-    ],
+    data: newSocreses ? newSocreses : socreses,
   });
 
   const router = useRouter();
@@ -71,17 +67,46 @@ export default function Index() {
               {
                 icon: 'visibility',
                 tooltip: 'See More',
-                onClick: () => { router.push('/pengabdian-masyarakat/' + 'id'); }
+                onClick: (event, rowData) => { router.push('/pengabdian-masyarakat/' + rowData.id); }
               },
               {
                 icon: 'edit',
                 tooltip: 'Edit',
-                onClick: () => { router.push('/pengabdian-masyarakat/edit/' + 'id'); }
+                onClick: (event, rowData) => { router.push('/pengabdian-masyarakat/edit/' + rowData.id); }
               },
               {
                 icon: 'delete',
                 tooltip: 'Delete',
-                onClick: (event, rowData) => { confirm("Apakah Anda yakin ingin menghapus " + rowData.nama_dosen + " - " + rowData.tahun + "?"); }
+                onClick: (event, rowData) => {
+                  confirm("Apakah Anda yakin ingin menghapus " + rowData.nama_dosen + " - " + rowData.tahun + "?");
+                  event.preventDefault();
+                  Swal.fire({
+                    title: `Hapus Pengmas ${rowData.title} - ${rowData.year}?`,
+                    text: 'Pengmas akan dihapus secara permanen',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Hapus',
+                    cancelButtonText: 'Batal',
+                  }).then(async (result) => {
+                    if (result.value) {
+                      await axios.delete(`${API}/socres?id=${rowData.id}`)
+                                  .then(() => {
+                                    Swal.fire(
+                                      'Berhasil!',
+                                      'Pengmas berhasil dihapus.',
+                                      'success'
+                                    );
+                                  })
+                                  .catch(error => {
+                                    Swal.fire(
+                                      'Gagal!',
+                                      error,
+                                      'error'
+                                    );
+                                  });
+                      }
+                    })
+                }
               }
             ]}
           />
@@ -90,3 +115,28 @@ export default function Index() {
     </div>
   );
 }
+
+Index.getInitialProps = async ctx => {
+  console.log('ke sini')
+  const { socreses } = await ctx.store.dispatch(getAllSocreses());
+  console.log('pp = ', socreses)
+  const { lecturers } = await ctx.store.dispatch(getAllLecturers());
+  const data = {
+    socreses: socreses,
+    lecturers: lecturers
+  }
+  console.log('data = ', data);
+  return data;
+};
+
+Index.propTypes = {
+  socreses: PropTypes.any,
+  lecturers: PropTypes.any
+};
+
+const mapStateToProps = state => ({
+  socreses: state.pengmasReducer.socreses,
+  lecturers: state.usersReducer.lecturers
+});
+
+export default connect(mapStateToProps)(Index);
