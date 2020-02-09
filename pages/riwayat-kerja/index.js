@@ -7,38 +7,33 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import PropTypes from 'prop-types';
+import { connect } from "react-redux";
+import { getAllExperiences } from "../../store/actions/kerjaActions";
+import { getAllLecturers } from "../../store/actions/usersActions";
+import Swal from 'sweetalert2';
+import axios from "axios";
+import { API } from "../../config";
 
-export default function Index() {
+const Index = props => {
+  const listDosen = props.lecturers;
+  const experiences = props.experiences.results ? props.experiences.results : [];
+  console.log(experiences);
+  let newExperiences = [];
+  experiences.map((item, index) => {
+    newExperiences[index] = item;
+    let namaDosen = listDosen.find(obj => { return obj.user_id == item.lecturer_nip }).name;
+    newExperiences[index].lecturer_name = namaDosen;
+  });
+
   const [state] = React.useState({
     columns: [
-      { title: 'No', field: 'no' },
-      { title: 'Nama Pekerjaan', field: 'judul' },
-      { title: 'Nama', field: 'nama_dosen' },
-      { title: 'Tahun', field: 'tahun' }
+      { title: 'Nama', field: 'lecturer_name' },
+      { title: 'Nama Pekerjaan', field: 'job_name' },
+      { title: 'Tahun', field: 'year' },
+      { title: 'Semester', field: 'term' },
     ],
-    data: [
-      {
-        id: 1,
-        no: 1,
-        judul: 'Dosen ITB',
-        tahun: 2012,
-        nama_dosen: 'Handajaya Rusli'
-      },
-      {
-        id: 2,
-        no: 2,
-        judul: 'CEO PT. KimiaIndo',
-        tahun: 2013,
-        nama_dosen: 'Handajaya Rusli'
-      },
-      {
-        id: 3,
-        no: 3,
-        judul: 'Presiden RI',
-        tahun: 2014,
-        nama_dosen: 'Handajaya Rusli'
-      },
-    ],
+    data: newExperiences ? newExperiences : experiences,
   });
 
   const router = useRouter();
@@ -71,17 +66,45 @@ export default function Index() {
               {
                 icon: 'visibility',
                 tooltip: 'See More',
-                onClick: () => { router.push('/riwayat-kerja/' + 'id'); }
+                onClick: (event, rowData) => { router.push('/riwayat-kerja/' + rowData.id); }
               },
               {
                 icon: 'edit',
                 tooltip: 'Edit',
-                onClick: () => { router.push('/riwayat-kerja/edit/' + 'id'); }
+                onClick: (event, rowData) => { router.push('/riwayat-kerja/edit/' + rowData.id); }
               },
               {
                 icon: 'delete',
                 tooltip: 'Delete',
-                onClick: (event, rowData) => { confirm("Apakah Anda yakin ingin menghapus " + rowData.nama_dosen + " - " + rowData.tahun + "?"); }
+                onClick: (event, rowData) => {
+                  event.preventDefault();
+                  Swal.fire({
+                    title: `Hapus Pekerjaan ${rowData.job_name} - ${rowData.lecturer_name}?`,
+                    text: 'Pekerjaan akan dihapus secara permanen',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Hapus',
+                    cancelButtonText: 'Batal',
+                  }).then(async (result) => {
+                    if (result.value) {
+                      await axios.delete(`${API}/experiences?id=${rowData.id}`)
+                                  .then(() => {
+                                    Swal.fire(
+                                      'Berhasil!',
+                                      'Pekerjaan berhasil dihapus.',
+                                      'success'
+                                    );
+                                  })
+                                  .catch(error => {
+                                    Swal.fire(
+                                      'Gagal!',
+                                      error,
+                                      'error'
+                                    );
+                                  });
+                      }
+                    })
+                }
               }
             ]}
           />
@@ -90,3 +113,28 @@ export default function Index() {
     </div>
   );
 }
+
+Index.getInitialProps = async ctx => {
+  console.log('ke sini')
+  const { experiences } = await ctx.store.dispatch(getAllExperiences());
+  console.log('pp = ', experiences)
+  const { lecturers } = await ctx.store.dispatch(getAllLecturers());
+  const data = {
+    experiences: experiences,
+    lecturers: lecturers
+  }
+  console.log('data = ', data);
+  return data;
+};
+
+Index.propTypes = {
+  experiences: PropTypes.any,
+  lecturers: PropTypes.any
+};
+
+const mapStateToProps = state => ({
+  experiences: state.kerjaReducer.experiences,
+  lecturers: state.usersReducer.lecturers
+});
+
+export default connect(mapStateToProps)(Index);

@@ -8,6 +8,7 @@ import jurnalReducer from "./jurnalReducer";
 import patenReducer from "./patenReducer";
 import karyaReducer from "./karyaReducer";
 import prestasiReducer from "./prestasiReducer";
+import kerjaReducer from "./kerjaReducer";
 
 export default combineReducers({
   usersReducer,
@@ -17,5 +18,6 @@ export default combineReducers({
   jurnalReducer,
   patenReducer,
   karyaReducer,
-  prestasiReducer
+  prestasiReducer,
+  kerjaReducer
 });
