@@ -48,7 +48,7 @@ export default function Index() {
         <Grid item xs={12}>
           <Typography variant="h4" gutterBottom>
             <Box fontWeight="fontWeightBold">
-              Halo, [nama dosen]!
+              Halo, [nama]!
             </Box>
           </Typography>
           <Typography variant="subtitle1" gutterBottom>

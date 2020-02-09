@@ -101,15 +101,18 @@ const EditKelas = props => {
       }).then(async (result) => {
         if (result.value) {
           for (let k = 1; k <= Object.keys(sksDosen).length; k++) {
-            let lecturer = `(${nipDosen['nipDosen' + k]},${sksDosen['sksDosen' + k]})`
+            // let lecturer = `(${nipDosen['nipDosen' + k]},${sksDosen['sksDosen' + k]})`
             let payload = {
               course_id: kodeMataKuliah,
               course_class: kelas,
               total_credit: totalSKS,
-              lecturer: [lecturer]
+              lecturer_credit: sksDosen['sksDosen1'],
+              lecturer_nip: nipDosen['nipDosen1']
+              // lecturer: [lecturer]
             }
             await axios.put(`${API}/academic/lecturer?id=${id}`, payload)
-                      .then(() => {
+                      .then((response) => {
+                        console.log(response);
                         Swal.fire(
                           'Tersimpan!',
                           'Kelas berhasil disimpan.',
@@ -196,7 +199,7 @@ const EditKelas = props => {
           </Grid>
           <Grid item xs={12}>
             <Typography variant="h4" gutterBottom>
-              Edit Kelas {kodeMataKuliah} - K{kelas}
+              Edit Kelas {currentClass.course_id} - K{currentClass.class}
             </Typography>
           </Grid>
           <Grid item xs={12} md={5}>
