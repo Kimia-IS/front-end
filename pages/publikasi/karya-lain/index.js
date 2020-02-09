@@ -7,42 +7,33 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import PropTypes from 'prop-types';
+import { connect } from "react-redux";
+import { getAllOthers } from "../../../store/actions/karyaActions";
+import { getAllLecturers } from "../../../store/actions/usersActions";
+import Swal from 'sweetalert2';
+import axios from "axios";
+import { API } from "../../../config";
 
-export default function Index() {
+const Index = props => {
+  const listDosen = props.lecturers;
+  const others = props.others.results ? props.others.results : [];
+  console.log(others);
+  let newOthers = [];
+  others.map((item, index) => {
+    newOthers[index] = item;
+    let namaDosen = listDosen.find(obj => { return obj.user_id == item.lecturer_nip }).name;
+    newOthers[index].lecturer_name = namaDosen;
+  });
+
   const [state] = React.useState({
     columns: [
-      { title: 'No', field: 'no' },
-      { title: 'Judul', field: 'kode_matkul' },
-      { title: 'Penulis', field: 'nama_matkul' },
-      { title: 'Tanggal', field: 'sks' },
-      { title: 'Penerbit', field: 'kelas' }
+      { title: 'Judul', field: 'title' },
+      { title: 'Penulis', field: 'lecturer_name' },
+      { title: 'Tahun', field: 'year' },
+      { title: 'Penerbit', field: 'publisher' }
     ],
-    data: [
-      {
-        id: 1,
-        no: 1,
-        kode_matkul: 'Karya Lain 1',
-        nama_matkul: 'Handajaya Rusli',
-        sks: '1 Januari 2019',
-        kelas: 'Penerbit ITB'
-      },
-      {
-        id: 2,
-        no: 2,
-        kode_matkul: 'Karya Lain 2',
-        nama_matkul: 'Handajaya Rusli',
-        sks: '19 Februari 2019',
-        kelas: 'Penerbit ITB'
-      },
-      {
-        id: 3,
-        no: 3,
-        kode_matkul: 'Karya Lain 1',
-        nama_matkul: 'Feby Eliana',
-        sks: '1 Januari 2020',
-        kelas: 'Erlangga'
-      },
-    ],
+    data: newOthers ? newOthers : others,
   });
 
   const router = useRouter();
@@ -78,17 +69,45 @@ export default function Index() {
               {
                 icon: 'visibility',
                 tooltip: 'See More',
-                onClick: () => { router.push('/publikasi/karya-lain/' + 'id'); }
+                onClick: (event, rowData) => { router.push('/publikasi/karya-lain/' + rowData.id); }
               },
               {
                 icon: 'edit',
                 tooltip: 'Edit',
-                onClick: () => { router.push('/publikasi/karya-lain/edit/' + 'id'); }
+                onClick: (event, rowData) => { router.push('/publikasi/karya-lain/edit/' + rowData.id); }
               },
               {
                 icon: 'delete',
                 tooltip: 'Delete',
-                onClick: (event, rowData) => { confirm("Apakah Anda yakin ingin menghapus " + rowData.kode_matkul + " - " + rowData.nama_matkul + "?"); }
+                onClick: (event, rowData) => {
+                  event.preventDefault();
+                  Swal.fire({
+                    title: `Hapus Karya ${rowData.title} - ${rowData.year}?`,
+                    text: 'Karya akan dihapus secara permanen',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Hapus',
+                    cancelButtonText: 'Batal',
+                  }).then(async (result) => {
+                    if (result.value) {
+                      await axios.delete(`${API}/publication/other?id=${rowData.id}`)
+                                  .then(() => {
+                                    Swal.fire(
+                                      'Berhasil!',
+                                      'Karya berhasil dihapus.',
+                                      'success'
+                                    );
+                                  })
+                                  .catch(error => {
+                                    Swal.fire(
+                                      'Gagal!',
+                                      error,
+                                      'error'
+                                    );
+                                  });
+                      }
+                    })
+                }
               }
             ]}
           />
@@ -97,3 +116,26 @@ export default function Index() {
     </div>
   );
 }
+
+Index.getInitialProps = async ctx => {
+  const { others } = await ctx.store.dispatch(getAllOthers());
+  const { lecturers } = await ctx.store.dispatch(getAllLecturers());
+  const data = {
+    others: others,
+    lecturers: lecturers
+  }
+  console.log('data = ', data);
+  return data;
+};
+
+Index.propTypes = {
+  others: PropTypes.any,
+  lecturers: PropTypes.any
+};
+
+const mapStateToProps = state => ({
+  others: state.karyaReducer.others,
+  lecturers: state.usersReducer.lecturers
+});
+
+export default connect(mapStateToProps)(Index);

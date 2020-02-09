@@ -6,111 +6,220 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import 'date-fns';
-import DateFnsUtils from '@date-io/date-fns';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from '@material-ui/pickers';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import { makeStyles } from '@material-ui/core/styles';
+import axios from "axios";
+import { API } from "../../../config";
+import PropTypes from 'prop-types';
+import { connect } from "react-redux";
+import { getAllLecturers } from "../../../store/actions/usersActions";
+import Swal from 'sweetalert2';
 
-export default function CreateKaryaLain() {
-	const [selectedDate, setSelectedDate] = React.useState(new Date('2020-01-01T21:11:54'));
+const useStyles = makeStyles(theme => ({
+  formControl: {
+    minWidth: 300,
+    fullWidth: true,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+}));
 
-	const handleDateChange = date => {
-	    setSelectedDate(date);
+const CreateKarya = props => {
+	const classes = useStyles();
+
+	const listDosen = props.lecturers;
+
+	const [state, setState] = React.useState();
+	const [nipDosen, setNipDosen] = React.useState('');
+	const [publicationFiles, setPublicationFiles] = React.useState();
+
+	const handleChangeState = (e) => setState({
+	      ...state,
+	      [e.target.name]: e.target.value
+	});
+
+	const handleChangeSelectNipDosen = event => {
+        setNipDosen(event.target.value);
 	};
+
+	const handleFileUpload = (e) => {
+	    setPublicationFiles(e.target.files);
+	};
+
+	const handleSubmit = async (event) => {
+	    event.preventDefault();
+	    if (publicationFiles) {
+	      Swal.fire({
+	          title: 'Buat baru?',
+	          text: 'Pastikan data sudah terisi dengan benar',
+	          icon: 'warning',
+	          showCancelButton: true,
+	          confirmButtonText: 'Buat',
+	          cancelButtonText: 'Batal',
+	        }).then(async (result) => {
+	          if (result.value) {
+	            // Create form data
+	            const formData = new FormData();
+	            for (let i = 0; i < publicationFiles.length; i++) {
+		          formData.append('publication_files', publicationFiles[i]);
+		        }
+		        formData.append('lecturer_nip', nipDosen);
+		        formData.append('title', state.title);
+		        formData.append('year', state.year);
+		        formData.append('publisher', state.publisher);
+		        console.log('formData = ', formData);
+		        // Uploading
+	            await axios.post(`${API}/publication/other`, formData, {
+	                            headers: {
+	                              'Content-Type': 'multipart/form-data'
+	                            }
+	                        })
+	                        .then((response) => {
+	                        	console.log(response);
+	                          Swal.fire(
+	                            'Tersimpan!',
+	                            'Karya berhasil dibuat.',
+	                            'success'
+	                          );
+	                        })
+	                        .catch(error => {
+	                          Swal.fire(
+	                            'Gagal!',
+	                            error,
+	                            'error'
+	                          );
+	                        });
+	            }
+	          })
+	      }
+	      else {
+	        Swal.fire(
+	                'Oops!',
+	                'Wajib upload minimal 1 file.',
+	                'warning'
+	            );
+	      }
+	  }
+
+	  const fieldListFiles = () => {
+        let field = []
+        if (publicationFiles) {
+          for (let i = 0; i < publicationFiles.length; i++) {
+            field.push(<span key={i}>{i + 1}. {publicationFiles[i].name}<br /></span>);
+          }
+        }
+        return field;
+	  }
 
   return (
     <div>
-      <Grid container spacing={3}>
-      	<Grid item xs={12}>
-          <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
-            <Link color="inherit" href="/dashboard">
-              Dashboard
-            </Link>
-            <Link color="inherit" href="/publikasi">
-              Publikasi
-            </Link>
-            <Link color="inherit" href="/publikasi/karya-lain">
-              Karya Lain
-            </Link>
-            <Typography color="textPrimary">Buat Karya Lain Baru</Typography>
-          </Breadcrumbs>
-        </Grid>
-      	<Grid item xs={12}>
-          <Typography variant="h4" gutterBottom>
-	        Buat Karya Lain Baru
-	      </Typography>
-        </Grid>
-        <Grid item xs={12} md={8}>
-	    	<TextField id="judul" label="Judul Karya Lain" variant="outlined" fullWidth required />
-        </Grid>
-        <Grid item xs={12} md={8}>
-          <TextField id="nama" value="Handajaya Rusli" label="Penulis" variant="outlined" fullWidth disabled required />
-        </Grid>
-        <Grid container item spacing={3} xs={12}>
-	        <Grid item xs={12} md={5}>
-	        	<TextField id="penerbit" label="Penerbit" variant="outlined" fullWidth required />
+	    <form onSubmit={handleSubmit}>
+	      <Grid container spacing={3}>
+	      	<Grid item xs={12}>
+	          <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
+	            <Link color="inherit" href="/dashboard">
+	              Dashboard
+	            </Link>
+	            <Link color="inherit" href="/publikasi">
+	              Publikasi
+	            </Link>
+	            <Link color="inherit" href="/publikasi/karya-lain">
+	              Karya Lain
+	            </Link>
+	            <Typography color="textPrimary">Buat Karya Lain Baru</Typography>
+	          </Breadcrumbs>
 	        </Grid>
-	        <Grid item xs={12} md={3}>
-	        	<MuiPickersUtilsProvider utils={DateFnsUtils}>
-			      <Grid container justify="space-around">
-			        <KeyboardDatePicker
-			          disableToolbar
-			          variant="inline"
-			          format="MM/dd/yyyy"
-			          margin="normal"
-			          id="date-picker-inline"
-			          label="Tanggal masuk"
-			          value={selectedDate}
-			          onChange={handleDateChange}
-			          KeyboardButtonProps={{
-			            'aria-label': 'change date',
-			          }}
-			          fullWidth
-			        />
-			      </Grid>
-			    </MuiPickersUtilsProvider>
+	      	<Grid item xs={12}>
+	          <Typography variant="h4" gutterBottom>
+		        Buat Karya Lain Baru
+		      </Typography>
 	        </Grid>
-        </Grid>
-        <Grid item xs={12} md={8}>
-        	<Grid container spacing={3}>
-		        <Grid item xs={12} md={4}>
-		        	<input
-					  accept="image/*"
-					  style={{ display: 'none' }}
-					  id="raised-button-file"
-					  multiple
-					  type="file"
-					/>
-					<label htmlFor="raised-button-file">
-					  <Button variant="outlined" fullWidth component="span">
-					    Upload file
-					  </Button>
-					</label> 
+	        <Grid item xs={12} md={8}>
+		    	<TextField name="title" onChange={handleChangeState} label="Judul Karya Lain" variant="outlined" fullWidth required />
+	        </Grid>
+	        <Grid item xs={12} md={8}>
+	          <FormControl variant="outlined" fullWidth required className={classes.formControl}>
+	              <InputLabel id="demo-simple-select-label1">Nama Penulis</InputLabel>
+	              <Select
+	                labelId="demo-simple-select-label1"
+	                value={nipDosen}
+	                onChange={handleChangeSelectNipDosen}
+	              >
+	                <MenuItem value="" disabled>
+	                  Pilih Penulis
+	                </MenuItem>
+	                {listDosen.map((value, index) => {
+	                  return <MenuItem key={index} value={value.user_id}>{value.user_id} - {value.name}</MenuItem>;
+	                })}
+	              </Select>
+	            </FormControl>
+	        </Grid>
+	        <Grid container item spacing={3} xs={12}>
+		        <Grid item xs={12} md={5}>
+		        	<TextField name="publisher" onChange={handleChangeState} label="Penerbit" variant="outlined" fullWidth required />
 		        </Grid>
 		        <Grid item xs={12} md={3}>
-		        	<Typography variant="subtitle1" gutterBottom>
-				        nama_file.ext
-				      </Typography>
+		        	<TextField name="year" onChange={handleChangeState} type="number" label="Tahun" variant="outlined" fullWidth required />
 		        </Grid>
 	        </Grid>
-        </Grid>
-        <Grid item xs={12}>
-        	<Grid container spacing={3}>
-		        <Grid item xs={12} md={2}>
-			      <Button variant="outlined" color="secondary" fullWidth href="/publikasi/karya-lain">
-					Batal
-				  </Button>
-				</Grid>
-		        <Grid item xs={12} md={3}>
-			      <Button variant="outlined" color="primary" fullWidth href="/publikasi/karya-lain">
-					Simpan
-				  </Button>
-				</Grid>
-			</Grid>
-        </Grid>
-      </Grid>
+	        <Grid item xs={12} md={8}>
+	          <Grid container spacing={3}>
+	                <Grid item xs={12} md={4}>
+	                  <input
+		                style={{ display: 'none' }}
+		                id="raised-button-file"
+		                multiple
+		                type="file"
+		                onChange={handleFileUpload}
+		              />
+		              <label htmlFor="raised-button-file">
+		                <Button variant="outlined" fullWidth component="span">
+		                  Upload file
+		                </Button>
+		              </label> 
+	                </Grid>
+	                <Grid item xs={12} md={8}>
+	                  <Typography variant="subtitle1" gutterBottom>
+	                    {fieldListFiles()}
+	                </Typography>
+	                </Grid>
+	              </Grid>
+	            </Grid>
+	            <Grid item xs={12}>
+	              <Grid container spacing={3}>
+	                <Grid item xs={12} md={2}>
+	                    <Button variant="outlined" color="secondary" fullWidth href="/publikasi/karya-lain">
+	                      Batal
+	                    </Button>
+	                  </Grid>
+	                  <Grid item xs={12} md={3}>
+	                    <Button variant="outlined" type="submit" color="primary" fullWidth>
+	                      Simpan
+	                    </Button>
+	                  </Grid>
+	              </Grid>
+	        </Grid>
+	      </Grid>
+	    </form>
   	</div>
   );
 }
+
+CreateKarya.getInitialProps = async ctx => {
+  const { lecturers } = await ctx.store.dispatch(getAllLecturers());
+  return { lecturers };
+};
+
+CreateKarya.propTypes = {
+  lecturers: PropTypes.any
+};
+
+const mapStateToProps = state => ({
+  lecturers: state.usersReducer.lecturers
+});
+
+export default connect(mapStateToProps)(CreateKarya);
