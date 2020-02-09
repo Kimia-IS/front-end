@@ -3,11 +3,9 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import Card from '@material-ui/core/Card';
-import Button from '@material-ui/core/Button';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import CardActions from '@material-ui/core/CardActions';
 import CardActionArea from '@material-ui/core/CardActionArea';
 
 const useStyles = makeStyles({
@@ -60,14 +58,14 @@ export default function Index() {
         <Grid item xs={12} md={4}>
           <Card className={classes.card}>
             <CardActionArea>
-              <Link href="/dosen/login">
+              <Link href="/user/login">
                 <CardMedia
                   className={classes.media}
                   image="/static/images/home-dosen.jpg"
-                  title="Dosen"
+                  title="User"
                 />
                 <Typography variant="h6" className={classes.typography} align="center" gutterBottom>
-                  Login sebagai Dosen
+                  Login sebagai Pengguna
                 </Typography>
               </Link>
             </CardActionArea>

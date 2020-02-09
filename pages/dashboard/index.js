@@ -8,7 +8,6 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
-import CardActions from '@material-ui/core/CardActions';
 import CardActionArea from '@material-ui/core/CardActionArea';
 
 const useStyles = makeStyles({
@@ -49,7 +48,7 @@ export default function Index() {
         <Grid item xs={12}>
           <Typography variant="h4" gutterBottom>
             <Box fontWeight="fontWeightBold">
-              Halo, [nama dosen]!
+              Halo, [nama]!
             </Box>
           </Typography>
           <Typography variant="subtitle1" gutterBottom>

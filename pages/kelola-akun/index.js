@@ -7,46 +7,24 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import PropTypes from 'prop-types';
+import { connect } from "react-redux";
+import { getAllUsers } from "../../store/actions/usersActions";
+import Swal from 'sweetalert2';
+import axios from "axios";
+import { API } from "../../config";
 
-export default function Index() {
-  const [state, setState] = React.useState({
+const Index = props => {
+  const { users } = props;
+
+  const [state] = React.useState({
     columns: [
-      { title: 'No', field: 'no' },
-      { title: 'Nama', field: 'nama' },
       { title: 'NIP / ID', field: 'user_id' },
+      { title: 'Nama', field: 'name' },
       { title: 'Email', field: 'email' },
-      { title: 'Peran', field: 'role' },
-      { title: 'Verifikasi', field: 'verified' }
+      { title: 'Peran', field: 'role' }
     ],
-    data: [
-      {
-        id: 1,
-        no: 1,
-        nama: 'Feby Eliana',
-        user_id: '1234',
-        email: 'feby@chem.itb.ac.id',
-        role: 'Super admin',
-        verified: 'Sudah'
-      },
-      {
-        id: 2,
-        no: 2,
-        nama: 'Vincent Siauw',
-        user_id: '1235',
-        email: 'vincent@chem.itb.ac.id',
-        role: 'Admin akademik',
-        verified: 'Belum'
-      },
-      {
-        id: 3,
-        no: 3,
-        nama: 'Handajaya Rusli',
-        user_id: '19123884202',
-        email: 'hans@chem.itb.ac.id',
-        role: 'Dosen',
-        verified: 'Sudah'
-      },
-    ],
+    data: users,
   });
 
   const router = useRouter();
@@ -79,12 +57,75 @@ export default function Index() {
               {
                 icon: 'edit',
                 tooltip: 'Edit',
-                onClick: (event, rowData) => { router.push('/kelola-akun/edit/' + 'id') }
+                onClick: (event, rowData) => {
+                  let queryRole = 0;
+                  if (rowData.role == 'Super Admin') { queryRole = 1 }
+                    else if (rowData.role == 'Admin Akademik') { queryRole = 2 }
+                    else if (rowData.role == 'Admin Non-Akademik') { queryRole = 3 }
+                    else if (rowData.role == 'Tendik') { queryRole = 4 }
+                    else if (rowData.role == 'Dosen') { queryRole = 5 }
+                    else if (rowData.role == 'Kaprodi') { queryRole = 6 }       
+                  router.push('/kelola-akun/edit?id=' + rowData.id + '&role=' + queryRole); 
+                }
               },
               {
                 icon: 'delete',
                 tooltip: 'Delete',
-                onClick: (event, rowData) => { confirm("Apakah Anda yakin ingin menghapus " + rowData.nama + " - " + rowData.user_id + "?") }
+                onClick: (event, rowData) => { 
+                  event.preventDefault();
+                  Swal.fire({
+                    title: `Hapus akun ${rowData.name}?`,
+                    text: 'Akun akan dihapus secara permanen',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Hapus',
+                    cancelButtonText: 'Batal',
+                  }).then(async (result) => {
+                    if (result.value) {
+                      if ((rowData.role == 'Dosen') || (rowData.role == 'Tendik') || (rowData.role == 'Kaprodi')) {
+                        await axios.delete(`${API}/auth/lecturer/delete/${rowData.user_id}`)
+                                    .then(() => {
+                                      Swal.fire(
+                                        'Berhasil!',
+                                        'Akun berhasil dihapus.',
+                                        'success'
+                                      );
+                                    })
+                                    .catch(error => {
+                                      Swal.fire(
+                                        'Gagal!',
+                                        error,
+                                        'error'
+                                      );
+                                    });
+                      }
+                      else if ((rowData.role == 'Super Admin') || (rowData.role == 'Admin Akademik') || (rowData.role == 'Admin Non-Akademik')) {
+                        await axios.delete(`${API}/auth/admin/delete/${rowData.user_id}`)
+                                    .then(() => {
+                                      Swal.fire(
+                                        'Berhasil!',
+                                        'Akun berhasil dihapus.',
+                                        'success'
+                                      );
+                                    })
+                                    .catch(error => {
+                                      Swal.fire(
+                                        'Gagal!',
+                                        error,
+                                        'error'
+                                      );
+                                    });
+                      }
+                      else {
+                        Swal.fire(
+                          'Gagal!',
+                          'No role selected.',
+                          'error'
+                        );
+                      }
+                    }
+                  })
+                }
               }
             ]}
           />
@@ -93,3 +134,18 @@ export default function Index() {
     </div>
   );
 }
+
+Index.getInitialProps = async ctx => {
+  const { users } = await ctx.store.dispatch(getAllUsers());
+  return { users };
+};
+
+Index.propTypes = {
+  users: PropTypes.any
+};
+
+const mapStateToProps = state => ({
+  users: state.usersReducer.users
+});
+
+export default connect(mapStateToProps)(Index);

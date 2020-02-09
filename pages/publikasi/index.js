@@ -1,15 +1,11 @@
 import React from 'react';
-import { useRouter }  from 'next/router';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
-import MaterialTable from 'material-table';
-import Button from '@material-ui/core/Button';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
-import CardActions from '@material-ui/core/CardActions';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
@@ -34,7 +30,6 @@ const useStyles = makeStyles({
 
 export default function Index() {
   const classes = useStyles();
-  const router = useRouter();
 
   return (
     <div>

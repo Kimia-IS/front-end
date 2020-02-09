@@ -7,50 +7,26 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import PropTypes from 'prop-types';
+import { connect } from "react-redux";
+import { getAllClasses } from "../../store/actions/akademikActions";
+import Swal from 'sweetalert2';
+import axios from "axios";
+import { API } from "../../config";
 
-export default function Index() {
-  const [state, setState] = React.useState({
+const Index = props => {
+  const { classes } = props;
+
+  const [state] = React.useState({
     columns: [
-      { title: 'No', field: 'no' },
-      { title: 'Kode', field: 'kode_matkul' },
-      { title: 'Nama Mata Kuliah', field: 'nama_matkul' },
-      { title: 'SKS', field: 'sks', type: 'numeric' },
-      { title: 'Kelas', field: 'kelas' },
-      { title: 'Dosen', field: 'dosen' },
-      { title: 'SKS Dosen', field: 'sks_dosen' }
+      { title: 'Kode', field: 'course_id' },
+      { title: 'Nama Mata Kuliah', field: 'course_name' },
+      { title: 'SKS', field: 'total_credit', type: 'numeric' },
+      { title: 'Kelas', field: 'class' },
+      { title: 'Dosen', field: 'lecturer(s)' },
+      { title: 'SKS Dosen', field: 'lecturer_credit' },
     ],
-    data: [
-      {
-        id: 1,
-        no: 1,
-        kode_matkul: 'KI3121',
-        nama_matkul: 'Kimia Murni',
-        sks: 3,
-        kelas: '01',
-        dosen: 'Handajaya Rusli',
-        sks_dosen: 3
-      },
-      {
-        id: 2,
-        no: 2,
-        kode_matkul: 'KI2111',
-        nama_matkul: 'Kimia Palsu',
-        sks: 4,
-        kelas: '01',
-        dosen: 'Feby Eliana, Vincent Siauw',
-        sks_dosen: '2, 2'
-      },
-      {
-        id: 3,
-        no: 3,
-        kode_matkul: 'KI2111',
-        nama_matkul: 'Kimia Palsu',
-        sks: 4,
-        kelas: '02',
-        dosen: 'Alfian Maulana',
-        sks_dosen: 4
-      },
-    ],
+    data: classes.results
   });
 
   const router = useRouter();
@@ -58,7 +34,7 @@ export default function Index() {
   return (
     <div>
       <Grid container spacing={3} alignItems="center" alignContent="center" justify="center">
-        <Grid item xs={12} md={10}>
+        <Grid item xs={12} md={7}>
           <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
             <Link color="inherit" href="/dashboard">
               Dashboard
@@ -66,8 +42,13 @@ export default function Index() {
             <Typography color="textPrimary">Akademik</Typography>
           </Breadcrumbs>
         </Grid>
+        <Grid item xs={8} md={3}>
+          <Button variant="outlined" fullWidth href='/akademik/create/mata-kuliah'>
+            Buat/Hapus Mata Kuliah
+          </Button>
+        </Grid>
         <Grid item xs={8} md={2}>
-          <Button variant="outlined" fullWidth href='/akademik/create'>
+          <Button variant="outlined" fullWidth href='/akademik/create/kelas'>
             Buat Kelas Baru
           </Button>
         </Grid>
@@ -76,20 +57,48 @@ export default function Index() {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <MaterialTable
-            title="Daftar Mata Kuliah"
+            title="Daftar Kelas"
             columns={state.columns}
             data={state.data}
             actions={[
               {
                 icon: 'edit',
                 tooltip: 'Edit',
-                onClick: (event, rowData) => { router.push('/akademik/edit/' + 'id') }
+                onClick: (event, rowData) => { router.push('/akademik/edit/' + rowData.id); }
               },
               {
                 icon: 'delete',
                 tooltip: 'Delete',
-                onClick: (event, rowData) => { confirm("Apakah Anda yakin ingin menghapus " + rowData.kode_matkul + " - " + rowData.nama_matkul + "?") }
-              }
+                onClick: (event, rowData) => {
+                  event.preventDefault();
+                  Swal.fire({
+                    title: `Hapus kelas ${rowData.course_name} - K${rowData.class}?`,
+                    text: 'Kelas akan dihapus secara permanen',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Hapus',
+                    cancelButtonText: 'Batal',
+                  }).then(async (result) => {
+                    if (result.value) {
+                      await axios.delete(`${API}/academic/lecturer?id=${rowData.id}`)
+                                  .then(() => {
+                                    Swal.fire(
+                                      'Berhasil!',
+                                      'Kelas berhasil dihapus.',
+                                      'success'
+                                    );
+                                  })
+                                  .catch(error => {
+                                    Swal.fire(
+                                      'Gagal!',
+                                      error,
+                                      'error'
+                                    );
+                                  });
+                      }
+                    })
+                  }
+                }
             ]}
           />
         </Grid>
@@ -97,3 +106,18 @@ export default function Index() {
     </div>
   );
 }
+
+Index.getInitialProps = async ctx => {
+  const { classes } = await ctx.store.dispatch(getAllClasses());
+  return { classes };
+};
+
+Index.propTypes = {
+  classes: PropTypes.any
+};
+
+const mapStateToProps = state => ({
+  classes: state.akademikReducer.classes
+});
+
+export default connect(mapStateToProps)(Index);

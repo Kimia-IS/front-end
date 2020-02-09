@@ -7,42 +7,34 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import PropTypes from 'prop-types';
+import { connect } from "react-redux";
+import { getAllJournals } from "../../../store/actions/jurnalActions";
+import { getAllLecturers } from "../../../store/actions/usersActions";
+import Swal from 'sweetalert2';
+import axios from "axios";
+import { API } from "../../../config";
 
-export default function Index() {
-  const [state, setState] = React.useState({
+const Index = props => {
+  const listDosen = props.lecturers;
+  const journals = props.journals.results ? props.journals.results : [];
+  console.log(journals);
+  let newJournals = [];
+  journals.map((item, index) => {
+    newJournals[index] = item;
+    let namaDosen = listDosen.find(obj => { return obj.user_id == item.lecturer_nip }).name;
+    newJournals[index].lecturer_name = namaDosen;
+  });
+
+  const [state] = React.useState({
     columns: [
-      { title: 'No', field: 'no' },
-      { title: 'Judul', field: 'kode_matkul' },
-      { title: 'Penulis', field: 'nama_matkul' },
-      { title: 'Tahun', field: 'sks' },
-      { title: 'Jenis Jurnal', field: 'kelas' }
+      { title: 'Judul', field: 'title' },
+      { title: 'Penulis', field: 'lecturer_name' },
+      { title: 'Tahun', field: 'year' },
+      { title: 'Jenis Jurnal', field: 'type' },
+      { title: 'Nomor Jurnal', field: 'number' },
     ],
-    data: [
-      {
-        id: 1,
-        no: 1,
-        kode_matkul: 'Laju Hidrolisis Heroin dalam Air dan Plasma',
-        nama_matkul: 'Handajaya Rusli',
-        sks: 2017,
-        kelas: 'Nasional terakreditasi'
-      },
-      {
-        id: 2,
-        no: 2,
-        kode_matkul: 'Laju Hidrolisis Heroin dalam Udara dan Plasma',
-        nama_matkul: 'Handajaya Rusli',
-        sks: 2018,
-        kelas: 'Nasional'
-      },
-      {
-        id: 3,
-        no: 3,
-        kode_matkul: 'Steroids from the Super Red Dragon Fruit (Hylocereus costaricensis)',
-        nama_matkul: 'Feby Eliana',
-        sks: 2019,
-        kelas: 'Internasional terindeks scopus'
-      },
-    ],
+    data: newJournals ? newJournals : journals,
   });
 
   const router = useRouter();
@@ -78,17 +70,45 @@ export default function Index() {
               {
                 icon: 'visibility',
                 tooltip: 'See More',
-                onClick: (event, rowData) => { router.push('/publikasi/jurnal/' + 'id') }
+                onClick: (event, rowData) => { router.push('/publikasi/jurnal/' + rowData.id); }
               },
               {
                 icon: 'edit',
                 tooltip: 'Edit',
-                onClick: (event, rowData) => { router.push('/publikasi/jurnal/edit/' + 'id') }
+                onClick: (event, rowData) => { router.push('/publikasi/jurnal/edit/' + rowData.id); }
               },
               {
                 icon: 'delete',
                 tooltip: 'Delete',
-                onClick: (event, rowData) => { confirm("Apakah Anda yakin ingin menghapus " + rowData.kode_matkul + " - " + rowData.nama_matkul + "?") }
+                onClick: (event, rowData) => {
+                  event.preventDefault();
+                  Swal.fire({
+                    title: `Hapus Jurnal ${rowData.title} - ${rowData.year}?`,
+                    text: 'Jurnal akan dihapus secara permanen',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Hapus',
+                    cancelButtonText: 'Batal',
+                  }).then(async (result) => {
+                    if (result.value) {
+                      await axios.delete(`${API}/publication/journal?id=${rowData.id}`)
+                                  .then(() => {
+                                    Swal.fire(
+                                      'Berhasil!',
+                                      'Jurnal berhasil dihapus.',
+                                      'success'
+                                    );
+                                  })
+                                  .catch(error => {
+                                    Swal.fire(
+                                      'Gagal!',
+                                      error,
+                                      'error'
+                                    );
+                                  });
+                      }
+                    })
+                }
               }
             ]}
           />
@@ -97,3 +117,26 @@ export default function Index() {
     </div>
   );
 }
+
+Index.getInitialProps = async ctx => {
+  const { journals } = await ctx.store.dispatch(getAllJournals());
+  const { lecturers } = await ctx.store.dispatch(getAllLecturers());
+  const data = {
+    journals: journals,
+    lecturers: lecturers
+  }
+  console.log('data = ', data);
+  return data;
+};
+
+Index.propTypes = {
+  journals: PropTypes.any,
+  lecturers: PropTypes.any
+};
+
+const mapStateToProps = state => ({
+  journals: state.jurnalReducer.journals,
+  lecturers: state.usersReducer.lecturers
+});
+
+export default connect(mapStateToProps)(Index);

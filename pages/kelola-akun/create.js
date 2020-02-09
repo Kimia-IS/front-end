@@ -6,16 +6,17 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
+import axios from "axios";
+import { API } from "../../config";
+import Swal from 'sweetalert2';
 
 const useStyles = makeStyles(theme => ({
   formControl: {
-    // margin: theme.spacing(1),
     minWidth: 300,
     fullWidth: true,
   },
@@ -26,175 +27,124 @@ const useStyles = makeStyles(theme => ({
 
 export default function CreateAkun() {
 	const classes = useStyles();
-	
-	const [count, setCount] = React.useState(2);	// Pahami lagi perilaku 'count' (lifecycle)
-	const [inputDosen2, setInputDosen2] = React.useState(false);
-	const [inputDosen3, setInputDosen3] = React.useState(false);
-	const [tipeMahasiswa, setTipeMahasiswa] = React.useState('');
-	const [posisiDosen, setPosisiDosen] = React.useState('');
-	const [selectedDate, setSelectedDate] = React.useState(new Date('2020-01-01T21:11:54'));
 
-	const handleDateChange = date => {
-	    setSelectedDate(date);
-	};
+	const [role, setRole] = React.useState("");
+  const [state, setState] = React.useState();
 
-	const handleChangeTipeMahasiswa = event => {
-		setTipeMahasiswa(event.target.value);
-	};
+  const handleInputChange = (e) => setState({
+      ...state,
+      [e.target.name]: e.target.value
+  })
 
-	const handleChangePosisiDosen = event => {
-		setPosisiDosen(event.target.value);
-	};
+  function handleChangeRole(event) {
+    setRole(event.target.value);
+  }
 
-	const handleTambahDosen = () => {
-		if (count <= 3) {
-			setCount(count => count + 1);
-			if (count >= 2) {
-				setInputDosen2(true);
-			}
-			if (count >= 3) {
-				setInputDosen3(true);
-			}
-		}
-	};
+  React.useEffect(() => {
+     console.log('hehe')
+  }, [state]);
 
-	const handleKurangDosen = () => {
-		if (count >= 3) {
-			setCount(count => count - 1);
-			if (count <= 4) {
-				setInputDosen3(false);
-			}
-			if (count <= 3) {
-				setInputDosen2(false);
-			}
-		}
-	};
-
-	const addFieldDosen2 = () => {
-		if (inputDosen2) {
-			return (
-				<Grid item xs={12} md={8}>
-		        	<Grid container spacing={3}>
-				        <Grid item xs={12} md={7}>
-				          <TextField id="dosen_2" label="Nama dosen 2" variant="outlined" fullWidth />
-				        </Grid>
-				        <Grid item xs={12} md={5}>
-				          <TextField id="sks_dosen_2" label="SKS dosen 2" variant="outlined" fullWidth required />
-				        </Grid>
-		        	</Grid>
-		        </Grid>
-			)
-		}
-	}
-
-	const addFieldDosen3 = () => {
-		if (inputDosen3) {
-			return (
-				<Grid item xs={12} md={8}>
-		        	<Grid container spacing={3}>
-				        <Grid item xs={12} md={7}>
-				          <TextField id="dosen_3" label="Nama dosen 3" variant="outlined" fullWidth />
-				        </Grid>
-				        <Grid item xs={12} md={5}>
-				          <TextField id="sks_dosen_3" label="SKS dosen 3" variant="outlined" fullWidth required />
-				        </Grid>
-		        	</Grid>
-		        </Grid>
-			)
-		}
-	}
-
-	/*const addFieldDosen = () => {
-		console.log('addFieldDosen')
-		console.log('state = ' + count)
-	    let field = [];
-
-	    if (count >= 3) {
-	    	handleClickOpen;
-	    	{() => {setOpen(true); console.log(open);}} // ga dijalanin
-	    	console.log('setOpen = ' + open)
-	    } else {
-		    for (let i = 2; i < count; i++) {
-		      field.push(
-		      	<Grid item xs={12} md={8}>
-		        	<Grid container spacing={3}>
-				      	<Grid item xs={12} md={7}>
-				          <TextField id={"dosen_" + i} label={"Nama dosen " + i} variant="outlined" required fullWidth />
-				        </Grid>
-				        <Grid item xs={12} md={5}>
-				          <TextField id={"sks_dosen_" + i} label={"SKS dosen " + i} variant="outlined" fullWidth required />
-				        </Grid>
-			        </Grid>
-		        </Grid>
-		      );
-		    }
-	    }
-
-	    return field;
-	 }*/
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    Swal.fire({
+      title: 'Buat baru?',
+      text: 'Pastikan data sudah terisi dengan benar',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Buat',
+      cancelButtonText: 'Batal',
+    }).then(async (result) => {
+      if (result.value) {
+        const payload = {
+          user_id: state.user_id,
+          email: state.email,
+          name: state.name,
+          role: role
+        }
+        await axios.post(`${API}/auth/register`, payload)
+                    .then(() => {
+                      Swal.fire(
+                        'Tersimpan!',
+                        'Akun berhasil dibuat.',
+                        'success'
+                      );
+                    })
+                    .catch(error => {
+                      Swal.fire(
+                        'Gagal!',
+                        error,
+                        'error'
+                      );
+                    });
+      }
+    })
+  }
 
   return (
     <div>
-      <Grid container spacing={3}>
-      	<Grid item xs={12}>
-          <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
-            <Link color="inherit" href="/dashboard">
-              Dashboard
-            </Link>
-            <Link color="inherit" href="/kelola-akun">
-              Kelola Akun
-            </Link>
-            <Typography color="textPrimary">Buat Akun Baru</Typography>
-          </Breadcrumbs>
+      <form onSubmit={handleSubmit}>
+        <Grid container spacing={3}>
+        	<Grid item xs={12}>
+            <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
+              <Link color="inherit" href="/dashboard">
+                Dashboard
+              </Link>
+              <Link color="inherit" href="/kelola-akun">
+                Kelola Akun
+              </Link>
+              <Typography color="textPrimary">Buat Akun Baru</Typography>
+            </Breadcrumbs>
+          </Grid>
+        	<Grid item xs={12}>
+            <Typography variant="h4" gutterBottom>
+  	        Buat Akun Baru
+  	      </Typography>
+          </Grid>
+          <Grid item xs={12} md={3}>
+            <TextField label="Nama" name="name" onChange={handleInputChange} variant="outlined" fullWidth required />
+          </Grid>
+          <Grid item xs={12} md={5}>
+            <TextField label="NIP / ID" name="user_id" onChange={handleInputChange} variant="outlined" fullWidth required />
+          </Grid>
+          <Grid item xs={12} md={5}>
+            <TextField label="Email" name="email" onChange={handleInputChange} variant="outlined" fullWidth required />
+          </Grid>
+          <Grid item xs={12} md={3}>
+            <FormControl variant="outlined" required className={classes.formControl}>
+    	        <InputLabel id="demo-simple-select-label">Peran</InputLabel>
+    	        <Select
+    	          labelId="demo-simple-select-label"
+    	          value={role}
+    	          onChange={handleChangeRole}
+    	        >
+                <MenuItem value="" disabled>
+                  Pilih Peran
+                </MenuItem>
+    	          <MenuItem value={1}>Super admin</MenuItem>
+    	          <MenuItem value={2}>Admin akademik</MenuItem>
+    	          <MenuItem value={3}>Admin non-akademik</MenuItem>
+    	          <MenuItem value={4}>Tenaga pendidik</MenuItem>
+                <MenuItem value={5}>Dosen</MenuItem>
+    	          <MenuItem value={6}>Kepala program studi</MenuItem>
+    	        </Select>
+    	      </FormControl>
+          </Grid>
+          <Grid item xs={12}>
+          	<Grid container spacing={3}>
+  		        <Grid item xs={12} md={2}>
+    			      <Button variant="outlined" color="secondary" fullWidth href="/kelola-akun">
+        					Batal
+      				  </Button>
+      				</Grid>
+  		        <Grid item xs={12} md={3}>
+    			      <Button variant="outlined" type="submit" color="primary" fullWidth>
+        					Buat
+      				  </Button>
+      				</Grid>
+      			</Grid>
+          </Grid>
         </Grid>
-      	<Grid item xs={12}>
-          <Typography variant="h4" gutterBottom>
-	        Buat Akun Baru
-	      </Typography>
-        </Grid>
-        <Grid item xs={12} md={3}>
-          <TextField id="kode_matkul" label="Nama" variant="outlined" fullWidth required />
-        </Grid>
-        <Grid item xs={12} md={5}>
-          <TextField id="nama_matkul" label="NIP / ID" variant="outlined" fullWidth required />
-        </Grid>
-        <Grid item xs={12} md={5}>
-          <TextField id="kode_matkul" label="Email" variant="outlined" fullWidth required />
-        </Grid>
-        <Grid item xs={12} md={3}>
-          <FormControl variant="outlined" className={classes.formControl}>
-	        <InputLabel id="demo-simple-select-label">Peran</InputLabel>
-	        <Select
-	          labelId="demo-simple-select-label"
-	          id="demo-simple-select"
-	          value={tipeMahasiswa}
-	          onChange={handleChangeTipeMahasiswa}
-	        >
-	          <MenuItem value="dalam">Dosen</MenuItem>
-	          <MenuItem value="dalam">Admin akademik</MenuItem>
-	          <MenuItem value="luar">Admin penelitian</MenuItem>
-	          <MenuItem value="luar">Admin pengabdian masyarakat</MenuItem>
-	          <MenuItem value="luar">Admin publikasi</MenuItem>
-	          <MenuItem value="dalam">Tenaga pendidik</MenuItem>
-	          <MenuItem value="dalam">Kepala program studi</MenuItem>
-	        </Select>
-	      </FormControl>
-        </Grid>
-        <Grid item xs={12}>
-        	<Grid container spacing={3}>
-		        <Grid item xs={12} md={2}>
-			      <Button variant="outlined" color="secondary" fullWidth href="/kelola-akun">
-					Batal
-				  </Button>
-				</Grid>
-		        <Grid item xs={12} md={3}>
-			      <Button variant="outlined" color="primary" fullWidth href="/kelola-akun">
-					Buat
-				  </Button>
-				</Grid>
-			</Grid>
-        </Grid>
-      </Grid>
+      </form>
   	</div>
   );
 }
