@@ -198,7 +198,7 @@ const EditKelas = props => {
             </Breadcrumbs>
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h4" gutterBottom>
+            <Typography variant="h4" gutterBottom> 
               Edit Kelas {currentClass.course_id} - K{currentClass.class}
             </Typography>
           </Grid>
