@@ -87,7 +87,7 @@ const Index = props => {
                     cancelButtonText: 'Batal',
                   }).then(async (result) => {
                     if (result.value) {
-                      await axios.delete(`${API}/publication/achievement?id=${rowData.id}`)
+                      await axios.delete(`${API}/achievements?id=${rowData.id}`)
                                   .then(() => {
                                     Swal.fire(
                                       'Berhasil!',

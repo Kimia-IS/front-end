@@ -6,8 +6,46 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import PropTypes from 'prop-types';
+import { connect } from "react-redux";
+import { API } from "../../config";
+import { getAchievementById } from "../../store/actions/prestasiActions";
+import { getAllLecturers } from "../../store/actions/usersActions";
 
-export default function LihatTA() {
+const SeePrestasi = props => {
+  const listDosen = props.lecturers;
+  const data = props.achievement.results;
+  console.log(props)
+  const namaDosen = listDosen.find(obj => { return obj.user_id == data.lecturer_nip }).name;
+  const files = data.filepath.slice(2, -2).split("', '");
+
+  const fieldListFiles = (files) => {
+    let field = [];
+    if (files) {
+      for (let i = 0; i < files.length; i++) {
+        field.push(
+          <Grid container spacing={3} key={i}>
+            <Grid item xs={4} md={3}>
+              <Button variant="outlined" fullWidth target="_blank" href={`${API}/${files[i]}`}>
+                Lihat file {i + 1}
+            </Button>
+            </Grid>
+            <Grid item xs={8} md={9}>
+              <Typography variant="subtitle1" gutterBottom>
+                {files[i].slice(25)}
+              </Typography>
+            </Grid>
+          </Grid>
+        );
+      }
+    }
+    return (
+      <Grid item xs={12}>
+        {field}
+      </Grid>
+    );
+  }
+
   return (
     <div>
       <Grid container spacing={3}>
@@ -19,48 +57,69 @@ export default function LihatTA() {
             <Link color="inherit" href="/prestasi">
               Prestasi
             </Link>
-            <Typography color="textPrimary">Prestasi [ID]</Typography>
+            <Typography color="textPrimary">Lihat Prestasi</Typography>
           </Breadcrumbs>
         </Grid>
       	<Grid item xs={12}>
           <Typography variant="h4" gutterBottom>
-	        Prestasi [ID]
-	      </Typography>
+  	        Prestasi - {data.title}
+  	      </Typography>
         </Grid>
         <Grid item xs={12} md={5}>
-          <TextField id="nim" label="Nama" variant="outlined" fullWidth required disabled />
+          <TextField value={namaDosen} label="Nama" variant="outlined" fullWidth disabled />
         </Grid>
         <Grid item xs={12} md={3}>
-          <TextField id="nama_mahasiswa" label="Tahun" variant="outlined" fullWidth required disabled />
+          <TextField value={data.year} label="Tahun" variant="outlined" fullWidth disabled />
         </Grid>
         <Grid item xs={12} md={8}>
-          <TextField id="tipe" label="Judul prestasi" variant="outlined" fullWidth required disabled />
+          <TextField value={data.title} label="Judul prestasi" variant="outlined" fullWidth disabled />
         </Grid>
         <Grid item xs={12} md={6}>
-          <TextField id="posisi" label="Pemberi" variant="outlined" fullWidth required disabled />
+          <TextField value={data.issuer} label="Pemberi" variant="outlined" fullWidth disabled />
         </Grid>
         <Grid item xs={12} md={8}>
-        	<Grid container spacing={3}>
-		        <Grid item xs={12} md={4}>
-					  <Button variant="outlined" fullWidth>
-					    Lihat file
-					  </Button>
-		        </Grid>
-		        <Grid item xs={12} md={3}>
-		        	nama_file.extension
-		        </Grid>
-	        </Grid>
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <Typography variant="h5" gutterBottom>
+                  List files
+              </Typography>
+            </Grid>
+            {fieldListFiles(files)}
+          </Grid>
         </Grid>
         <Grid item xs={12}>
-        	<Grid container spacing={3}>
-		        <Grid item xs={12} md={6}>
-			      <Button variant="outlined" color="secondary" fullWidth href="/prestasi">
-					Kembali
-				  </Button>
-				</Grid>
-			</Grid>
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={6}>
+              <Button variant="outlined" color="secondary" fullWidth href="/prestasi">
+                Kembali
+              </Button>
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
   	</div>
   );
 }
+
+SeePrestasi.getInitialProps = async ctx => {
+  const id = parseInt(ctx.query.id);
+  const { achievement } = await ctx.store.dispatch(getAchievementById(id));
+  const { lecturers } = await ctx.store.dispatch(getAllLecturers());
+  const data = {
+    achievement: achievement,
+    lecturers: lecturers
+  }
+  return data;
+};
+
+SeePrestasi.propTypes = {
+  achievement: PropTypes.any,
+  lecturers: PropTypes.any
+};
+
+const mapStateToProps = state => ({
+  achievement: state.prestasiReducer.achievement,
+  lecturers: state.usersReducer.lecturers
+});
+
+export default connect(mapStateToProps)(SeePrestasi);
