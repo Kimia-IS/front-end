@@ -7,42 +7,33 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import PropTypes from 'prop-types';
+import { connect } from "react-redux";
+import { getAllPatents } from "../../../store/actions/patenActions";
+import { getAllLecturers } from "../../../store/actions/usersActions";
+import Swal from 'sweetalert2';
+import axios from "axios";
+import { API } from "../../../config";
 
-export default function Index() {
+const Index = props => {
+  const listDosen = props.lecturers;
+  const patents = props.patents.results ? props.patents.results : [];
+  console.log(patents);
+  let newPatents = [];
+  patents.map((item, index) => {
+    newPatents[index] = item;
+    let namaDosen = listDosen.find(obj => { return obj.user_id == item.lecturer_nip }).name;
+    newPatents[index].lecturer_name = namaDosen;
+  });
+
   const [state] = React.useState({
     columns: [
-      { title: 'No', field: 'no' },
-      { title: 'Judul', field: 'kode_matkul' },
-      { title: 'Nama Pengaju', field: 'nama_matkul' },
-      { title: 'Status', field: 'sks' },
-      { title: 'Tahun', field: 'kelas' },
+      { title: 'Judul', field: 'title' },
+      { title: 'Nama Pengaju', field: 'lecturer_name' },
+      { title: 'Status', field: 'status' },
+      { title: 'Tahun', field: 'year' },
     ],
-    data: [
-      {
-        id: 1,
-        no: 1,
-        kode_matkul: 'Paten 1',
-        nama_matkul: 'Handajaya Rusli',
-        sks: 'Granted',
-        kelas: 2019
-      },
-      {
-        id: 2,
-        no: 2,
-        kode_matkul: 'Paten 2',
-        nama_matkul: 'Handajaya Rusli',
-        sks: 'Granted',
-        kelas: 2019
-      },
-      {
-        id: 3,
-        no: 3,
-        kode_matkul: 'Paten 1',
-        nama_matkul: 'Feby Eiana',
-        sks: 'Terdaftar',
-        kelas: 2020
-      },
-    ],
+    data: newPatents ? newPatents : patents,
   });
 
   const router = useRouter();
@@ -78,17 +69,45 @@ export default function Index() {
               {
                 icon: 'visibility',
                 tooltip: 'See More',
-                onClick: () => { router.push('/publikasi/paten/' + 'id'); }
+                onClick: (event, rowData) => { router.push('/publikasi/paten/' + rowData.id); }
               },
               {
                 icon: 'edit',
                 tooltip: 'Edit',
-                onClick: () => { router.push('/publikasi/paten/edit/' + 'id'); }
+                onClick: (event, rowData) => { router.push('/publikasi/paten/edit/' + rowData.id); }
               },
               {
                 icon: 'delete',
                 tooltip: 'Delete',
-                onClick: (event, rowData) => { confirm("Apakah Anda yakin ingin menghapus " + rowData.kode_matkul + " - " + rowData.nama_matkul + "?"); }
+                onClick: (event, rowData) => {
+                  event.preventDefault();
+                  Swal.fire({
+                    title: `Hapus Paten ${rowData.title} - ${rowData.year}?`,
+                    text: 'Paten akan dihapus secara permanen',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Hapus',
+                    cancelButtonText: 'Batal',
+                  }).then(async (result) => {
+                    if (result.value) {
+                      await axios.delete(`${API}/publication/patent?id=${rowData.id}`)
+                                  .then(() => {
+                                    Swal.fire(
+                                      'Berhasil!',
+                                      'Paten berhasil dihapus.',
+                                      'success'
+                                    );
+                                  })
+                                  .catch(error => {
+                                    Swal.fire(
+                                      'Gagal!',
+                                      error,
+                                      'error'
+                                    );
+                                  });
+                      }
+                    })
+                }
               }
             ]}
           />
@@ -97,3 +116,28 @@ export default function Index() {
     </div>
   );
 }
+
+Index.getInitialProps = async ctx => {
+  console.log('ke sini')
+  const { patents } = await ctx.store.dispatch(getAllPatents());
+  console.log('pp = ', patents)
+  const { lecturers } = await ctx.store.dispatch(getAllLecturers());
+  const data = {
+    patents: patents,
+    lecturers: lecturers
+  }
+  console.log('data = ', data);
+  return data;
+};
+
+Index.propTypes = {
+  patents: PropTypes.any,
+  lecturers: PropTypes.any
+};
+
+const mapStateToProps = state => ({
+  patents: state.patenReducer.patents,
+  lecturers: state.usersReducer.lecturers
+});
+
+export default connect(mapStateToProps)(Index);

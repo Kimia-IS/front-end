@@ -26,7 +26,7 @@ const SeeJurnal = props => {
   		for (let i = 0; i < names.length; i++) {
 	        field.push(
 	            <Grid item xs={12} md={8}>
-		          <TextField label={`Penulis ${i + 2}`} value={names[i]} variant="outlined" fullWidth disabled />
+		          <TextField key={i} label={`Penulis ${i + 2}`} value={names[i]} variant="outlined" fullWidth disabled />
 		        </Grid>
 	        );
 	    }
@@ -89,6 +89,7 @@ const SeeJurnal = props => {
         <Grid item xs={12} md={8}>
           <TextField value={namaDosen} label="Penulis 1" variant="outlined" fullWidth disabled />
         </Grid>
+        {fieldListAuthor(names)}
         <Grid container item spacing={3} xs={12}>
 	        <Grid item xs={12} md={3}>
 	          <TextField value={data.year} label="Tahun" variant="outlined" fullWidth disabled />
