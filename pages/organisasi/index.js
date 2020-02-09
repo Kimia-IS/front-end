@@ -7,38 +7,33 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import PropTypes from 'prop-types';
+import { connect } from "react-redux";
+import { getAllOrganizations } from "../../store/actions/organisasiActions";
+import { getAllLecturers } from "../../store/actions/usersActions";
+import Swal from 'sweetalert2';
+import axios from "axios";
+import { API } from "../../config";
 
-export default function Index() {
+const Index = props => {
+  const listDosen = props.lecturers;
+  const organizations = props.organizations.results ? props.organizations.results : [];
+  console.log(organizations);
+  let newOrganizations = [];
+  organizations.map((item, index) => {
+    newOrganizations[index] = item;
+    let namaDosen = listDosen.find(obj => { return obj.user_id == item.lecturer_nip }).name;
+    newOrganizations[index].lecturer_name = namaDosen;
+  });
+
   const [state] = React.useState({
     columns: [
-      { title: 'No', field: 'no' },
-      { title: 'Nama Organisasi', field: 'judul' },
-      { title: 'Nama', field: 'nama_dosen' },
-      { title: 'Tahun', field: 'tahun' }
+      { title: 'Nama Organisasi', field: 'organization_name' },
+      { title: 'Nama', field: 'lecturer_name' },
+      { title: 'Posisi', field: 'position' },
+      { title: 'Tahun', field: 'year' }
     ],
-    data: [
-      {
-        id: 1,
-        no: 1,
-        judul: 'Amisca ITB',
-        tahun: 2012,
-        nama_dosen: 'Handajaya Rusli'
-      },
-      {
-        id: 2,
-        no: 2,
-        judul: 'ITB Jazz',
-        tahun: 2013,
-        nama_dosen: 'Handajaya Rusli'
-      },
-      {
-        id: 3,
-        no: 3,
-        judul: 'Genshiken',
-        tahun: 2014,
-        nama_dosen: 'Handajaya Rusli'
-      },
-    ],
+    data: newOrganizations ? newOrganizations : organizations,
   });
 
   const router = useRouter();
@@ -71,17 +66,45 @@ export default function Index() {
               {
                 icon: 'visibility',
                 tooltip: 'See More',
-                onClick: () => { router.push('/organisasi/' + 'id'); }
+                onClick: (event, rowData) => { router.push('/organisasi/' + rowData.id); }
               },
               {
                 icon: 'edit',
                 tooltip: 'Edit',
-                onClick: () => { router.push('/organisasi/edit/' + 'id'); }
+                onClick: (event, rowData) => { router.push('/organisasi/edit/' + rowData.id); }
               },
               {
                 icon: 'delete',
                 tooltip: 'Delete',
-                onClick: (event, rowData) => { confirm("Apakah Anda yakin ingin menghapus " + rowData.nama_dosen + " - " + rowData.tahun + "?"); }
+                onClick: (event, rowData) => {
+                  event.preventDefault();
+                  Swal.fire({
+                    title: `Hapus Organisasi ${rowData.organization_name} - ${rowData.year}?`,
+                    text: 'Organisasi akan dihapus secara permanen',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Hapus',
+                    cancelButtonText: 'Batal',
+                  }).then(async (result) => {
+                    if (result.value) {
+                      await axios.delete(`${API}/organizations?id=${rowData.id}`)
+                                  .then(() => {
+                                    Swal.fire(
+                                      'Berhasil!',
+                                      'Organisasi berhasil dihapus.',
+                                      'success'
+                                    );
+                                  })
+                                  .catch(error => {
+                                    Swal.fire(
+                                      'Gagal!',
+                                      error,
+                                      'error'
+                                    );
+                                  });
+                      }
+                    })
+                }
               }
             ]}
           />
@@ -90,3 +113,28 @@ export default function Index() {
     </div>
   );
 }
+
+Index.getInitialProps = async ctx => {
+  console.log('ke sini')
+  const { organizations } = await ctx.store.dispatch(getAllOrganizations());
+  console.log('pp = ', organizations)
+  const { lecturers } = await ctx.store.dispatch(getAllLecturers());
+  const data = {
+    organizations: organizations,
+    lecturers: lecturers
+  }
+  console.log('data = ', data);
+  return data;
+};
+
+Index.propTypes = {
+  organizations: PropTypes.any,
+  lecturers: PropTypes.any
+};
+
+const mapStateToProps = state => ({
+  organizations: state.organisasiReducer.organizations,
+  lecturers: state.usersReducer.lecturers
+});
+
+export default connect(mapStateToProps)(Index);

@@ -162,41 +162,41 @@ const CreatePrestasi = props => {
     	    	<TextField name="issuer" onChange={handleChangeState} label="Pemberi" variant="outlined" fullWidth required />
           </Grid>
           <Grid item xs={12} md={8}>
-                <Grid container spacing={3}>
-                      <Grid item xs={12} md={4}>
-                        <input
-                        style={{ display: 'none' }}
-                        id="raised-button-file"
-                        multiple
-                        type="file"
-                        onChange={handleFileUpload}
-                      />
-                      <label htmlFor="raised-button-file">
-                        <Button variant="outlined" fullWidth component="span">
-                          Upload file
-                        </Button>
-                      </label> 
-                      </Grid>
-                      <Grid item xs={12} md={8}>
-                        <Typography variant="subtitle1" gutterBottom>
-                          {fieldListFiles()}
-                      </Typography>
-                      </Grid>
-                    </Grid>
+            <Grid container spacing={3}>
+                <Grid item xs={12} md={4}>
+                  <input
+                  style={{ display: 'none' }}
+                  id="raised-button-file"
+                  multiple
+                  type="file"
+                  onChange={handleFileUpload}
+                />
+                <label htmlFor="raised-button-file">
+                  <Button variant="outlined" fullWidth component="span">
+                    Upload file
+                  </Button>
+                </label> 
+                </Grid>
+                <Grid item xs={12} md={8}>
+                  <Typography variant="subtitle1" gutterBottom>
+                    {fieldListFiles()}
+                </Typography>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item xs={12}>
+              <Grid container spacing={3}>
+                <Grid item xs={12} md={2}>
+                    <Button variant="outlined" color="secondary" fullWidth href="/prestasi">
+                      Batal
+                    </Button>
                   </Grid>
-                  <Grid item xs={12}>
-                    <Grid container spacing={3}>
-                      <Grid item xs={12} md={2}>
-                          <Button variant="outlined" color="secondary" fullWidth href="/prestasi">
-                            Batal
-                          </Button>
-                        </Grid>
-                        <Grid item xs={12} md={3}>
-                          <Button variant="outlined" type="submit" color="primary" fullWidth>
-                            Simpan
-                          </Button>
-                        </Grid>
-                    </Grid>
+                  <Grid item xs={12} md={3}>
+                    <Button variant="outlined" type="submit" color="primary" fullWidth>
+                      Simpan
+                    </Button>
+                  </Grid>
+              </Grid>
             </Grid>
         </Grid>
       </form>
