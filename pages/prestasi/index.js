@@ -7,38 +7,33 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import PropTypes from 'prop-types';
+import { connect } from "react-redux";
+import { getAllAchievements } from "../../store/actions/prestasiActions";
+import { getAllLecturers } from "../../store/actions/usersActions";
+import Swal from 'sweetalert2';
+import axios from "axios";
+import { API } from "../../config";
 
-export default function Index() {
+const Index = props => {
+  const listDosen = props.lecturers;
+  const achievements = props.achievements.results ? props.achievements.results : [];
+  console.log(achievements);
+  let newAchievements = [];
+  achievements.map((item, index) => {
+    newAchievements[index] = item;
+    let namaDosen = listDosen.find(obj => { return obj.user_id == item.lecturer_nip }).name;
+    newAchievements[index].lecturer_name = namaDosen;
+  });
+
   const [state] = React.useState({
     columns: [
-      { title: 'No', field: 'no' },
-      { title: 'Judul', field: 'judul' },
-      { title: 'Nama', field: 'nama_dosen' },
-      { title: 'Tahun', field: 'tahun' }
+      { title: 'Judul', field: 'title' },
+      { title: 'Nama', field: 'lecturer_name' },
+      { title: 'Tahun', field: 'year' },
+      { title: 'Pemberi', field: 'issuer' }
     ],
-    data: [
-      {
-        id: 1,
-        no: 1,
-        judul: 'Penghargaan Nobel',
-        tahun: 2012,
-        nama_dosen: 'Handajaya Rusli'
-      },
-      {
-        id: 2,
-        no: 2,
-        judul: 'Penghargaan Nobel',
-        tahun: 2013,
-        nama_dosen: 'Handajaya Rusli'
-      },
-      {
-        id: 3,
-        no: 3,
-        judul: 'Penghargaan Nobel',
-        tahun: 2014,
-        nama_dosen: 'Handajaya Rusli'
-      },
-    ],
+    data: newAchievements ? newAchievements : achievements,
   });
 
   const router = useRouter();
@@ -71,17 +66,45 @@ export default function Index() {
               {
                 icon: 'visibility',
                 tooltip: 'See More',
-                onClick: () => { router.push('/prestasi/' + 'id'); }
+                onClick: (event, rowData) => { router.push('/prestasi/' + rowData.id); }
               },
               {
                 icon: 'edit',
                 tooltip: 'Edit',
-                onClick: () => { router.push('/prestasi/edit/' + 'id'); }
+                onClick: (event, rowData) => { router.push('/prestasi/edit/' + rowData.id); }
               },
               {
                 icon: 'delete',
                 tooltip: 'Delete',
-                onClick: (event, rowData) => { confirm("Apakah Anda yakin ingin menghapus " + rowData.nama_dosen + " - " + rowData.tahun + "?"); }
+                onClick: (event, rowData) => {
+                  event.preventDefault();
+                  Swal.fire({
+                    title: `Hapus Prestasi ${rowData.title} - ${rowData.year}?`,
+                    text: 'Prestasi akan dihapus secara permanen',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Hapus',
+                    cancelButtonText: 'Batal',
+                  }).then(async (result) => {
+                    if (result.value) {
+                      await axios.delete(`${API}/publication/achievement?id=${rowData.id}`)
+                                  .then(() => {
+                                    Swal.fire(
+                                      'Berhasil!',
+                                      'Prestasi berhasil dihapus.',
+                                      'success'
+                                    );
+                                  })
+                                  .catch(error => {
+                                    Swal.fire(
+                                      'Gagal!',
+                                      error,
+                                      'error'
+                                    );
+                                  });
+                      }
+                    })
+                }
               }
             ]}
           />
@@ -90,3 +113,28 @@ export default function Index() {
     </div>
   );
 }
+
+Index.getInitialProps = async ctx => {
+  console.log('ke sini')
+  const { achievements } = await ctx.store.dispatch(getAllAchievements());
+  console.log('pp = ', achievements)
+  const { lecturers } = await ctx.store.dispatch(getAllLecturers());
+  const data = {
+    achievements: achievements,
+    lecturers: lecturers
+  }
+  console.log('data = ', data);
+  return data;
+};
+
+Index.propTypes = {
+  achievements: PropTypes.any,
+  lecturers: PropTypes.any
+};
+
+const mapStateToProps = state => ({
+  achievements: state.prestasiReducer.achievements,
+  lecturers: state.usersReducer.lecturers
+});
+
+export default connect(mapStateToProps)(Index);
