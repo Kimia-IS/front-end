@@ -18,10 +18,13 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import PropTypes from 'prop-types';
+import { connect } from "react-redux";
+import { API } from "../../config";
+import { getProfileById } from "../../store/actions/usersActions";
 
 const useStyles = makeStyles(theme => ({
   formControl: {
-    // margin: theme.spacing(1),
     minWidth: 300,
     fullWidth: true,
   },
@@ -30,6 +33,7 @@ const useStyles = makeStyles(theme => ({
   },
   table: {
     minWidth: 650,
+    margin: 30
   }
 }));
 
@@ -45,7 +49,9 @@ const rows = [
   createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 
-export default function LihatProfil() {
+const SeePrestasi = props => {
+	const data = props.profile;
+	console.log('data.ased = ', data.asd)
 	const classes = useStyles();
 
   return (
@@ -59,12 +65,12 @@ export default function LihatProfil() {
             <Link color="inherit" href="/profil">
               Profil
             </Link>
-            <Typography color="textPrimary">Profil [ID]</Typography>
+            <Typography color="textPrimary">Lihat Profil</Typography>
           </Breadcrumbs>
         </Grid>
       	<Grid item xs={12}>
           <Typography variant="h4" gutterBottom>
-	        Profil [ID]
+	        Profil - {data.profile.nip}
 	      </Typography>
         </Grid>
         <Grid item xs={12}>
@@ -87,7 +93,7 @@ export default function LihatProfil() {
 				            </Typography>
 	        			</Grid>
 	        			<Grid item xs={10}>
-	        				<Typography color="inherit">: Feby Eliana</Typography>
+	        				<Typography color="inherit">: {data.profile.name}</Typography>
 	        			</Grid>
 	          		</Grid>
 	          		<Grid container item xs={12}>
@@ -99,7 +105,7 @@ export default function LihatProfil() {
 				            </Typography>
 	        			</Grid>
 	        			<Grid item xs={10}>
-	        				<Typography color="inherit">: 198609262015051001</Typography>
+	        				<Typography color="inherit">: {data.profile.nip}</Typography>
 	        			</Grid>
 		          	</Grid>
 		          	<Grid container item xs={12}>
@@ -111,7 +117,7 @@ export default function LihatProfil() {
 				            </Typography>
 	        			</Grid>
 	        			<Grid item xs={10}>
-	        				<Typography color="inherit">: feby@chem.itb.ac.id</Typography>
+	        				<Typography color="inherit">: {data.profile.email}</Typography>
 	        			</Grid>
 		          	</Grid>
 		          	<Grid container item xs={12}>
@@ -123,7 +129,7 @@ export default function LihatProfil() {
 				            </Typography>
 	        			</Grid>
 	        			<Grid item xs={10}>
-	        				<Typography color="inherit">: Dosen</Typography>
+	        				<Typography color="inherit">: {data.profile.role}</Typography>
 	        			</Grid>
 		          	</Grid>
 	          	</Grid>
@@ -141,29 +147,31 @@ export default function LihatProfil() {
 		      <Table className={classes.table} aria-label="simple table">
 		        <TableHead>
 		          <TableRow>
-		            <TableCell>Dessert (100g serving)</TableCell>
-		            <TableCell align="right">Calories</TableCell>
-		            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-		            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-		            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+		            <TableCell>Mata Kuliah</TableCell>
+		            <TableCell>Kelas</TableCell>
+		            <TableCell>Dosen</TableCell>
+		            <TableCell>SKS Dosen</TableCell>
 		          </TableRow>
 		        </TableHead>
 		        <TableBody>
-		          {rows.map(row => (
-		            <TableRow key={row.name}>
-		              <TableCell component="th" scope="row">
-		                {row.name}
-		              </TableCell>
-		              <TableCell align="right">{row.calories}</TableCell>
-		              <TableCell align="right">{row.fat}</TableCell>
-		              <TableCell align="right">{row.carbs}</TableCell>
-		              <TableCell align="right">{row.protein}</TableCell>
+		          {data.academic ? data.academic.map((value, index) => (
+		            <TableRow key={index}>
+		              <TableCell>{value.course_id} - {value.course_name}</TableCell>
+		              <TableCell>{value.class}</TableCell>
+		              <TableCell>{value['lecturer(s)']}</TableCell>
+		              <TableCell>{value.lecturer_credit}</TableCell>
+		              
 		            </TableRow>
-		          ))}
+		          )) : <Typography>Tidak ada data</Typography>}
 		        </TableBody>
 		      </Table>
 		    </TableContainer>
 	      </ExpansionPanel>
+	      {/*<TableCell>
+          	<Button variant="outlined" target="_blank" color="primary" fullWidth href={`/akademik/${value.id}`}>
+          		Lihat
+          	</Button>
+          </TableCell>*/}
 	      <ExpansionPanel>
 	        <ExpansionPanelSummary
 	          expandIcon={<ExpandMoreIcon />}
@@ -283,3 +291,19 @@ export default function LihatProfil() {
   	</div>
   );
 }
+
+SeePrestasi.getInitialProps = async ctx => {
+  const id = parseInt(ctx.query.id);
+  const { profile } = await ctx.store.dispatch(getProfileById(id));
+  return { profile };
+};
+
+SeePrestasi.propTypes = {
+  profile: PropTypes.any
+};
+
+const mapStateToProps = state => ({
+  profile: state.usersReducer.profile
+});
+
+export default connect(mapStateToProps)(SeePrestasi);

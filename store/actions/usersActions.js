@@ -28,3 +28,10 @@ export const getAllLecturers = () => async dispatch => {
   const lecturers = res.data.results;
   return dispatch({ type: actions.GET_ALL_LECTURERS, lecturers: lecturers });
 };
+
+export const getProfileById = (id) => async dispatch => {
+  const res = await axios.get(`${API}/profile/lecturer:${id}`);
+  const profile = res.data.results;
+  console.log('profile =', profile);
+  return dispatch({ type: actions.GET_PROFILE_BY_ID, profile: profile });
+};
