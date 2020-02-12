@@ -9,9 +9,6 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { getAllUsers } from "../../store/actions/usersActions";
-import Swal from 'sweetalert2';
-import axios from "axios";
-import { API } from "../../config";
 
 const Index = props => {
   const { users } = props;

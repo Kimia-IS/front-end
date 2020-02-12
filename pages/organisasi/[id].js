@@ -11,7 +11,6 @@ import { connect } from "react-redux";
 import { API } from "../../config";
 import { getOrganizationById } from "../../store/actions/organisasiActions";
 import { getAllLecturers } from "../../store/actions/usersActions";
-import axios from "axios";
 
 const SeePrestasi = props => {
   const listDosen = props.lecturers;

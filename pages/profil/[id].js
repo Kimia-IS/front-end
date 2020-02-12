@@ -11,7 +11,6 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Box from '@material-ui/core/Box';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -21,7 +20,6 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
-import { API } from "../../config";
 import { getProfileById } from "../../store/actions/usersActions";
 
 const useStyles = makeStyles(theme => ({
@@ -38,19 +36,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
-
-const SeePrestasi = props => {
+const SeeProfil = props => {
 	const data = props.profile;
 	console.log('finalTask  = ', data.finalTask.message)
 	const classes = useStyles();
@@ -474,13 +460,13 @@ const SeePrestasi = props => {
   );
 }
 
-SeePrestasi.getInitialProps = async ctx => {
+SeeProfil.getInitialProps = async ctx => {
   const id = parseInt(ctx.query.id);
   const { profile } = await ctx.store.dispatch(getProfileById(id));
   return { profile };
 };
 
-SeePrestasi.propTypes = {
+SeeProfil.propTypes = {
   profile: PropTypes.any
 };
 
@@ -488,4 +474,4 @@ const mapStateToProps = state => ({
   profile: state.usersReducer.profile
 });
 
-export default connect(mapStateToProps)(SeePrestasi);
+export default connect(mapStateToProps)(SeeProfil);
