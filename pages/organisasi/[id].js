@@ -27,24 +27,7 @@ const SeePrestasi = props => {
         field.push(
           <Grid container spacing={3} key={i}>
             <Grid item xs={4} md={3}>
-              <Button variant="outlined" fullWidth
-                onClick={async (e) => {
-                  e.preventDefault();
-                  const formData = new FormData();
-                  formData.append('filepath', files[i]);
-                  await axios.post(`${API}/download`, formData, {
-                              headers: {
-                                'Content-Type': 'multipart/form-data'
-                              }
-                          })
-                          .then((response) => {
-                            console.log(response);
-                          })
-                          .catch(error => {
-                            console.log(error);
-                          });
-                }}
-              >
+              <Button variant="outlined" fullWidth target="_blank" href={`${API}/download?filepath=${files[i]}`}>
                   Lihat file {i + 1}
               </Button>
             </Grid>
