@@ -79,12 +79,11 @@ const SeePrestasi = props => {
 	        <ExpansionPanelSummary
 	          expandIcon={<ExpandMoreIcon />}
 	          aria-controls="panel1a-content"
-	          id="panel1a-header"
 	        >
 	          <Typography variant="h6" className={classes.heading}>Info Umum</Typography>
 	        </ExpansionPanelSummary>
 	        <ExpansionPanelDetails>
-		        <Grid container spacing={3} xs={12}>
+		        <Grid container spacing={3}>
 		        	<Grid item xs={12} md={6}>
 		        		<TextField value={data.profile.results.name} label="Nama" variant="outlined" fullWidth disabled />
 		        	</Grid>
@@ -104,7 +103,6 @@ const SeePrestasi = props => {
 	        <ExpansionPanelSummary
 	          expandIcon={<ExpandMoreIcon />}
 	          aria-controls="panel2a-content"
-	          id="panel2a-header"
 	        >
 	          <Typography className={classes.heading}>Akademik</Typography>
 	        </ExpansionPanelSummary>
@@ -119,7 +117,7 @@ const SeePrestasi = props => {
 		          </TableRow>
 		        </TableHead>
 		        <TableBody>
-		          {data.academic.results ? data.academic.results.map((value, index) => (
+		          {(data.academic.results && data.academic.results.length > 0) ? data.academic.results.map((value, index) => (
 		            <TableRow key={index}>
 		              <TableCell>{value.course_id} - {value.course_name}</TableCell>
 		              <TableCell>{value.class}</TableCell>
@@ -131,16 +129,10 @@ const SeePrestasi = props => {
 		      </Table>
 		    </TableContainer>
 	      </ExpansionPanel>
-	      {/*<TableCell>
-          	<Button variant="outlined" target="_blank" color="primary" fullWidth href={`/akademik/${value.id}`}>
-          		Lihat
-          	</Button>
-          </TableCell>*/}
 	      <ExpansionPanel>
 	        <ExpansionPanelSummary
 	          expandIcon={<ExpandMoreIcon />}
 	          aria-controls="panel2a-content"
-	          id="panel2a-header"
 	        >
 	          <Typography className={classes.heading}>Tugas Akhir</Typography>
 	        </ExpansionPanelSummary>
@@ -157,7 +149,7 @@ const SeePrestasi = props => {
 		          </TableRow>
 		        </TableHead>
 		        <TableBody>
-		          {data.finalTask.results ? data.finalTask.results.map((value, index) => (
+		          {(data.finalTask.results && data.finalTask.results.length > 0) ? data.finalTask.results.map((value, index) => (
 		            <TableRow key={index}>
 		              <TableCell>{value.title}</TableCell>
 		              <TableCell>{value.student_name}</TableCell>
@@ -179,91 +171,293 @@ const SeePrestasi = props => {
 	        <ExpansionPanelSummary
 	          expandIcon={<ExpandMoreIcon />}
 	          aria-controls="panel2a-content"
-	          id="panel2a-header"
 	        >
 	          <Typography className={classes.heading}>Penelitian</Typography>
 	        </ExpansionPanelSummary>
-	        <ExpansionPanelDetails>
-	          <Typography>
-	            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-	            sit amet blandit leo lobortis eget.
-	          </Typography>
-	        </ExpansionPanelDetails>
+	        <TableContainer component={Paper}>
+		      <Table className={classes.table} aria-label="simple table">
+		        <TableHead>
+		          <TableRow>
+		            <TableCell>Judul</TableCell>
+		            <TableCell>NIP</TableCell>
+		            <TableCell>Tahun</TableCell>
+		            <TableCell>Investor</TableCell>
+		            <TableCell>Aksi</TableCell>
+		          </TableRow>
+		        </TableHead>
+		        <TableBody>
+		          {(data.research.results && data.research.results.length > 0) ? data.research.results.map((value, index) => (
+		            <TableRow key={index}>
+		              <TableCell>{value.title}</TableCell>
+		              <TableCell>{value.lecturer_nip}</TableCell>
+		              <TableCell>{value.year}</TableCell>
+		              <TableCell>{value.investor}</TableCell>
+		              <TableCell>
+			          	<Button variant="outlined" target="_blank" color="primary" fullWidth href={`/penelitian/${value.id}`}>
+			          		Lihat
+			          	</Button>
+			          </TableCell>
+		            </TableRow>
+		          )) : <TableCell>Tidak ada data</TableCell>}
+		        </TableBody>
+		      </Table>
+		    </TableContainer>
 	      </ExpansionPanel>
 	      <ExpansionPanel>
 	        <ExpansionPanelSummary
 	          expandIcon={<ExpandMoreIcon />}
 	          aria-controls="panel2a-content"
-	          id="panel2a-header"
 	        >
-	          <Typography className={classes.heading}>Publikasi</Typography>
+	          <Typography className={classes.heading}>Jurnal</Typography>
 	        </ExpansionPanelSummary>
-	        <ExpansionPanelDetails>
-	          <Typography>
-	            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-	            sit amet blandit leo lobortis eget.
-	          </Typography>
-	        </ExpansionPanelDetails>
+	        <TableContainer component={Paper}>
+		      <Table className={classes.table} aria-label="simple table">
+		        <TableHead>
+		          <TableRow>
+		            <TableCell>Judul</TableCell>
+		            <TableCell>Penulis</TableCell>
+		            <TableCell>Tahun</TableCell>
+		            <TableCell>Jenis Jurnal</TableCell>
+		            <TableCell>Nomor Jurnal</TableCell>
+		            <TableCell>Aksi</TableCell>
+		          </TableRow>
+		        </TableHead>
+		        <TableBody>
+		          {(data.journal.results && data.journal.results.length > 0) ? data.journal.results.map((value, index) => (
+		            <TableRow key={index}>
+		              <TableCell>{value.title}</TableCell>
+		              <TableCell>{value.lecturer_nip}</TableCell>
+		              <TableCell>{value.year}</TableCell>
+		              <TableCell>{value.type}</TableCell>
+		              <TableCell>{value.number}</TableCell>
+		              <TableCell>
+			          	<Button variant="outlined" target="_blank" color="primary" fullWidth href={`/publikasi/jurnal/${value.id}`}>
+			          		Lihat
+			          	</Button>
+			          </TableCell>
+		            </TableRow>
+		          )) : <TableCell>Tidak ada data</TableCell>}
+		        </TableBody>
+		      </Table>
+		    </TableContainer>
 	      </ExpansionPanel>
 	      <ExpansionPanel>
 	        <ExpansionPanelSummary
 	          expandIcon={<ExpandMoreIcon />}
 	          aria-controls="panel2a-content"
-	          id="panel2a-header"
+	        >
+	          <Typography className={classes.heading}>Paten</Typography>
+	        </ExpansionPanelSummary>
+	        <TableContainer component={Paper}>
+		      <Table className={classes.table} aria-label="simple table">
+		        <TableHead>
+		          <TableRow>
+		            <TableCell>Judul</TableCell>
+		            <TableCell>Pengaju</TableCell>
+		            <TableCell>Status</TableCell>
+		            <TableCell>Tahun</TableCell>
+		            <TableCell>Aksi</TableCell>
+		          </TableRow>
+		        </TableHead>
+		        <TableBody>
+		          {(data.patent.results && data.patent.results.length > 0) ? data.patent.results.map((value, index) => (
+		            <TableRow key={index}>
+		              <TableCell>{value.title}</TableCell>
+		              <TableCell>{value.lecturer_nip}</TableCell>
+		              <TableCell>{value.status}</TableCell>
+		              <TableCell>{value.year}</TableCell>
+		              <TableCell>
+			          	<Button variant="outlined" target="_blank" color="primary" fullWidth href={`/publikasi/patent/${value.id}`}>
+			          		Lihat
+			          	</Button>
+			          </TableCell>
+		            </TableRow>
+		          )) : <TableCell>Tidak ada data</TableCell>}
+		        </TableBody>
+		      </Table>
+		    </TableContainer>
+	      </ExpansionPanel>
+	      <ExpansionPanel>
+	        <ExpansionPanelSummary
+	          expandIcon={<ExpandMoreIcon />}
+	          aria-controls="panel2a-content"
+	        >
+	          <Typography className={classes.heading}>Karya Lain</Typography>
+	        </ExpansionPanelSummary>
+	        <TableContainer component={Paper}>
+		      <Table className={classes.table} aria-label="simple table">
+		        <TableHead>
+		          <TableRow>
+		            <TableCell>Judul</TableCell>
+		            <TableCell>Penulis</TableCell>
+		            <TableCell>Tahun</TableCell>
+		            <TableCell>Penerbit</TableCell>
+		            <TableCell>Aksi</TableCell>
+		          </TableRow>
+		        </TableHead>
+		        <TableBody>
+		          {(data.otherpub.results && data.otherpub.results.length > 0) ? data.otherpub.results.map((value, index) => (
+		            <TableRow key={index}>
+		              <TableCell>{value.title}</TableCell>
+		              <TableCell>{value.lecturer_nip}</TableCell>
+		              <TableCell>{value.year}</TableCell>
+		              <TableCell>{value.publisher}</TableCell>
+		              <TableCell>
+			          	<Button variant="outlined" target="_blank" color="primary" fullWidth href={`/publikasi/karya-lain/${value.id}`}>
+			          		Lihat
+			          	</Button>
+			          </TableCell>
+		            </TableRow>
+		          )) : <TableCell>Tidak ada data</TableCell>}
+		        </TableBody>
+		      </Table>
+		    </TableContainer>
+	      </ExpansionPanel>
+	      <ExpansionPanel>
+	        <ExpansionPanelSummary
+	          expandIcon={<ExpandMoreIcon />}
+	          aria-controls="panel2a-content"
 	        >
 	          <Typography className={classes.heading}>Pengabdian Masyarakat</Typography>
 	        </ExpansionPanelSummary>
-	        <ExpansionPanelDetails>
-	          <Typography>
-	            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-	            sit amet blandit leo lobortis eget.
-	          </Typography>
-	        </ExpansionPanelDetails>
+	        <TableContainer component={Paper}>
+		      <Table className={classes.table} aria-label="simple table">
+		        <TableHead>
+		          <TableRow>
+		            <TableCell>Judul</TableCell>
+		            <TableCell>NIP</TableCell>
+		            <TableCell>Posisi</TableCell>
+		            <TableCell>Tahun</TableCell>
+		            <TableCell>Pemberi Dana</TableCell>
+		            <TableCell>Aksi</TableCell>
+		          </TableRow>
+		        </TableHead>
+		        <TableBody>
+		          {(data.socres.results && data.socres.results.length > 0) ? data.socres.results.map((value, index) => (
+		            <TableRow key={index}>
+		              <TableCell>{value.title}</TableCell>
+		              <TableCell>{value.lecturer_nip}</TableCell>
+		              <TableCell>{value.position}</TableCell>
+		              <TableCell>{value.year}</TableCell>
+		              <TableCell>{value.investor}</TableCell>
+		              <TableCell>
+			          	<Button variant="outlined" target="_blank" color="primary" fullWidth href={`/pengabdian-masyarakat/${value.id}`}>
+			          		Lihat
+			          	</Button>
+			          </TableCell>
+		            </TableRow>
+		          )) : <TableCell>Tidak ada data</TableCell>}
+		        </TableBody>
+		      </Table>
+		    </TableContainer>
 	      </ExpansionPanel>
 	      <ExpansionPanel>
 	        <ExpansionPanelSummary
 	          expandIcon={<ExpandMoreIcon />}
 	          aria-controls="panel2a-content"
-	          id="panel2a-header"
 	        >
 	          <Typography className={classes.heading}>Prestasi</Typography>
 	        </ExpansionPanelSummary>
-	        <ExpansionPanelDetails>
-	          <Typography>
-	            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-	            sit amet blandit leo lobortis eget.
-	          </Typography>
-	        </ExpansionPanelDetails>
+	        <TableContainer component={Paper}>
+		      <Table className={classes.table} aria-label="simple table">
+		        <TableHead>
+		          <TableRow>
+		            <TableCell>Judul</TableCell>
+		            <TableCell>NIP</TableCell>
+		            <TableCell>Tahun</TableCell>
+		            <TableCell>Pemberi</TableCell>
+		            <TableCell>Aksi</TableCell>
+		          </TableRow>
+		        </TableHead>
+		        <TableBody>
+		          {(data.achievement.results && data.achievement.results.length > 0) ? data.achievement.results.map((value, index) => (
+		            <TableRow key={index}>
+		              <TableCell>{value.title}</TableCell>
+		              <TableCell>{value.lecturer_nip}</TableCell>
+		              <TableCell>{value.year}</TableCell>
+		              <TableCell>{value.issuer}</TableCell>
+		              <TableCell>
+			          	<Button variant="outlined" target="_blank" color="primary" fullWidth href={`/prestasi/${value.id}`}>
+			          		Lihat
+			          	</Button>
+			          </TableCell>
+		            </TableRow>
+		          )) : <TableCell>Tidak ada data</TableCell>}
+		        </TableBody>
+		      </Table>
+		    </TableContainer>
 	      </ExpansionPanel>
 	      <ExpansionPanel>
 	        <ExpansionPanelSummary
 	          expandIcon={<ExpandMoreIcon />}
 	          aria-controls="panel2a-content"
-	          id="panel2a-header"
 	        >
 	          <Typography className={classes.heading}>Organisasi</Typography>
 	        </ExpansionPanelSummary>
-	        <ExpansionPanelDetails>
-	          <Typography>
-	            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-	            sit amet blandit leo lobortis eget.
-	          </Typography>
-	        </ExpansionPanelDetails>
+	        <TableContainer component={Paper}>
+		      <Table className={classes.table} aria-label="simple table">
+		        <TableHead>
+		          <TableRow>
+		            <TableCell>Nama Organisasi</TableCell>
+		            <TableCell>NIP</TableCell>
+		            <TableCell>Posisi</TableCell>
+		            <TableCell>Tahun</TableCell>
+		            <TableCell>Aksi</TableCell>
+		          </TableRow>
+		        </TableHead>
+		        <TableBody>
+		          {(data.organization.results && data.organization.results.length > 0) ? data.organization.results.map((value, index) => (
+		            <TableRow key={index}>
+		              <TableCell>{value.organization_name}</TableCell>
+		              <TableCell>{value.lecturer_nip}</TableCell>
+		              <TableCell>{value.position}</TableCell>
+		              <TableCell>{value.year}</TableCell>
+		              <TableCell>
+			          	<Button variant="outlined" target="_blank" color="primary" fullWidth href={`/organisasi/${value.id}`}>
+			          		Lihat
+			          	</Button>
+			          </TableCell>
+		            </TableRow>
+		          )) : <TableCell>Tidak ada data</TableCell>}
+		        </TableBody>
+		      </Table>
+		    </TableContainer>
 	      </ExpansionPanel>
 	      <ExpansionPanel>
 	        <ExpansionPanelSummary
 	          expandIcon={<ExpandMoreIcon />}
 	          aria-controls="panel2a-content"
-	          id="panel2a-header"
 	        >
 	          <Typography className={classes.heading}>Riwayat Kerja</Typography>
 	        </ExpansionPanelSummary>
-	        <ExpansionPanelDetails>
-	          <Typography>
-	            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-	            sit amet blandit leo lobortis eget.
-	          </Typography>
-	        </ExpansionPanelDetails>
+	        <TableContainer component={Paper}>
+		      <Table className={classes.table} aria-label="simple table">
+		        <TableHead>
+		          <TableRow>
+		            <TableCell>NIP</TableCell>
+		            <TableCell>Nama Pekerjaan</TableCell>
+		            <TableCell>Tahun</TableCell>
+		            <TableCell>Semester</TableCell>
+		            <TableCell>Aksi</TableCell>
+		          </TableRow>
+		        </TableHead>
+		        <TableBody>
+		          {(data.experience.results && data.experience.results.length > 0) ? data.experience.results.map((value, index) => (
+		            <TableRow key={index}>
+		              <TableCell>{value.lecturer_nip}</TableCell>
+		              <TableCell>{value.job_name}</TableCell>
+		              <TableCell>{value.year}</TableCell>
+		              <TableCell>{value.term}</TableCell>
+		              <TableCell>
+			          	<Button variant="outlined" target="_blank" color="primary" fullWidth href={`/riwayat-kerja/${value.id}`}>
+			          		Lihat
+			          	</Button>
+			          </TableCell>
+		            </TableRow>
+		          )) : <TableCell>Tidak ada data</TableCell>}
+		        </TableBody>
+		      </Table>
+		    </TableContainer>
 	      </ExpansionPanel>
         </Grid>
         <Grid item xs={12}>
