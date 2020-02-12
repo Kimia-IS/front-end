@@ -62,9 +62,9 @@ const CreateOrganisasi = props => {
             cancelButtonText: 'Batal',
           }).then(async (result) => {
             if (result.value) {
-              // Create form data
-              const formData = new FormData();
-              for (let i = 0; i < organizationFiles.length; i++) {
+            // Create form data
+            const formData = new FormData();
+            for (let i = 0; i < organizationFiles.length; i++) {
               formData.append('organization_files', organizationFiles[i]);
             }
             formData.append('lecturer_nip', nipDosen);
