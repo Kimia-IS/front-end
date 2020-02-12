@@ -159,7 +159,6 @@ export default function CreateAkun() {
                 <input
                     style={{ display: 'none' }}
                     id="raised-button-file"
-                    multiple
                     type="file"
                     onChange={handleFileUpload}
                   />
@@ -173,28 +172,37 @@ export default function CreateAkun() {
                 <Button variant="outlined" color="primary" fullWidth
                   onClick={async (e) => {
                     e.preventDefault();
-                    const formData = new FormData();
-                    formData.append('bulk_file', bulkFile[0]);
-                    await axios.post(`${API}/upload/account`, formData, {
-                                headers: {
-                                  'Content-Type': 'multipart/form-data'
-                                }
-                            })
-                            .then((response) => {
-                              console.log(response);
-                              Swal.fire(
-                                'Tersimpan!',
-                                'Akun berhasil dibuat.',
-                                'success'
-                              );
-                            })
-                            .catch(error => {
-                              Swal.fire(
-                                'Gagal!',
-                                error,
-                                'error'
-                              );
-                            });
+                    if (bulkFile) {
+                      const formData = new FormData();
+                      formData.append('bulk_file', bulkFile[0]);
+                      await axios.post(`${API}/upload/account`, formData, {
+                                  headers: {
+                                    'Content-Type': 'multipart/form-data'
+                                  }
+                              })
+                              .then((response) => {
+                                console.log(response);
+                                Swal.fire(
+                                  'Tersimpan!',
+                                  'Akun berhasil dibuat.',
+                                  'success'
+                                );
+                              })
+                              .catch(error => {
+                                Swal.fire(
+                                  'Gagal!',
+                                  error,
+                                  'error'
+                                );
+                              });
+                    }
+                    else {
+                      Swal.fire(
+                          'Oops!',
+                          'Pilih file .csv terlebih dahulu.',
+                          'warning'
+                      );
+                    }
                   }}
                 >
                   Buat Akun dari Bulk File
