@@ -33,7 +33,7 @@ const Index = props => {
       { title: 'Nama Mahasiswa', field: 'student_name' },
       { title: 'Nama Dosen Pembimbing', field: 'lecturer_name' },
       { title: 'Tanggal Mulai', field: 'starting_date' },
-      { title: 'Tanggal Mulai', field: 'graduation_date' }
+      { title: 'Tanggal Lulus', field: 'graduation_date' }
     ],
     data: newFinalTasks ? newFinalTasks : finalTasks,
   });

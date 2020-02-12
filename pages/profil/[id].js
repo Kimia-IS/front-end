@@ -3,6 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import { makeStyles } from '@material-ui/core/styles';
@@ -33,7 +34,7 @@ const useStyles = makeStyles(theme => ({
   },
   table: {
     minWidth: 650,
-    margin: 30
+    //margin: 30
   }
 }));
 
@@ -51,7 +52,7 @@ const rows = [
 
 const SeePrestasi = props => {
 	const data = props.profile;
-	console.log('data.ased = ', data.asd)
+	console.log('finalTask  = ', data.finalTask.message)
 	const classes = useStyles();
 
   return (
@@ -70,7 +71,7 @@ const SeePrestasi = props => {
         </Grid>
       	<Grid item xs={12}>
           <Typography variant="h4" gutterBottom>
-	        Profil - {data.profile.nip}
+	        Profil - {data.profile.results.nip}
 	      </Typography>
         </Grid>
         <Grid item xs={12}>
@@ -83,56 +84,20 @@ const SeePrestasi = props => {
 	          <Typography variant="h6" className={classes.heading}>Info Umum</Typography>
 	        </ExpansionPanelSummary>
 	        <ExpansionPanelDetails>
-	        	<Grid container spacing={3} xs={12}>
-	        		<Grid container item xs={12}>
-	        			<Grid item xs={2}>
-		          			<Typography color="inherit">
-			          			<Box fontWeight="fontWeightBold">
-					              Nama
-					            </Box>
-				            </Typography>
-	        			</Grid>
-	        			<Grid item xs={10}>
-	        				<Typography color="inherit">: {data.profile.name}</Typography>
-	        			</Grid>
-	          		</Grid>
-	          		<Grid container item xs={12}>
-	          			<Grid item xs={2}>
-		          			<Typography color="inherit">
-			          			<Box fontWeight="fontWeightBold">
-					              NIP
-					            </Box>
-				            </Typography>
-	        			</Grid>
-	        			<Grid item xs={10}>
-	        				<Typography color="inherit">: {data.profile.nip}</Typography>
-	        			</Grid>
-		          	</Grid>
-		          	<Grid container item xs={12}>
-		          		<Grid item xs={2}>
-		          			<Typography color="inherit">
-			          			<Box fontWeight="fontWeightBold">
-					              Email
-					            </Box>
-				            </Typography>
-	        			</Grid>
-	        			<Grid item xs={10}>
-	        				<Typography color="inherit">: {data.profile.email}</Typography>
-	        			</Grid>
-		          	</Grid>
-		          	<Grid container item xs={12}>
-		          		<Grid item xs={2}>
-		          			<Typography color="inherit">
-			          			<Box fontWeight="fontWeightBold">
-					              Status
-					            </Box>
-				            </Typography>
-	        			</Grid>
-	        			<Grid item xs={10}>
-	        				<Typography color="inherit">: {data.profile.role}</Typography>
-	        			</Grid>
-		          	</Grid>
-	          	</Grid>
+		        <Grid container spacing={3} xs={12}>
+		        	<Grid item xs={12} md={6}>
+		        		<TextField value={data.profile.results.name} label="Nama" variant="outlined" fullWidth disabled />
+		        	</Grid>
+		        	<Grid item xs={12} md={6}>
+		        		<TextField value={data.profile.results.nip} label="NIP" variant="outlined" fullWidth disabled />
+		        	</Grid>
+		        	<Grid item xs={12} md={6}>
+		        		<TextField value={data.profile.results.email} label="Email" variant="outlined" fullWidth disabled />
+		        	</Grid>
+		        	<Grid item xs={12} md={6}>
+		        		<TextField value={data.profile.results.role} label="Role" variant="outlined" fullWidth disabled />
+		        	</Grid>
+		        </Grid>
 	        </ExpansionPanelDetails>
 	      </ExpansionPanel>
 	      <ExpansionPanel>
@@ -154,15 +119,14 @@ const SeePrestasi = props => {
 		          </TableRow>
 		        </TableHead>
 		        <TableBody>
-		          {data.academic ? data.academic.map((value, index) => (
+		          {data.academic.results ? data.academic.results.map((value, index) => (
 		            <TableRow key={index}>
 		              <TableCell>{value.course_id} - {value.course_name}</TableCell>
 		              <TableCell>{value.class}</TableCell>
 		              <TableCell>{value['lecturer(s)']}</TableCell>
 		              <TableCell>{value.lecturer_credit}</TableCell>
-		              
 		            </TableRow>
-		          )) : <Typography>Tidak ada data</Typography>}
+		          )) : <TableCell>Tidak ada data</TableCell>}
 		        </TableBody>
 		      </Table>
 		    </TableContainer>
@@ -180,12 +144,36 @@ const SeePrestasi = props => {
 	        >
 	          <Typography className={classes.heading}>Tugas Akhir</Typography>
 	        </ExpansionPanelSummary>
-	        <ExpansionPanelDetails>
-	          <Typography>
-	            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-	            sit amet blandit leo lobortis eget.
-	          </Typography>
-	        </ExpansionPanelDetails>
+	        <TableContainer component={Paper}>
+		      <Table className={classes.table} aria-label="simple table">
+		        <TableHead>
+		          <TableRow>
+		            <TableCell>Judul Tugas Akhir</TableCell>
+		            <TableCell>Nama Mahasiswa</TableCell>
+		            <TableCell>NIP Dosen Pembimbing</TableCell>
+		            <TableCell>Tanggal Mulai</TableCell>
+		            <TableCell>Tanggal Lulus</TableCell>
+		            <TableCell>Aksi</TableCell>
+		          </TableRow>
+		        </TableHead>
+		        <TableBody>
+		          {data.finalTask.results ? data.finalTask.results.map((value, index) => (
+		            <TableRow key={index}>
+		              <TableCell>{value.title}</TableCell>
+		              <TableCell>{value.student_name}</TableCell>
+		              <TableCell>{value.lecturer_nip}</TableCell>
+		              <TableCell>{value.starting_date}</TableCell>
+		              <TableCell>{value.graduation_date}</TableCell>
+		              <TableCell>
+			          	<Button variant="outlined" target="_blank" color="primary" fullWidth href={`/tugas-akhir/${value.id}`}>
+			          		Lihat
+			          	</Button>
+			          </TableCell>
+		            </TableRow>
+		          )) : <TableCell>Tidak ada data</TableCell>}
+		        </TableBody>
+		      </Table>
+		    </TableContainer>
 	      </ExpansionPanel>
 	      <ExpansionPanel>
 	        <ExpansionPanelSummary
