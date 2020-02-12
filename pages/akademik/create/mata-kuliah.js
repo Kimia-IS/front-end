@@ -36,6 +36,7 @@ const CreateMataKuliah = props => {
 
 	const [delMataKuliah, setDelMataKuliah] = React.useState("");
 	const [state, setState] = React.useState();
+	const [bulkFile, setBulkFile] = React.useState();
 
 	const handleInputChange = (e) => setState({
 	    ...state,
@@ -45,6 +46,10 @@ const CreateMataKuliah = props => {
 	function handleChangeSelectMataKuliah(event) {
     	setDelMataKuliah(event.target.value);
   	}
+
+  	const handleFileUpload = (e) => {
+        setBulkFile(e.target.files);
+    };
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
@@ -165,6 +170,61 @@ const CreateMataKuliah = props => {
 				</Grid>
 	        </Grid>
 	    
+	        <Grid item xs={12}>
+	          <Typography variant="h4" gutterBottom>
+		        Buat Mata Kuliah dari Bulk File (.csv)
+		      </Typography>
+	        </Grid>
+	        <Grid item xs={12}>
+	        	<Grid container spacing={3}>
+	        		<Grid item xs={12} md={3}>
+	        		  <input
+		                style={{ display: 'none' }}
+		                id="raised-button-file"
+		                multiple
+		                type="file"
+		                onChange={handleFileUpload}
+		              />
+		              <label htmlFor="raised-button-file">
+		                <Button variant="outlined" fullWidth component="span">
+		                  Pilih file
+		                </Button>
+		              </label>
+	        		</Grid>
+			        <Grid item xs={12} md={4}>
+				      <Button variant="outlined" color="primary" fullWidth
+				      	onClick={async (e) => {
+				      		e.preventDefault();
+				      		const formData = new FormData();
+			                formData.append('bulk_file', bulkFile[0]);
+			                await axios.post(`${API}/upload/courses`, formData, {
+		                              headers: {
+		                                'Content-Type': 'multipart/form-data'
+		                              }
+		                          })
+		                          .then((response) => {
+		                            console.log(response);
+		                            Swal.fire(
+		                              'Tersimpan!',
+		                              'Mata kuliah berhasil dibuat.',
+		                              'success'
+		                            );
+		                          })
+		                          .catch(error => {
+		                            Swal.fire(
+		                              'Gagal!',
+		                              error,
+		                              'error'
+		                            );
+		                          });
+				      	}}
+				      >
+						Buat Mata Kuliah dari Bulk File
+					  </Button>
+					</Grid>
+				</Grid>
+	        </Grid>
+
 	      	<Grid item xs={12}>
 	          <Typography variant="h4" gutterBottom>
 		        Hapus Mata Kuliah
