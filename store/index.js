@@ -3,15 +3,15 @@ import thunk from "redux-thunk";
 
 import reducers from "./reducers";
 
-/*const reduxDevtools =
+const reduxDevtools =
   typeof window !== "undefined" && process.env.NODE_ENV !== "production"
     ? window.__REDUX_DEVTOOLS_EXTENSION__ &&
       window.__REDUX_DEVTOOLS_EXTENSION__()
-    : f => f;*/
+    : f => f;
 
 const enhancers = compose(
   applyMiddleware(thunk),
-  /*reduxDevtools*/
+  reduxDevtools
 );
 
 export const makeStore = initialState => {

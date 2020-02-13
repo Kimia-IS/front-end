@@ -24,7 +24,7 @@ const Index = props => {
       { title: 'Email', field: 'email' },
       { title: 'Peran', field: 'role' }
     ],
-    data: users,
+    data: users ? users : [],
   });
 
   const router = useRouter();
