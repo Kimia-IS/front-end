@@ -17,7 +17,7 @@ import { API } from "../../config";
 const Index = props => {
   const { users } = props;
 
-  const [state] = React.useState({
+  const [state, setState] = React.useState({
     columns: [
       { title: 'NIP / ID', field: 'user_id' },
       { title: 'Nama', field: 'name' },
@@ -90,6 +90,10 @@ const Index = props => {
                                         'Akun berhasil dihapus.',
                                         'success'
                                       );
+                                      setState({
+                                        ...state,
+                                        data: state.data.filter((el) => { return el.user_id != rowData.user_id })
+                                      });
                                     })
                                     .catch(error => {
                                       Swal.fire(
@@ -107,6 +111,10 @@ const Index = props => {
                                         'Akun berhasil dihapus.',
                                         'success'
                                       );
+                                      setState({
+                                        ...state,
+                                        data: state.data.filter((el) => { return el.user_id != rowData.user_id })
+                                      });
                                     })
                                     .catch(error => {
                                       Swal.fire(
