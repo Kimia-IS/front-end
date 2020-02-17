@@ -65,7 +65,7 @@ const Index = props => {
                     else if (rowData.role == 'Tendik') { queryRole = 4 }
                     else if (rowData.role == 'Dosen') { queryRole = 5 }
                     else if (rowData.role == 'Kaprodi') { queryRole = 6 }       
-                  router.push('/kelola-akun/edit?id=' + rowData.id + '&role=' + queryRole); 
+                  router.push('/kelola-akun/edit?id=' + rowData.user_id + '&role=' + queryRole); 
                 }
               },
               {

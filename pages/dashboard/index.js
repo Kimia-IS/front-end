@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import CardActionArea from '@material-ui/core/CardActionArea';
+import cookies from 'next-cookies';
 
 const useStyles = makeStyles({
   card: {
@@ -29,26 +30,30 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Index() {
+export default function Index(ctx) {
   const classes = useStyles();
+
+  const user = cookies(ctx);
 
   return (
     <div>
       <Grid container spacing={3} alignItems="center" alignContent="center" justify="center">
         <Grid item xs={12} md={10}>
           <Breadcrumbs aria-label="breadcrumb">
-            <Typography color="inherit" variant="h6">Dashboard Dosen</Typography>
+            <Typography color="inherit" variant="h6">Dashboard</Typography>
           </Breadcrumbs>
         </Grid>
         <Grid item xs={12} md={2}>
-          <Button variant="outlined" fullWidth href="/kelola-akun">
-            Kelola Akun
-          </Button>
+          {user.role == 'Super Admin' ? (
+            <Button variant="outlined" fullWidth href="/kelola-akun">
+              Kelola Akun
+            </Button>
+          ) : ('')}
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h4" gutterBottom>
             <Box fontWeight="fontWeightBold">
-              Halo, [nama]!
+              Halo, {user.name}!
             </Box>
           </Typography>
           <Typography variant="subtitle1" gutterBottom>
@@ -60,6 +65,7 @@ export default function Index() {
       </Grid>
       <br />
       <Grid container spacing={3} justify="center">
+        {user.role != 'Admin Non-Akademik' ? (
         <Grid item xs={6} md={3}>
           <Card className={classes.card}>
             <CardActionArea>
@@ -76,6 +82,8 @@ export default function Index() {
             </CardActionArea>
           </Card>
         </Grid>
+        ) : ('')}
+        {user.role != 'Admin Non-Akademik' ? (
         <Grid item xs={6} md={3}>
           <Card className={classes.card}>
             <CardActionArea>
@@ -92,6 +100,8 @@ export default function Index() {
             </CardActionArea>
           </Card>
         </Grid>
+        ) : ('')}
+        {user.role != 'Admin Akademik' ? (
         <Grid item xs={6} md={3}>
           <Card className={classes.card}>
             <CardActionArea>
@@ -108,6 +118,8 @@ export default function Index() {
             </CardActionArea>
           </Card>
         </Grid>
+        ) : ('')}
+        {user.role != 'Admin Akademik' ? (
         <Grid item xs={6} md={3}>
           <Card className={classes.card}>
             <CardActionArea>
@@ -124,6 +136,8 @@ export default function Index() {
             </CardActionArea>
           </Card>
         </Grid>
+        ) : ('')}
+        {user.role != 'Admin Akademik' ? (
         <Grid item xs={6} md={3}>
           <Card className={classes.card}>
             <CardActionArea>
@@ -140,6 +154,8 @@ export default function Index() {
             </CardActionArea>
           </Card>
         </Grid>
+        ) : ('')}
+        {user.role != 'Admin Akademik' ? (
         <Grid item xs={6} md={3}>
           <Card className={classes.card}>
             <CardActionArea>
@@ -156,6 +172,8 @@ export default function Index() {
             </CardActionArea>
           </Card>
         </Grid>
+        ) : ('')}
+        {user.role != 'Admin Akademik' ? (
         <Grid item xs={6} md={3}>
           <Card className={classes.card}>
             <CardActionArea>
@@ -172,6 +190,8 @@ export default function Index() {
             </CardActionArea>
           </Card>
         </Grid>
+        ) : ('')}
+        {user.role != 'Admin Akademik' ? (
         <Grid item xs={6} md={3}>
           <Card className={classes.card}>
             <CardActionArea>
@@ -188,6 +208,8 @@ export default function Index() {
             </CardActionArea>
           </Card>
         </Grid>
+        ) : ('')}
+        {user.role != 'Admin Akademik' ? (
         <Grid item xs={6} md={3}>
           <Card className={classes.card}>
             <CardActionArea>
@@ -204,6 +226,7 @@ export default function Index() {
             </CardActionArea>
           </Card>
         </Grid>
+        ) : ('')}
       </Grid>
     </div>
   );

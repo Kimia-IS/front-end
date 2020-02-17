@@ -12,7 +12,9 @@ export const getAllUsers = () => async dispatch => {
 
 export const getUserById = (id, role) => async dispatch => {
   const res = await axios.get(`${API}/auth/user?id=${id}&role=${role}`);
+  console.log(res)
   const user = res.data.results;
+  console.log(user)
   if (user.role == 'Super Admin') { user.role = 1 }
   	else if (user.role == 'Admin Akademik') { user.role = 2 }
   	else if (user.role == 'Admin Non-Akademik') { user.role = 3 }

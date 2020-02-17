@@ -88,7 +88,8 @@ const Index = props => {
                   }).then(async (result) => {
                     if (result.value) {
                       await axios.delete(`${API}/organizations?id=${rowData.id}`)
-                                  .then(() => {
+                                  .then((response) => {
+                                    console.log('response =', response)
                                     Swal.fire(
                                       'Berhasil!',
                                       'Organisasi berhasil dihapus.',

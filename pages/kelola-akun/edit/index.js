@@ -188,8 +188,10 @@ const Edit = props => {
 }
 
 Edit.getInitialProps = async ctx => {
+  console.log(ctx.query)
   const id = parseInt(ctx.query.id);
   const role = parseInt(ctx.query.role);
+  console.log(role)
   const { user } = await ctx.store.dispatch(getUserById(id, role));
   return { user };
 };

@@ -67,11 +67,7 @@ const CreateMataKuliah = props => {
 				course_name: state.namaMataKuliah,
 				total_classes: state.jumlahKelas
 			}
-	        await axios.post(`${API}/academic/courses`, payload,{
-					    headers: {
-					      'Content-Type': 'multipart/form-data'
-					    }
-					})
+	        await axios.post(`${API}/academic/courses`, payload)
 	                    .then(() => {
 	                      Swal.fire(
 	                        'Tersimpan!',

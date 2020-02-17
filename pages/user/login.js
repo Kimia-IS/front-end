@@ -29,7 +29,11 @@ export default function LoginDosen() {
 						.then((response) => {
 							console.log(response);
 							if (response.data.results) {
-								document.cookie = `user=${response.data.results}; path=/`;
+								document.cookie = `id=${response.data.results.id}; path=/`;
+								document.cookie = `name=${response.data.results.name}; path=/`;
+								document.cookie = `role=${response.data.results.role}; path=/`;
+								document.cookie = `user_id=${response.data.results.nip}; path=/`;
+								document.cookie = `email=${response.data.results.email}; path=/`;
 								window.location = '/dashboard'
 							}
 							else {
