@@ -22,17 +22,31 @@ export default function LoginDosen() {
 		e.preventDefault();
 		if (state.nip) {
 			if (state.password) {
-				const payload = {
-					nip: state.nip,
-					password: state.password
-				}
-				console.log(payload)
-				axios.post(`${API}/auth/lecturer/login`, payload)
+				const formData = new FormData();
+				formData.append('id', state.nip);
+				formData.append('password', state.password);
+				axios.post(`${API}/auth/login/alternative/lecturer`, formData)
 						.then((response) => {
 							console.log(response);
+							if (response.data.results) {
+								document.cookie = `user=${response.data.results}; path=/`;
+								window.location = '/dashboard'
+							}
+							else {
+								Swal.fire(
+			                        'Gagal!',
+			                        'ID atau password salah',
+			                        'error'
+			                    );
+							}
 						})
 						.catch((error) => {
 							console.log(error);
+							Swal.fire(
+		                        'Gagal!',
+		                        error,
+		                        'error'
+		                    );
 						})
 			}
 			else {
