@@ -27,7 +27,7 @@ const Index = props => {
     newFinalTasks[index].graduation_date = newFinalTasks[index].graduation_date.slice(0, 16);
   });
 
-  const [state] = React.useState({
+  const [state, setState] = React.useState({
     columns: [
       { title: 'Judul Tugas Akhir', field: 'title' },
       { title: 'Nama Mahasiswa', field: 'student_name' },

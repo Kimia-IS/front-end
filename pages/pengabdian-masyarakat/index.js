@@ -26,7 +26,7 @@ const Index = props => {
     newSocreses[index].lecturer_name = namaDosen;
   });
 
-  const [state] = React.useState({
+  const [state, setState] = React.useState({
     columns: [
       { title: 'Judul', field: 'title' },
       { title: 'Nama Dosen', field: 'lecturer_name' },

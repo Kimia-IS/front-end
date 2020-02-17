@@ -17,7 +17,7 @@ import { API } from "../../config";
 const Index = props => {
   const { classes } = props;
 
-  const [state] = React.useState({
+  const [state, setState] = React.useState({
     columns: [
       { title: 'Kode', field: 'course_id' },
       { title: 'Nama Mata Kuliah', field: 'course_name' },
