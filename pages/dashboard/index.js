@@ -30,10 +30,10 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Index(ctx) {
+const Index = props => {
   const classes = useStyles();
 
-  const user = cookies(ctx);
+  const { user } = props;
 
   return (
     <div>
@@ -231,3 +231,10 @@ export default function Index(ctx) {
     </div>
   );
 }
+
+Index.getInitialProps = async ctx => {
+  const user = await cookies(ctx);
+  return { user };
+};
+
+export default Index;

@@ -19,10 +19,11 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Header(ctx) {
+const Header = props => {
   const classes = useStyles();
 
-  const user = cookies(ctx);
+  const user = props.user ? props.user : {};
+  console.log(user);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -37,7 +38,7 @@ export default function Header(ctx) {
     document.cookie = `name=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT`;
     document.cookie = `role=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT`;
     document.cookie = `user_id=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT`;
-    window.location = '/'
+    window.location = '/';
   };
 
   const handleClose = () => {
@@ -46,7 +47,22 @@ export default function Header(ctx) {
 
   return (
     <AppBar position="fixed" color="inherit" style={{marginBottom: "50px"}}>
-      
+      {user.id ? (
+        <Toolbar>
+          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" href="/">
+            <img src="/static/images/logo-itb.png" style={{'width': '45px'}}/>
+          </IconButton>
+          <Typography variant="h6" className={classes.title}>
+            <Link href="/" color="inherit">
+                Kimia IS
+            </Link>
+          </Typography>
+          <Button color="inherit" href="/dashboard">Dashboard</Button>
+          <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleLogout}>
+            Logout
+          </Button>
+        </Toolbar>
+       ) : (
         <Toolbar>
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" href="/">
             <img src="/static/images/logo-itb.png" style={{'width': '45px'}}/>
@@ -71,7 +87,15 @@ export default function Header(ctx) {
             <MenuItem><Link color="inherit" href="/admin/login">Login admin</Link></MenuItem>
           </Menu>
         </Toolbar>
-        
+       )}
     </AppBar> 
   );
 }
+
+Header.getInitialProps = async ctx => {
+  const user = await cookies(ctx);
+  console.log(user);
+  return { user };
+};
+
+export default Header;

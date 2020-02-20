@@ -65,7 +65,7 @@ export default function Index() {
                   title="User"
                 />
                 <Typography variant="h6" className={classes.typography} align="center" gutterBottom>
-                  Login sebagai Pengguna
+                  Login sebagai Dosen atau Tendik
                 </Typography>
               </Link>
             </CardActionArea>
