@@ -100,7 +100,7 @@ export default function LoginAdmin() {
 	      <Grid container spacing={3}>
 	      	<Grid item xs={12}>
 	          <Typography variant="h4" gutterBottom>
-		        Login sebagai Dosen atau Tendik
+		        Login sebagai Admin
 		      </Typography>
 	        </Grid>
 	        <Grid item xs={12}>

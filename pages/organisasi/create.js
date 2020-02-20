@@ -1,4 +1,5 @@
 import React from 'react';
+import { useRouter }  from 'next/router';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
@@ -30,6 +31,7 @@ const useStyles = makeStyles(theme => ({
 
 const CreateOrganisasi = props => {
   const classes = useStyles();
+  const router = useRouter();
 
   const listDosen = props.lecturers;
 
@@ -85,6 +87,7 @@ const CreateOrganisasi = props => {
                               'Organisasi berhasil dibuat.',
                               'success'
                             );
+                            router.push('/organisasi');
                           })
                           .catch(error => {
                             Swal.fire(
