@@ -158,7 +158,7 @@ const Index = props => {
           </Card>
         </Grid>
         ) : ('')}
-        {login.role != 'Admin Akademik' ? (
+        {login.role != 'Admin Akademik' && login.role != 'Admin Non-Akademik' ? (
         <Grid item xs={6} md={3}>
           <Card className={classes.card}>
             <CardActionArea>
@@ -176,7 +176,7 @@ const Index = props => {
           </Card>
         </Grid>
         ) : ('')}
-        {login.role != 'Admin Akademik' ? (
+        {login.role != 'Admin Akademik' && login.role != 'Admin Non-Akademik' ? (
         <Grid item xs={6} md={3}>
           <Card className={classes.card}>
             <CardActionArea>
@@ -194,7 +194,7 @@ const Index = props => {
           </Card>
         </Grid>
         ) : ('')}
-        {(login.role != 'Admin Akademik' && login.role != 'Dosen') ? (
+        {(login.role != 'Admin Akademik' && login.role != 'Dosen' && login.role != 'Admin Non-Akademik') ? (
         <Grid item xs={6} md={3}>
           <Card className={classes.card}>
             <CardActionArea>
