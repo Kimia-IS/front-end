@@ -2,38 +2,26 @@ import React from 'react';
 import { useRouter }  from 'next/router';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
 import MaterialTable from 'material-table';
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import PropTypes from 'prop-types';
+import { connect } from "react-redux";
+import { getAllUsers } from "../../store/actions/usersActions";
 
-export default function Index() {
+const Index = props => {
+  const { users } = props;
+
   const [state] = React.useState({
     columns: [
-      { title: 'No', field: 'no' },
-      { title: 'NIP', field: 'judul_ta' },
-      { title: 'Nama', field: 'nama_mahasiswa' }
+      { title: 'NIP / ID', field: 'user_id' },
+      { title: 'Nama', field: 'name' },
+      { title: 'Email', field: 'email' },
+      { title: 'Peran', field: 'role' }
     ],
-    data: [
-      {
-        id: 1,
-        no: 1,
-        judul_ta: '198609262015051001',
-        nama_mahasiswa: 'Feby Eliana'
-      },
-      {
-        id: 2,
-        no: 2,
-        judul_ta: '198609262015051002',
-        nama_mahasiswa: 'Vincent Siauw'
-      },
-      {
-        id: 3,
-        no: 3,
-        judul_ta: '198609262015051003',
-        nama_mahasiswa: 'Alfian Maulana'
-      },
-    ],
+    data: users,
   });
 
   const router = useRouter();
@@ -41,13 +29,18 @@ export default function Index() {
   return (
     <div>
       <Grid container spacing={3} alignItems="center" alignContent="center" justify="center">
-        <Grid item xs={12} md={12}>
+        <Grid item xs={12} md={10}>
           <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
             <Link color="inherit" href="/dashboard">
               Dashboard
             </Link>
             <Typography color="textPrimary">Profil</Typography>
           </Breadcrumbs>
+        </Grid>
+        <Grid item xs={8} md={2}>
+          <Button variant="outlined" fullWidth href='/profil/change-password'>
+            Ganti kata sandi
+          </Button>
         </Grid>
       </Grid>
       <br />
@@ -61,7 +54,7 @@ export default function Index() {
               {
                 icon: 'visibility',
                 tooltip: 'See More',
-                onClick: () => { router.push('/profil/' + 'id'); }
+                onClick: (event, rowData) => { router.push('/profil/' + rowData.user_id); }
               }
             ]}
           />
@@ -70,3 +63,18 @@ export default function Index() {
     </div>
   );
 }
+
+Index.getInitialProps = async ctx => {
+  const { users } = await ctx.store.dispatch(getAllUsers());
+  return { users };
+};
+
+Index.propTypes = {
+  users: PropTypes.any
+};
+
+const mapStateToProps = state => ({
+  users: state.usersReducer.users
+});
+
+export default connect(mapStateToProps)(Index);

@@ -17,7 +17,7 @@ import { API } from "../../config";
 const Index = props => {
   const { classes } = props;
 
-  const [state] = React.useState({
+  const [state, setState] = React.useState({
     columns: [
       { title: 'Kode', field: 'course_id' },
       { title: 'Nama Mata Kuliah', field: 'course_name' },
@@ -26,7 +26,7 @@ const Index = props => {
       { title: 'Dosen', field: 'lecturer(s)' },
       { title: 'SKS Dosen', field: 'lecturer_credit' },
     ],
-    data: classes.results
+    data: classes.results ? classes.results : []
   });
 
   const router = useRouter();
@@ -87,6 +87,10 @@ const Index = props => {
                                       'Kelas berhasil dihapus.',
                                       'success'
                                     );
+                                    setState({
+                                      ...state,
+                                      data: state.data.filter((el) => { return el.id != rowData.id })
+                                    });
                                   })
                                   .catch(error => {
                                     Swal.fire(

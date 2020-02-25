@@ -26,9 +26,9 @@ const SeePrestasi = props => {
         field.push(
           <Grid container spacing={3} key={i}>
             <Grid item xs={4} md={3}>
-              <Button variant="outlined" fullWidth target="_blank" href={`${API}/${files[i]}`}>
-                Lihat file {i + 1}
-            </Button>
+              <Button variant="outlined" fullWidth target="_blank" href={`${API}/download?filepath=${files[i]}`}>
+                  Lihat file {i + 1}
+              </Button>
             </Grid>
             <Grid item xs={8} md={9}>
               <Typography variant="subtitle1" gutterBottom>

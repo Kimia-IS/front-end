@@ -26,7 +26,7 @@ const Index = props => {
     newExperiences[index].lecturer_name = namaDosen;
   });
 
-  const [state] = React.useState({
+  const [state, setState] = React.useState({
     columns: [
       { title: 'Nama', field: 'lecturer_name' },
       { title: 'Nama Pekerjaan', field: 'job_name' },
@@ -94,6 +94,10 @@ const Index = props => {
                                       'Pekerjaan berhasil dihapus.',
                                       'success'
                                     );
+                                    setState({
+                                      ...state,
+                                      data: state.data.filter((el) => { return el.id != rowData.id })
+                                    });
                                   })
                                   .catch(error => {
                                     Swal.fire(

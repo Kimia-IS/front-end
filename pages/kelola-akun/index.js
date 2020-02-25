@@ -17,14 +17,14 @@ import { API } from "../../config";
 const Index = props => {
   const { users } = props;
 
-  const [state] = React.useState({
+  const [state, setState] = React.useState({
     columns: [
       { title: 'NIP / ID', field: 'user_id' },
       { title: 'Nama', field: 'name' },
       { title: 'Email', field: 'email' },
       { title: 'Peran', field: 'role' }
     ],
-    data: users,
+    data: users ? users : [],
   });
 
   const router = useRouter();
@@ -65,7 +65,7 @@ const Index = props => {
                     else if (rowData.role == 'Tendik') { queryRole = 4 }
                     else if (rowData.role == 'Dosen') { queryRole = 5 }
                     else if (rowData.role == 'Kaprodi') { queryRole = 6 }       
-                  router.push('/kelola-akun/edit?id=' + rowData.id + '&role=' + queryRole); 
+                  router.push('/kelola-akun/edit?id=' + rowData.user_id + '&role=' + queryRole); 
                 }
               },
               {
@@ -90,6 +90,10 @@ const Index = props => {
                                         'Akun berhasil dihapus.',
                                         'success'
                                       );
+                                      setState({
+                                        ...state,
+                                        data: state.data.filter((el) => { return el.user_id != rowData.user_id })
+                                      });
                                     })
                                     .catch(error => {
                                       Swal.fire(
@@ -107,6 +111,10 @@ const Index = props => {
                                         'Akun berhasil dihapus.',
                                         'success'
                                       );
+                                      setState({
+                                        ...state,
+                                        data: state.data.filter((el) => { return el.user_id != rowData.user_id })
+                                      });
                                     })
                                     .catch(error => {
                                       Swal.fire(

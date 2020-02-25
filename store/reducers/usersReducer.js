@@ -11,6 +11,12 @@ export default (state = {}, action) => {
     case actions.GET_ALL_LECTURERS:
       return { ...state, lecturers: action.lecturers };
 
+    case actions.GET_PROFILE_BY_ID:
+      return { ...state, profile: action.profile };
+
+    /*case actions.GET_USER_FROM_COOKIE:
+      return { ...state, login: action.login };*/
+
     //case actions.LOGIN:
     //  return { ...state, self: action.self };
 

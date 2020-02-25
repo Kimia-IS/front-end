@@ -9,6 +9,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import CardActionArea from '@material-ui/core/CardActionArea';
+import PropTypes from 'prop-types';
+//import cookies from 'next-cookies';
 
 const useStyles = makeStyles({
   card: {
@@ -29,26 +31,32 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Index() {
+const Index = props => {
   const classes = useStyles();
+
+  console.log('props in dashboard=', props);
+
+  const { login } = props;
 
   return (
     <div>
       <Grid container spacing={3} alignItems="center" alignContent="center" justify="center">
         <Grid item xs={12} md={10}>
           <Breadcrumbs aria-label="breadcrumb">
-            <Typography color="inherit" variant="h6">Dashboard Dosen</Typography>
+            <Typography color="inherit" variant="h6">Dashboard</Typography>
           </Breadcrumbs>
         </Grid>
         <Grid item xs={12} md={2}>
-          <Button variant="outlined" fullWidth href="/kelola-akun">
-            Kelola Akun
-          </Button>
+          {login.role == 'Super Admin' ? (
+            <Button variant="outlined" fullWidth href="/kelola-akun">
+              Kelola Akun
+            </Button>
+          ) : ('')}
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h4" gutterBottom>
             <Box fontWeight="fontWeightBold">
-              Halo, [nama]!
+              Halo, {login.name}!
             </Box>
           </Typography>
           <Typography variant="subtitle1" gutterBottom>
@@ -60,6 +68,7 @@ export default function Index() {
       </Grid>
       <br />
       <Grid container spacing={3} justify="center">
+        {login.role != 'Admin Non-Akademik' ? (
         <Grid item xs={6} md={3}>
           <Card className={classes.card}>
             <CardActionArea>
@@ -76,6 +85,8 @@ export default function Index() {
             </CardActionArea>
           </Card>
         </Grid>
+        ) : ('')}
+        {login.role != 'Admin Non-Akademik' ? (
         <Grid item xs={6} md={3}>
           <Card className={classes.card}>
             <CardActionArea>
@@ -92,6 +103,8 @@ export default function Index() {
             </CardActionArea>
           </Card>
         </Grid>
+        ) : ('')}
+        {login.role != 'Admin Akademik' ? (
         <Grid item xs={6} md={3}>
           <Card className={classes.card}>
             <CardActionArea>
@@ -108,6 +121,8 @@ export default function Index() {
             </CardActionArea>
           </Card>
         </Grid>
+        ) : ('')}
+        {login.role != 'Admin Akademik' ? (
         <Grid item xs={6} md={3}>
           <Card className={classes.card}>
             <CardActionArea>
@@ -124,6 +139,8 @@ export default function Index() {
             </CardActionArea>
           </Card>
         </Grid>
+        ) : ('')}
+        {login.role != 'Admin Akademik' ? (
         <Grid item xs={6} md={3}>
           <Card className={classes.card}>
             <CardActionArea>
@@ -140,6 +157,8 @@ export default function Index() {
             </CardActionArea>
           </Card>
         </Grid>
+        ) : ('')}
+        {login.role != 'Admin Akademik' && login.role != 'Admin Non-Akademik' ? (
         <Grid item xs={6} md={3}>
           <Card className={classes.card}>
             <CardActionArea>
@@ -156,6 +175,8 @@ export default function Index() {
             </CardActionArea>
           </Card>
         </Grid>
+        ) : ('')}
+        {login.role != 'Admin Akademik' && login.role != 'Admin Non-Akademik' ? (
         <Grid item xs={6} md={3}>
           <Card className={classes.card}>
             <CardActionArea>
@@ -172,6 +193,8 @@ export default function Index() {
             </CardActionArea>
           </Card>
         </Grid>
+        ) : ('')}
+        {(login.role != 'Admin Akademik' && login.role != 'Dosen' && login.role != 'Admin Non-Akademik') ? (
         <Grid item xs={6} md={3}>
           <Card className={classes.card}>
             <CardActionArea>
@@ -188,6 +211,7 @@ export default function Index() {
             </CardActionArea>
           </Card>
         </Grid>
+        ) : ('')}
         <Grid item xs={6} md={3}>
           <Card className={classes.card}>
             <CardActionArea>
@@ -208,3 +232,14 @@ export default function Index() {
     </div>
   );
 }
+
+/*Index.getInitialProps = async ctx => {
+  const login = await cookies(ctx);
+  return { login };
+};*/
+
+Index.propTypes = {
+  login: PropTypes.any
+};
+
+export default Index;

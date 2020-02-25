@@ -27,13 +27,13 @@ const Index = props => {
     newFinalTasks[index].graduation_date = newFinalTasks[index].graduation_date.slice(0, 16);
   });
 
-  const [state] = React.useState({
+  const [state, setState] = React.useState({
     columns: [
       { title: 'Judul Tugas Akhir', field: 'title' },
       { title: 'Nama Mahasiswa', field: 'student_name' },
       { title: 'Nama Dosen Pembimbing', field: 'lecturer_name' },
       { title: 'Tanggal Mulai', field: 'starting_date' },
-      { title: 'Tanggal Mulai', field: 'graduation_date' }
+      { title: 'Tanggal Lulus', field: 'graduation_date' }
     ],
     data: newFinalTasks ? newFinalTasks : finalTasks,
   });
@@ -96,6 +96,10 @@ const Index = props => {
                                       'Tugas akhir berhasil dihapus.',
                                       'success'
                                     );
+                                    setState({
+                                      ...state,
+                                      data: state.data.filter((el) => { return el.id != rowData.id })
+                                    });
                                   })
                                   .catch(error => {
                                     Swal.fire(

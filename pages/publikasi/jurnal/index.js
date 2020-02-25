@@ -26,7 +26,7 @@ const Index = props => {
     newJournals[index].lecturer_name = namaDosen;
   });
 
-  const [state] = React.useState({
+  const [state, setState] = React.useState({
     columns: [
       { title: 'Judul', field: 'title' },
       { title: 'Penulis', field: 'lecturer_name' },
@@ -98,6 +98,10 @@ const Index = props => {
                                       'Jurnal berhasil dihapus.',
                                       'success'
                                     );
+                                    setState({
+                                      ...state,
+                                      data: state.data.filter((el) => { return el.id != rowData.id })
+                                    });
                                   })
                                   .catch(error => {
                                     Swal.fire(

@@ -26,7 +26,7 @@ const Index = props => {
     newOrganizations[index].lecturer_name = namaDosen;
   });
 
-  const [state] = React.useState({
+  const [state, setState] = React.useState({
     columns: [
       { title: 'Nama Organisasi', field: 'organization_name' },
       { title: 'Nama', field: 'lecturer_name' },
@@ -88,12 +88,17 @@ const Index = props => {
                   }).then(async (result) => {
                     if (result.value) {
                       await axios.delete(`${API}/organizations?id=${rowData.id}`)
-                                  .then(() => {
+                                  .then((response) => {
+                                    console.log('response =', response)
                                     Swal.fire(
                                       'Berhasil!',
                                       'Organisasi berhasil dihapus.',
                                       'success'
                                     );
+                                    setState({
+                                      ...state,
+                                      data: state.data.filter((el) => { return el.id != rowData.id })
+                                    });
                                   })
                                   .catch(error => {
                                     Swal.fire(

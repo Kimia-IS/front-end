@@ -30,6 +30,11 @@ export default function CreateAkun() {
 
 	const [role, setRole] = React.useState("");
   const [state, setState] = React.useState();
+  const [bulkFile, setBulkFile] = React.useState();
+
+  const handleFileUpload = (e) => {
+      setBulkFile(e.target.files);
+  };
 
   const handleInputChange = (e) => setState({
       ...state,
@@ -142,6 +147,68 @@ export default function CreateAkun() {
       				  </Button>
       				</Grid>
       			</Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant="h4" gutterBottom>
+              Buat Akun dari Bulk File (.csv)
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={3}>
+                <input
+                    style={{ display: 'none' }}
+                    id="raised-button-file"
+                    type="file"
+                    onChange={handleFileUpload}
+                  />
+                  <label htmlFor="raised-button-file">
+                    <Button variant="outlined" fullWidth component="span">
+                      Pilih file
+                    </Button>
+                  </label>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Button variant="outlined" color="primary" fullWidth
+                  onClick={async (e) => {
+                    e.preventDefault();
+                    if (bulkFile) {
+                      const formData = new FormData();
+                      formData.append('bulk_file', bulkFile[0]);
+                      await axios.post(`${API}/upload/account`, formData, {
+                                  headers: {
+                                    'Content-Type': 'multipart/form-data'
+                                  }
+                              })
+                              .then((response) => {
+                                console.log(response);
+                                Swal.fire(
+                                  'Tersimpan!',
+                                  'Akun berhasil dibuat.',
+                                  'success'
+                                );
+                              })
+                              .catch(error => {
+                                Swal.fire(
+                                  'Gagal!',
+                                  error,
+                                  'error'
+                                );
+                              });
+                    }
+                    else {
+                      Swal.fire(
+                          'Oops!',
+                          'Pilih file .csv terlebih dahulu.',
+                          'warning'
+                      );
+                    }
+                  }}
+                >
+                  Buat Akun dari Bulk File
+                </Button>
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
       </form>

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { API } from "../../config";
+// import cookies from 'next-cookies';
 
 import actions from "./index";
 
@@ -12,7 +13,9 @@ export const getAllUsers = () => async dispatch => {
 
 export const getUserById = (id, role) => async dispatch => {
   const res = await axios.get(`${API}/auth/user?id=${id}&role=${role}`);
+  console.log(res)
   const user = res.data.results;
+  console.log(user)
   if (user.role == 'Super Admin') { user.role = 1 }
   	else if (user.role == 'Admin Akademik') { user.role = 2 }
   	else if (user.role == 'Admin Non-Akademik') { user.role = 3 }
@@ -28,3 +31,19 @@ export const getAllLecturers = () => async dispatch => {
   const lecturers = res.data.results;
   return dispatch({ type: actions.GET_ALL_LECTURERS, lecturers: lecturers });
 };
+
+export const getProfileById = (id) => async dispatch => {
+  const res = await axios.get(`${API}/profile/lecturer:${id}`);
+  const profile = res.data.results;
+  console.log('profile =', profile);
+  return dispatch({ type: actions.GET_PROFILE_BY_ID, profile: profile });
+};
+
+/*export const getUserFromCookie = () => {
+  const user = await cookies(ctx);
+  console.log('user in actions = ', user);
+  return {
+    type: actions.GET_USER_FROM_COOKIE,
+    login: user
+  };
+};*/
