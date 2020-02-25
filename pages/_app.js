@@ -10,6 +10,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { Provider } from "react-redux";
 import withRedux from "next-redux-wrapper";
+import cookies from 'next-cookies';
 
 import { makeStore } from "../store";
 
@@ -19,7 +20,11 @@ class MyApp extends App {
       ? await Component.getInitialProps(ctx)
       : {};
 
-    return { pageProps };
+    const user = await cookies(ctx);
+    // const { users } = await ctx.store.dispatch(getAllUsers());
+    console.log('user in _app =', user);
+
+    return { ...pageProps, ...{login: user} };
   }
 
   componentDidMount() {
@@ -31,7 +36,8 @@ class MyApp extends App {
   }
 
   render() {
-    const { Component, pageProps, store } = this.props;
+    console.log(this.props);
+    const { Component, pageProps, store, login } = this.props;
 
     return (
       <React.Fragment>
@@ -42,10 +48,10 @@ class MyApp extends App {
           <ThemeProvider theme={theme}>
             {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
             <CssBaseline />
-            <Header {...pageProps} />
+            <Header {...pageProps}{...{login: login}} />
             <Container>
               <Box my={12}>
-                <Component {...pageProps} />
+                <Component {...pageProps}{...{login: login}} />
               </Box>
             </Container>
             <Footer />

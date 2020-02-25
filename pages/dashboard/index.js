@@ -33,7 +33,9 @@ const useStyles = makeStyles({
 const Index = props => {
   const classes = useStyles();
 
-  const { user } = props;
+  console.log('props in dashboard=', props);
+
+  const { login } = props;
 
   return (
     <div>
@@ -44,7 +46,7 @@ const Index = props => {
           </Breadcrumbs>
         </Grid>
         <Grid item xs={12} md={2}>
-          {user.role == 'Super Admin' ? (
+          {login.role == 'Super Admin' ? (
             <Button variant="outlined" fullWidth href="/kelola-akun">
               Kelola Akun
             </Button>
@@ -53,7 +55,7 @@ const Index = props => {
         <Grid item xs={12}>
           <Typography variant="h4" gutterBottom>
             <Box fontWeight="fontWeightBold">
-              Halo, {user.name}!
+              Halo, {login.name}!
             </Box>
           </Typography>
           <Typography variant="subtitle1" gutterBottom>
@@ -65,7 +67,7 @@ const Index = props => {
       </Grid>
       <br />
       <Grid container spacing={3} justify="center">
-        {user.role != 'Admin Non-Akademik' ? (
+        {login.role != 'Admin Non-Akademik' ? (
         <Grid item xs={6} md={3}>
           <Card className={classes.card}>
             <CardActionArea>
@@ -83,7 +85,7 @@ const Index = props => {
           </Card>
         </Grid>
         ) : ('')}
-        {user.role != 'Admin Non-Akademik' ? (
+        {login.role != 'Admin Non-Akademik' ? (
         <Grid item xs={6} md={3}>
           <Card className={classes.card}>
             <CardActionArea>
@@ -101,7 +103,7 @@ const Index = props => {
           </Card>
         </Grid>
         ) : ('')}
-        {user.role != 'Admin Akademik' ? (
+        {login.role != 'Admin Akademik' ? (
         <Grid item xs={6} md={3}>
           <Card className={classes.card}>
             <CardActionArea>
@@ -119,7 +121,7 @@ const Index = props => {
           </Card>
         </Grid>
         ) : ('')}
-        {user.role != 'Admin Akademik' ? (
+        {login.role != 'Admin Akademik' ? (
         <Grid item xs={6} md={3}>
           <Card className={classes.card}>
             <CardActionArea>
@@ -137,7 +139,7 @@ const Index = props => {
           </Card>
         </Grid>
         ) : ('')}
-        {user.role != 'Admin Akademik' ? (
+        {login.role != 'Admin Akademik' ? (
         <Grid item xs={6} md={3}>
           <Card className={classes.card}>
             <CardActionArea>
@@ -155,7 +157,7 @@ const Index = props => {
           </Card>
         </Grid>
         ) : ('')}
-        {user.role != 'Admin Akademik' ? (
+        {login.role != 'Admin Akademik' ? (
         <Grid item xs={6} md={3}>
           <Card className={classes.card}>
             <CardActionArea>
@@ -173,7 +175,7 @@ const Index = props => {
           </Card>
         </Grid>
         ) : ('')}
-        {user.role != 'Admin Akademik' ? (
+        {login.role != 'Admin Akademik' ? (
         <Grid item xs={6} md={3}>
           <Card className={classes.card}>
             <CardActionArea>
@@ -191,7 +193,7 @@ const Index = props => {
           </Card>
         </Grid>
         ) : ('')}
-        {user.role != 'Admin Akademik' ? (
+        {login.role != 'Admin Akademik' ? (
         <Grid item xs={6} md={3}>
           <Card className={classes.card}>
             <CardActionArea>
@@ -209,7 +211,7 @@ const Index = props => {
           </Card>
         </Grid>
         ) : ('')}
-        {user.role != 'Admin Akademik' ? (
+        {login.role != 'Admin Akademik' ? (
         <Grid item xs={6} md={3}>
           <Card className={classes.card}>
             <CardActionArea>
@@ -232,9 +234,9 @@ const Index = props => {
   );
 }
 
-Index.getInitialProps = async ctx => {
-  const user = await cookies(ctx);
-  return { user };
-};
+/*Index.getInitialProps = async ctx => {
+  const login = await cookies(ctx);
+  return { login };
+};*/
 
 export default Index;

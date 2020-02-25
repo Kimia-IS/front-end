@@ -1,5 +1,6 @@
 import axios from "axios";
 import { API } from "../../config";
+// import cookies from 'next-cookies';
 
 import actions from "./index";
 
@@ -37,3 +38,12 @@ export const getProfileById = (id) => async dispatch => {
   console.log('profile =', profile);
   return dispatch({ type: actions.GET_PROFILE_BY_ID, profile: profile });
 };
+
+/*export const getUserFromCookie = () => {
+  const user = await cookies(ctx);
+  console.log('user in actions = ', user);
+  return {
+    type: actions.GET_USER_FROM_COOKIE,
+    login: user
+  };
+};*/

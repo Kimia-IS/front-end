@@ -20,10 +20,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Header = props => {
+  console.log('props in header=', props);
   const classes = useStyles();
 
-  const user = props.user ? props.user : {};
-  console.log(user);
+  const login = props.login ? props.login : {};
+  console.log(login);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -47,13 +48,13 @@ const Header = props => {
 
   return (
     <AppBar position="fixed" color="inherit" style={{marginBottom: "50px"}}>
-      {user.id ? (
+      {login.id ? (
         <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" href="/">
+          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" href="/dashboard">
             <img src="/static/images/logo-itb.png" style={{'width': '45px'}}/>
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            <Link href="/" color="inherit">
+            <Link href="/dashboard" color="inherit">
                 Kimia IS
             </Link>
           </Typography>
@@ -92,10 +93,11 @@ const Header = props => {
   );
 }
 
-Header.getInitialProps = async ctx => {
-  const user = await cookies(ctx);
-  console.log(user);
-  return { user };
-};
+/*Header.getInitialProps = async ctx => {
+
+  // const login = await cookies(ctx);
+  //console.log(login);
+  return { login };
+};*/
 
 export default Header;
