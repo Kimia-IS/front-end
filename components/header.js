@@ -8,7 +8,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import cookies from 'next-cookies';
+import PropTypes from 'prop-types';
+//import cookies from 'next-cookies';
 
 const useStyles = makeStyles(theme => ({
   menuButton: {
@@ -99,5 +100,9 @@ const Header = props => {
   //console.log(login);
   return { login };
 };*/
+
+Header.propTypes = {
+  login: PropTypes.any
+};
 
 export default Header;

@@ -9,7 +9,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import cookies from 'next-cookies';
+import PropTypes from 'prop-types';
+//import cookies from 'next-cookies';
 
 const useStyles = makeStyles({
   card: {
@@ -236,5 +237,9 @@ const Index = props => {
   const login = await cookies(ctx);
   return { login };
 };*/
+
+Index.propTypes = {
+  login: PropTypes.any
+};
 
 export default Index;

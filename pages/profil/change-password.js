@@ -6,28 +6,12 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
 import axios from "axios";
 import { API } from "../../config";
 import Swal from 'sweetalert2';
-
-const useStyles = makeStyles(theme => ({
-  formControl: {
-    minWidth: 300,
-    fullWidth: true,
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
-  },
-}));
+import PropTypes from 'prop-types';
 
 const ChangePassword = props => {
-	const classes = useStyles();
-
   console.log('props in ChangePassword = ', props);
   const user = props.login;
 
@@ -129,5 +113,9 @@ const ChangePassword = props => {
   	</div>
   );
 }
+
+ChangePassword.propTypes = {
+  login: PropTypes.any
+};
 
 export default ChangePassword;
