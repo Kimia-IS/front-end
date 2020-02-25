@@ -193,7 +193,7 @@ const Index = props => {
           </Card>
         </Grid>
         ) : ('')}
-        {login.role != 'Admin Akademik' ? (
+        {(login.role != 'Admin Akademik' && login.role != 'Dosen') ? (
         <Grid item xs={6} md={3}>
           <Card className={classes.card}>
             <CardActionArea>
