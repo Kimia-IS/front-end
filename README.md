@@ -1,6 +1,6 @@
 # Kimia IS Frontend
 
-Preview: https://kimia-is.netlify.com/
+Preview (deprecated static pages): https://kimia-is.netlify.com/
 
 > 
 
